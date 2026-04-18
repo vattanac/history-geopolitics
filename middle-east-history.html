@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Middle East History — A Complete Journey</title>
+<style>
+  :root {
+    --bg-1: #0a0618;
+    --bg-2: #120a2e;
+    --bg-3: #1a0f3d;
+    --accent-1: #ff6b35;
+    --accent-2: #f7c548;
+    --accent-3: #06b6d4;
+    --accent-4: #a855f7;
+    --text-main: #f3f0ff;
+    --text-dim: #b8b3d1;
+    --glass: rgba(255, 255, 255, 0.06);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --card-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg-1);
+    color: var(--text-main);
+    line-height: 1.7;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* Animated background */
+  .bg-gradient {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(255, 107, 53, 0.18), transparent 50%),
+      radial-gradient(circle at 80% 40%, rgba(168, 85, 247, 0.18), transparent 50%),
+      radial-gradient(circle at 50% 80%, rgba(6, 182, 212, 0.15), transparent 50%),
+      linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+    animation: bgShift 20s ease-in-out infinite;
+  }
+
+  @keyframes bgShift {
+    0%, 100% { filter: hue-rotate(0deg); }
+    50% { filter: hue-rotate(30deg); }
+  }
+
+  .noise {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.04;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Navbar */
+  .navbar {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    background: rgba(15, 10, 35, 0.75);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    padding: 0.6rem 1.2rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 95vw;
+  }
+
+  .navbar a {
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .navbar a:hover {
+    background: var(--glass);
+    color: var(--text-main);
+    transform: translateY(-1px);
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 6rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    padding: 0.5rem 1.2rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-bottom: 2rem;
+    backdrop-filter: blur(10px);
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-1);
+    box-shadow: 0 0 12px var(--accent-1);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .hero h1 {
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #fff 0%, var(--accent-2) 50%, var(--accent-1) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero p {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--text-dim);
+    max-width: 720px;
+    margin-bottom: 3rem;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .stat-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    padding: 1.2rem 1.8rem;
+    border-radius: 20px;
+    min-width: 140px;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* Section structure */
+  section {
+    padding: 5rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .section-label {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: var(--accent-3);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #fff 0%, var(--text-dim) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-intro {
+    font-size: 1.1rem;
+    color: var(--text-dim);
+    max-width: 780px;
+    margin-bottom: 3rem;
+  }
+
+  /* Glass cards */
+  .card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-radius: 24px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--card-shadow);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  }
+
+  .card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+  }
+
+  .card .date-range {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-4));
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
+  }
+
+  .card p {
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+  }
+
+  .card p:last-child {
+    margin-bottom: 0;
+  }
+
+  .card strong {
+    color: var(--text-main);
+    font-weight: 600;
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.5rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg,
+      var(--accent-1) 0%,
+      var(--accent-2) 25%,
+      var(--accent-3) 50%,
+      var(--accent-4) 75%,
+      var(--accent-1) 100%);
+    border-radius: 2px;
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -1.8rem;
+    top: 2rem;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--bg-2);
+    border: 3px solid var(--accent-2);
+    box-shadow: 0 0 16px rgba(247, 197, 72, 0.6);
+  }
+
+  /* Grid layouts */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+  }
+
+  .mini-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    border-radius: 18px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .mini-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .mini-card .icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-4));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .mini-card h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+  }
+
+  .mini-card p {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* Highlight quotes */
+  .highlight {
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(168, 85, 247, 0.1));
+    border-left: 3px solid var(--accent-2);
+    padding: 1.5rem 1.8rem;
+    border-radius: 12px;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: var(--text-main);
+  }
+
+  /* Footer */
+  footer {
+    padding: 4rem 2rem 3rem;
+    text-align: center;
+    border-top: 1px solid var(--glass-border);
+    margin-top: 4rem;
+  }
+
+  footer p {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Category tags */
+  .tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .tag {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .navbar { padding: 0.4rem 0.6rem; }
+    .navbar a { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
+    section { padding: 3rem 1rem; }
+    .card { padding: 1.5rem; }
+    .timeline { padding-left: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-gradient"></div>
+<div class="noise"></div>
+
+<nav class="navbar">
+  <a href="#hero">Home</a>
+  <a href="#ancient">Ancient</a>
+  <a href="#empires">Empires</a>
+  <a href="#islam">Islamic Age</a>
+  <a href="#ottoman">Ottoman</a>
+  <a href="#modern">Modern</a>
+  <a href="#today">Today</a>
+</nav>
+
+<section class="hero" id="hero">
+  <div class="hero-badge">Interactive History Guide · 2026 Edition</div>
+  <h1>The Middle East<br>A Story of 5,000 Years</h1>
+  <p>From the first cities in Mesopotamia to the digital age today — a deep, detailed, and easy-to-read journey through the land that shaped human history, religion, trade, science, and politics.</p>
+  <div class="hero-stats">
+    <div class="stat-card">
+      <div class="stat-number">5000+</div>
+      <div class="stat-label">Years of History</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">20+</div>
+      <div class="stat-label">Major Empires</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">3</div>
+      <div class="stat-label">World Religions Born</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">18</div>
+      <div class="stat-label">Countries Today</div>
+    </div>
+  </div>
+</section>
+
+<section id="intro" class="reveal">
+  <span class="section-label">Welcome</span>
+  <h2 class="section-title">What Is the Middle East?</h2>
+  <p class="section-intro">The Middle East is a large region that sits where Africa, Asia, and Europe meet. It includes countries like Egypt, Turkey, Iran, Iraq, Saudi Arabia, Syria, Israel, Palestine, Lebanon, Jordan, Yemen, Oman, the UAE, Qatar, Bahrain, Kuwait, and others. For thousands of years, this land has been the center of trade, religion, science, and power. To understand the world today, you must understand this place.</p>
+
+  <div class="card">
+    <h3>Why This Region Matters So Much</h3>
+    <p>The Middle East gave us many things we still use today. The first writing system, called <strong>cuneiform</strong>, started here. The first laws were written here. The wheel, the number zero, algebra, astronomy, and even the first cities all came from this land. Three major world religions — <strong>Judaism, Christianity, and Islam</strong> — all began here. Today, much of the world's oil also comes from this region, making it very important for the global economy.</p>
+    <div class="tags">
+      <span class="tag">Cradle of civilization</span>
+      <span class="tag">Birth of religions</span>
+      <span class="tag">Ancient trade routes</span>
+      <span class="tag">Modern oil power</span>
+    </div>
+  </div>
+</section>
+
+<section id="ancient" class="reveal">
+  <span class="section-label">Part 1 · The Ancient World</span>
+  <h2 class="section-title">The First Civilizations</h2>
+  <p class="section-intro">Around 3500 BCE, humans built their first real cities in a land called Mesopotamia, which means "the land between two rivers." These rivers were the Tigris and the Euphrates, in what is now Iraq. This region is often called the "Cradle of Civilization" because so many firsts happened here.</p>
+
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="card">
+        <span class="date-range">3500 – 2000 BCE</span>
+        <h3>Sumer — The First Cities</h3>
+        <p>The Sumerians were the first people to build real cities like <strong>Uruk, Ur, and Eridu</strong>. They invented cuneiform writing by pressing marks into wet clay tablets. They built huge temple towers called <strong>ziggurats</strong>. They also invented the wheel, the plow, and the 60-minute hour (which is why we still count time in 60s today).</p>
+        <p>Sumer was not one kingdom. It was many city-states that fought each other often. The famous <strong>Epic of Gilgamesh</strong>, one of the oldest stories in the world, comes from this time. It tells of a king who searches for eternal life.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="card">
+        <span class="date-range">2334 – 2154 BCE</span>
+        <h3>Akkadian Empire — The First Empire</h3>
+        <p>A king named <strong>Sargon of Akkad</strong> united all the Sumerian cities into one large empire. This is often called the world's first true empire. Sargon's armies were very organized, and his empire stretched from the Persian Gulf to the Mediterranean Sea.</p>
+        <p>The Akkadians spoke a different language than Sumerian, but they kept Sumerian culture alive. Eventually, drought and invasions caused the empire to fall.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="card">
+        <span class="date-range">1894 – 539 BCE</span>
+        <h3>Babylon — Law, Math, and Stars</h3>
+        <p>Babylon became a great city under King <strong>Hammurabi</strong> (around 1792 BCE). He created the <strong>Code of Hammurabi</strong>, one of the first sets of written laws. The famous rule "an eye for an eye" comes from this code. The laws were carved on a tall stone pillar so everyone could see them.</p>
+        <p>Later, Babylon was conquered and then rose again under <strong>Nebuchadnezzar II</strong> (around 605 BCE). He built the legendary <strong>Hanging Gardens of Babylon</strong>, one of the Seven Wonders of the Ancient World. Babylonians were also great at math and astronomy. They mapped the stars and predicted eclipses.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="card">
+        <span class="date-range">2500 – 609 BCE</span>
+        <h3>Assyria — The Warrior Empire</h3>
+        <p>The Assyrians were famous for their strong military. They had iron weapons, war chariots, and a terrifying reputation. At their peak, they controlled a huge area including Egypt, Israel, and much of the Middle East. Their capital city, <strong>Nineveh</strong>, had a great library with thousands of clay tablets.</p>
+        <p>Assyria was eventually destroyed by a combined force of Babylonians and Medes in 612 BCE.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="card">
+        <span class="date-range">3100 – 30 BCE</span>
+        <h3>Ancient Egypt — Land of Pharaohs</h3>
+        <p>While Mesopotamia was growing, another great civilization was rising along the Nile River in Egypt. Egyptian history is often split into three big periods: the <strong>Old Kingdom</strong> (pyramids were built), the <strong>Middle Kingdom</strong> (art and writing grew), and the <strong>New Kingdom</strong> (Egypt became a huge empire).</p>
+        <p>Famous pharaohs include <strong>Khufu</strong> (who built the Great Pyramid), <strong>Hatshepsut</strong> (one of the few female pharaohs), <strong>Ramses II</strong> (the greatest warrior king), and <strong>Tutankhamun</strong> (the boy king whose tomb was found full of gold in 1922).</p>
+        <p>Egyptians invented hieroglyphic writing, papyrus paper, and advanced medicine. They believed in many gods and built amazing temples. Egypt stayed powerful for 3,000 years before being conquered by Persia, then Alexander the Great, then Rome. <strong>Cleopatra VII</strong> was the last pharaoh, and her death in 30 BCE ended ancient Egypt.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="card">
+        <span class="date-range">1200 – 586 BCE</span>
+        <h3>Phoenicians and Hebrews</h3>
+        <p>The <strong>Phoenicians</strong> lived along the coast of modern Lebanon. They were amazing sailors and traders. They sailed all across the Mediterranean and even reached Britain. Most importantly, they invented the first true <strong>alphabet</strong>. Our alphabet today comes from theirs.</p>
+        <p>The <strong>Hebrews</strong> (later called Jews) lived in the land of Canaan (modern Israel/Palestine). Their history is told in the Hebrew Bible. They were the first people to believe in only one God — this is called <strong>monotheism</strong>. Kings like <strong>David</strong> and <strong>Solomon</strong> built a kingdom with Jerusalem as its capital. The Babylonians destroyed the First Temple in 586 BCE and took many Jews into exile.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="empires" class="reveal">
+  <span class="section-label">Part 2 · Classical Empires</span>
+  <h2 class="section-title">Persians, Greeks, and Romans</h2>
+  <p class="section-intro">After the fall of Babylon and Assyria, three great powers took turns ruling the Middle East: the Persians from the east, the Greeks from the west, and finally the Romans. Each of them changed the region forever.</p>
+
+  <div class="grid">
+    <div class="mini-card">
+      <div class="icon">P</div>
+      <h4>Persian Empire</h4>
+      <p>550 – 330 BCE. The largest empire the world had seen. Founded by Cyrus the Great, who was known for being kind to the people he conquered.</p>
+    </div>
+    <div class="mini-card">
+      <div class="icon">G</div>
+      <h4>Greek / Hellenistic</h4>
+      <p>330 – 63 BCE. Alexander the Great swept through the region. Greek culture mixed with local cultures, creating a new blended world.</p>
+    </div>
+    <div class="mini-card">
+      <div class="icon">R</div>
+      <h4>Roman / Byzantine</h4>
+      <p>63 BCE – 1453 CE. Rome ruled the western part. After Rome fell, the eastern half became the Byzantine Empire and lasted another 1,000 years.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="date-range">550 – 330 BCE</span>
+    <h3>The Persian Empire — The Superpower of the Ancient World</h3>
+    <p><strong>Cyrus the Great</strong> founded the Persian Empire (also called the Achaemenid Empire) around 550 BCE. He conquered the Medes, Lydians, and Babylonians. When he took Babylon, he freed the Jews who had been held there and let them return home to rebuild their temple.</p>
+    <p>The Persian Empire became the largest the world had ever seen. It stretched from India in the east to Egypt and Greece in the west. They built the famous <strong>Royal Road</strong>, a highway system that helped messages travel fast. They also created a postal system, a tax system, and allowed different cultures and religions to exist peacefully.</p>
+    <p>The Persians followed a religion called <strong>Zoroastrianism</strong>, which taught about one good god and one evil force — ideas that may have influenced later religions. The famous king <strong>Darius I</strong> and his son <strong>Xerxes</strong> fought wars against the Greek city-states but could not fully conquer them.</p>
+  </div>
+
+  <div class="card">
+    <span class="date-range">334 – 323 BCE</span>
+    <h3>Alexander the Great Changes Everything</h3>
+    <p>In 334 BCE, a young king from Macedonia named <strong>Alexander the Great</strong> began one of the most amazing conquests in history. In just 10 years, he defeated the massive Persian Empire, conquered Egypt, and marched all the way to India. He was only 32 when he died in Babylon in 323 BCE.</p>
+    <p>Alexander spread Greek language, ideas, and art across the whole Middle East. This mixing of Greek and eastern culture is called the <strong>Hellenistic Age</strong>. He founded many cities, most famous being <strong>Alexandria in Egypt</strong>, which became a huge center of learning with its famous library.</p>
+    <p>After Alexander died, his generals fought over his empire and split it into three main parts: the <strong>Ptolemies</strong> ruled Egypt, the <strong>Seleucids</strong> ruled most of the Middle East, and the <strong>Antigonids</strong> ruled Greece.</p>
+  </div>
+
+  <div class="card">
+    <span class="date-range">63 BCE – 636 CE</span>
+    <h3>Rome and Byzantium — The Long Rule of the West</h3>
+    <p>The Romans came to the Middle East in 63 BCE when General <strong>Pompey</strong> captured Jerusalem. Over time, Rome took control of Egypt, Syria, Judea (Israel/Palestine), and Anatolia (Turkey). Roman roads, trade, and peace (called the <em>Pax Romana</em>) made the region very rich.</p>
+    <p>A very important event happened under Roman rule: the birth of <strong>Jesus Christ</strong> in Bethlehem around 4 BCE. Jesus taught new ideas about love, forgiveness, and one God. He was crucified by Roman order around 30 CE. His followers spread his teachings, and <strong>Christianity</strong> slowly grew from a small Jewish sect into a world religion.</p>
+    <p>In 70 CE, the Romans destroyed the <strong>Second Temple in Jerusalem</strong> after a Jewish revolt. This was a terrible event for Jews, who were then spread across the world — this scattering is called the <strong>Diaspora</strong>.</p>
+    <p>In 313 CE, Emperor <strong>Constantine</strong> made Christianity legal. In 330 CE, he moved the Roman capital to a new city called <strong>Constantinople</strong> (modern Istanbul). When the western Roman Empire fell in 476 CE, the eastern part — now called the <strong>Byzantine Empire</strong> — kept going for almost 1,000 more years.</p>
+  </div>
+
+  <div class="card">
+    <span class="date-range">247 BCE – 651 CE</span>
+    <h3>The Parthians and Sassanids — Persia Returns</h3>
+    <p>While Rome ruled the western Middle East, Persia rose again in the east. First came the <strong>Parthian Empire</strong> (247 BCE – 224 CE), then the <strong>Sassanid Empire</strong> (224 – 651 CE). The Sassanids were the last Persian empire before Islam. They were a great power that rivaled Rome and Byzantium for centuries.</p>
+    <p>Rome/Byzantium and Persia fought many long, brutal wars. By the early 600s, both empires were tired, poor, and weakened. This opened the door for a huge change that no one saw coming.</p>
+  </div>
+</section>
+
+<section id="islam" class="reveal">
+  <span class="section-label">Part 3 · The Rise of Islam</span>
+  <h2 class="section-title">A New Faith Changes the World</h2>
+  <p class="section-intro">In the early 600s CE, a new religion was born in the Arabian Peninsula. Within 100 years, it spread faster than any religion before it. The Islamic world would become the most advanced civilization on Earth for several centuries, leading in science, art, medicine, and philosophy.</p>
+
+  <div class="card">
+    <span class="date-range">570 – 632 CE</span>
+    <h3>The Prophet Muhammad and the Start of Islam</h3>
+    <p><strong>Muhammad</strong> was born in the city of Mecca around 570 CE. Mecca was a busy trade town where many Arab tribes came to worship at a shrine called the <strong>Kaaba</strong>. Muhammad was a merchant who became known as honest and thoughtful.</p>
+    <p>When he was about 40 years old, Muslims believe he received messages from God (called <strong>Allah</strong> in Arabic) through the angel Gabriel. These messages, collected over 23 years, became the holy book of Islam — the <strong>Quran</strong>. Muhammad taught that there is only one God, that all people are equal before God, and that Muslims must pray, give to the poor, fast during Ramadan, and visit Mecca if possible.</p>
+    <p>At first, the leaders of Mecca rejected Muhammad and his small group of followers. In 622 CE, Muhammad and his followers moved to the city of <strong>Medina</strong>. This journey is called the <strong>Hijra</strong>, and it marks year one of the Islamic calendar. In Medina, Muhammad became both a religious and political leader. By 630 CE, he returned to Mecca with an army and took the city peacefully. Most Arabs accepted Islam. Muhammad died in 632 CE.</p>
+  </div>
+
+  <div class="card">
+    <span class="date-range">632 – 661 CE</span>
+    <h3>The Rashidun — The Four Rightly Guided Caliphs</h3>
+    <p>After Muhammad died, his friend <strong>Abu Bakr</strong> became the first <strong>Caliph</strong> (meaning "successor"). Then came <strong>Umar</strong>, <strong>Uthman</strong>, and <strong>Ali</strong>. These four are called the <strong>Rashidun</strong>, or "Rightly Guided," by most Muslims.</p>
+    <p>In just 30 years, these caliphs led armies that conquered a huge area. They defeated both the weakened Byzantine Empire in Syria and Egypt, and completely destroyed the Sassanid Persian Empire. Islam now ruled from Libya to Persia.</p>
+    <p>But a terrible event happened: the fourth caliph Ali was murdered, and his supporters split from the main Muslim community. This split created the two main branches of Islam: <strong>Sunni</strong> (who accepted the Rashidun and other caliphs) and <strong>Shia</strong> (who believed only Ali's family should lead). This split still affects the Middle East today.</p>
+  </div>
+
+  <div class="card">
+    <span class="date-range">661 – 750 CE</span>
+    <h3>The Umayyad Caliphate — Empire from Spain to India</h3>
+    <p>The <strong>Umayyad dynasty</strong> moved the capital to <strong>Damascus</strong> in Syria. They built one of the largest empires in history. At its peak, it stretched from Spain and Portugal in the west, across North Africa, through the Middle East, and into Central Asia and India in the east.</p>
+    <p>The Umayyads built beautiful buildings like the <strong>Dome of the Rock</strong> in Jerusalem (691 CE), one of the oldest Islamic buildings still standing. Arabic became the language of government and science. Non-Muslims (Christians and Jews) were called <strong>"People of the Book"</strong> and were allowed to keep their religion if they paid a special tax.</p>
+    <p>However, many people felt the Umayyads cared more about wealth than faith. In 750 CE, a revolution overthrew them. Almost all the Umayyad family was killed, except one prince who escaped to Spain and started a new Umayyad kingdom there.</p>
+  </div>
+
+  <div class="card">
+    <span class="date-range">750 – 1258 CE</span>
+    <h3>The Abbasid Caliphate — The Golden Age of Islam</h3>
+    <p>The <strong>Abbasid dynasty</strong> moved the capital to a new city: <strong>Baghdad</strong>, built in 762 CE on the Tigris River in Iraq. Baghdad became the greatest city in the world. At its peak, it had over one million people, huge libraries, and scholars from every culture.</p>
+    <p>This period (roughly 750 – 1258) is called the <strong>Islamic Golden Age</strong>. In the famous <strong>House of Wisdom</strong> in Baghdad, scholars translated Greek, Persian, Indian, and Chinese books into Arabic. They saved much ancient knowledge that was lost in Europe.</p>
+    <p>Islamic scientists made huge discoveries:</p>
+    <p>• <strong>Al-Khwarizmi</strong> invented <strong>algebra</strong> (the word comes from Arabic "al-jabr"). The word "algorithm" also comes from his name.<br>
+    • <strong>Ibn al-Haytham</strong> founded modern optics and the scientific method.<br>
+    • <strong>Al-Razi</strong> and <strong>Ibn Sina</strong> (Avicenna) wrote medical books used in Europe for 500 years.<br>
+    • <strong>Al-Kindi</strong> and <strong>Al-Farabi</strong> built on Greek philosophy.<br>
+    • Astronomers mapped stars and made accurate calendars.<br>
+    • Muslims brought the numbers we use today (0-9) from India to the world.</p>
+    <p>Famous caliph <strong>Harun al-Rashid</strong> (ruled 786 – 809) is the one featured in the tales of "One Thousand and One Nights" (Arabian Nights). Trade flowed from China to Spain. Islamic coins have been found as far away as Scandinavia.</p>
+    <p>But the huge empire was hard to control. Over time, different regions broke away under their own rulers. The Abbasid caliph became more of a religious symbol than a real ruler.</p>
+  </div>
+
+  <div class="highlight">
+    Did you know? Coffee, the number zero, paper-making (from China), windmills, hospitals, and even universities as we know them were spread or invented during the Islamic Golden Age.
+  </div>
+
+  <div class="card">
+    <span class="date-range">909 – 1171 CE</span>
+    <h3>The Fatimids and Other Rival Caliphates</h3>
+    <p>The Abbasids were not the only Islamic rulers. The <strong>Fatimid Caliphate</strong> (a Shia dynasty) ruled North Africa and Egypt from 909. They founded the city of <strong>Cairo</strong> in 969 and built the famous <strong>Al-Azhar University</strong>, which is still one of the most important Islamic schools today.</p>
+    <p>In Spain, the Umayyad prince who escaped built the <strong>Caliphate of Córdoba</strong>, which turned Córdoba into the most advanced city in Europe. Christians, Jews, and Muslims often lived together peacefully there — this era is sometimes called <strong>"La Convivencia"</strong> (living together).</p>
+  </div>
+</section>
+
+<section id="crusades" class="reveal">
+  <span class="section-label">Part 4 · Crusades and Mongols</span>
+  <h2 class="section-title">Wars, Invasions, and Rebirth</h2>
+  <p class="section-intro">Between 1095 and 1300, the Middle East faced two huge shocks: invasions from Christian Europe (the Crusades) and invasions from Asia (the Mongols). Both changed the region forever.</p>
+
+  <div class="card">
+    <span class="date-range">1095 – 1291 CE</span>
+    <h3>The Crusades — A 200-Year Holy War</h3>
+    <p>In 1095, <strong>Pope Urban II</strong> called for European Christians to fight a war to take Jerusalem back from Muslims. This began what are called the <strong>Crusades</strong>. There were many crusades over about 200 years.</p>
+    <p>The <strong>First Crusade</strong> (1096 – 1099) was the most successful for the Christians. They captured Jerusalem in a bloody battle in 1099. They set up four small Crusader states in the Middle East.</p>
+    <p>Then came <strong>Saladin</strong> (Salah al-Din), a Kurdish Muslim leader. He united Muslims and took Jerusalem back in 1187. He was known for being fair and kind even to his enemies. The famous <strong>Third Crusade</strong> (led by Richard the Lionheart of England) could not retake Jerusalem.</p>
+    <p>The crusades continued but slowly failed. In 1291, the last Crusader city, <strong>Acre</strong>, fell to the Muslims, ending the crusades in the Holy Land. The crusades left lasting anger and also led to the exchange of ideas and goods between Europe and the Middle East.</p>
+  </div>
+
+  <div class="card">
+    <span class="date-range">1220 – 1260 CE</span>
+    <h3>The Mongol Invasion — The Darkest Day</h3>
+    <p>From the steppes of Mongolia came the terrifying armies of <strong>Genghis Khan</strong> and later his grandson <strong>Hulagu Khan</strong>. In 1258, Hulagu attacked Baghdad. After 40 days, the city fell. The Mongols killed hundreds of thousands of people, burned the House of Wisdom, and destroyed nearly all the books. The Tigris River ran black with ink and red with blood, it is said.</p>
+    <p>The fall of Baghdad in 1258 is often seen as the end of the Islamic Golden Age. The caliph was killed, and the Abbasid dynasty ended (though a weak symbolic caliph continued in Egypt).</p>
+    <p>The Mongols were finally stopped in 1260 by the <strong>Mamluks</strong> of Egypt at the Battle of <strong>Ain Jalut</strong>. The Mamluks were slave-soldiers who had taken power in Egypt. They defeated the Mongols and saved the Islamic world from total destruction.</p>
+  </div>
+
+  <div class="card">
+    <span class="date-range">1250 – 1517 CE</span>
+    <h3>The Mamluk Sultanate — Egypt's Glory</h3>
+    <p>The <strong>Mamluks</strong> ruled Egypt and Syria for about 250 years. Under them, Cairo became one of the great cities of the world. They built beautiful mosques, schools, and hospitals. Trade was rich, especially the spice trade with India and China.</p>
+    <p>The Mamluks also fought off several more Mongol attacks and drove the last Crusaders out of the Middle East. They protected Islamic culture during a dangerous time.</p>
+  </div>
+</section>
+
+<section id="ottoman" class="reveal">
+  <span class="section-label">Part 5 · The Ottoman Era</span>
+  <h2 class="section-title">The Last Great Islamic Empire</h2>
+  <p class="section-intro">From a small Turkish tribe in the 1200s grew one of the longest-lasting and largest empires in history. The Ottoman Empire ruled much of the Middle East, North Africa, and Southeast Europe for over 600 years.</p>
+
+  <div class="card">
+    <span class="date-range">1299 – 1453 CE</span>
+    <h3>The Rise of the Ottomans</h3>
+    <p>A Turkish leader named <strong>Osman I</strong> founded a small state in Anatolia (Turkey) around 1299. His descendants — the <strong>Ottomans</strong> — slowly expanded. They were skilled warriors and smart rulers.</p>
+    <p>In 1453, Sultan <strong>Mehmed II</strong> (called "the Conqueror") did something amazing: he captured <strong>Constantinople</strong>, the capital of the Byzantine Empire. The city had strong walls that had stood for 1,000 years, but Ottoman cannons broke through. This ended the Byzantine Empire and marked the end of the Middle Ages for many historians. Mehmed renamed the city <strong>Istanbul</strong> and made it the new Ottoman capital.</p>
+  </div>
+
+  <div class="card">
+    <span class="date-range">1453 – 1683 CE</span>
+    <h3>The Golden Age of the Ottomans</h3>
+    <p>Under Sultan <strong>Selim I</strong> (ruled 1512 – 1520), the Ottomans conquered Egypt, Syria, and the holy cities of Mecca and Medina. The Ottoman sultan became the <strong>Caliph</strong> — the leader of all Sunni Muslims.</p>
+    <p>Then came <strong>Suleiman the Magnificent</strong> (ruled 1520 – 1566), the greatest Ottoman sultan. He conquered Hungary, nearly took Vienna, ruled parts of North Africa, and dominated the eastern Mediterranean. Under him, the empire had great art, architecture, and law. The famous architect <strong>Mimar Sinan</strong> built stunning mosques across the empire.</p>
+    <p>The Ottomans let different religions and cultures live under their rule through a system called the <strong>millet system</strong>. Each religious community — Muslims, Christians, Jews, and others — had its own laws for internal matters. Many Jews expelled from Spain in 1492 were welcomed by the Ottomans.</p>
+  </div>
+
+  <div class="card">
+    <span class="date-range">1501 – 1736 CE</span>
+    <h3>Safavid Persia — The Rival Shia Empire</h3>
+    <p>While the Sunni Ottomans ruled the west, the <strong>Safavid dynasty</strong> ruled Persia (Iran) and made Shia Islam the official religion. This is the main reason Iran today is mostly Shia while most of the Middle East is Sunni.</p>
+    <p>The Safavids under <strong>Shah Abbas I</strong> (ruled 1588 – 1629) made their capital <strong>Isfahan</strong> one of the most beautiful cities in the world. They built amazing mosques with blue tiles and grand squares. Persian art, carpets, and poetry flourished.</p>
+    <p>The Ottomans and Safavids fought many wars over Iraq and the Caucasus, but neither could destroy the other.</p>
+  </div>
+
+  <div class="card">
+    <span class="date-range">1683 – 1914 CE</span>
+    <h3>The Long Decline of the Ottomans</h3>
+    <p>In 1683, the Ottomans tried to capture <strong>Vienna</strong> but failed. This is often seen as the start of their long decline. Over the next 200 years, European countries (especially Russia, Britain, France, and Austria) slowly took pieces of Ottoman land.</p>
+    <p>The Ottomans tried to modernize. They created new laws, schools, and armies in the 1800s (a reform period called the <strong>Tanzimat</strong>). But it was not enough. Nationalism — the idea that each ethnic group should have its own country — spread. Greeks, Serbs, Bulgarians, and others broke away.</p>
+    <p>By 1914, the Ottoman Empire was called <strong>"the Sick Man of Europe."</strong> It was much smaller and weaker than before. Then came World War I.</p>
+  </div>
+</section>
+
+<section id="modern" class="reveal">
+  <span class="section-label">Part 6 · The Modern Era Begins</span>
+  <h2 class="section-title">World Wars and New Nations</h2>
+  <p class="section-intro">The 20th century completely remade the Middle East. Two world wars, the discovery of huge oil reserves, the end of colonialism, and the creation of Israel all happened in just a few decades. The borders and conflicts of today mostly come from this time.</p>
+
+  <div class="card">
+    <span class="date-range">1914 – 1918</span>
+    <h3>World War I and the Fall of the Ottomans</h3>
+    <p>The Ottoman Empire joined World War I on the side of Germany. This was a huge mistake. By the end of the war in 1918, the empire was destroyed.</p>
+    <p>During the war, the British made three big promises that contradicted each other:</p>
+    <p>• To the <strong>Arabs</strong> (the McMahon–Hussein letters): If you revolt against the Ottomans, we will help you create one big Arab kingdom. Arab leader <strong>Sharif Hussein</strong> and his son <strong>Faisal</strong> led a revolt, helped by British officer <strong>T. E. Lawrence</strong> ("Lawrence of Arabia").<br>
+    • To the <strong>French</strong> (the Sykes–Picot Agreement, 1916): We will secretly divide the Arab lands between Britain and France.<br>
+    • To the <strong>Jews</strong> (the Balfour Declaration, 1917): Britain supports a "national home for the Jewish people" in Palestine.</p>
+    <p>These three broken promises are the root of many Middle East problems that still exist today.</p>
+  </div>
+
+  <div class="card">
+    <span class="date-range">1918 – 1939</span>
+    <h3>The Mandate Period — European Rule</h3>
+    <p>After the war, the League of Nations gave the Arab lands to Britain and France as <strong>"mandates"</strong> (basically colonies). France took <strong>Syria and Lebanon</strong>. Britain took <strong>Iraq, Transjordan (Jordan), and Palestine</strong>. The borders were often drawn with straight lines on a map, ignoring local tribes, religions, and history.</p>
+    <p>In Turkey, a general named <strong>Mustafa Kemal Atatürk</strong> led a revolution and created the modern Republic of Turkey in 1923. He ended the caliphate, changed the alphabet from Arabic to Latin letters, gave women voting rights, and tried to make Turkey a modern secular nation.</p>
+    <p>In Persia, a soldier named <strong>Reza Khan</strong> took power and started the <strong>Pahlavi dynasty</strong> in 1925. He renamed the country <strong>Iran</strong>.</p>
+    <p>In the Arabian Peninsula, a strong leader named <strong>Ibn Saud</strong> united many tribes and created the Kingdom of <strong>Saudi Arabia</strong> in 1932. Soon after, huge amounts of oil were discovered — this would change everything.</p>
+  </div>
+
+  <div class="card">
+    <span class="date-range">1947 – 1949</span>
+    <h3>The Creation of Israel and the First Arab–Israeli War</h3>
+    <p>After the horrors of the Holocaust in World War II, international support for a Jewish homeland grew. In 1947, the United Nations voted to split Palestine into two states — one Jewish, one Arab — with Jerusalem as an international city.</p>
+    <p>The Jews accepted the plan. The Arab states rejected it. On <strong>May 14, 1948</strong>, Jewish leaders declared the independence of the <strong>State of Israel</strong>. The very next day, five Arab countries (Egypt, Jordan, Syria, Iraq, Lebanon) attacked. After months of fighting, Israel won and even expanded beyond the UN plan.</p>
+    <p>Around <strong>700,000 Palestinians</strong> fled or were forced from their homes. Palestinians call this the <strong>Nakba</strong> ("catastrophe"). Most of them became refugees in neighboring countries, and this refugee problem continues today. Meanwhile, around 800,000 Jews were also forced from Arab countries and went mostly to Israel.</p>
+  </div>
+
+  <div class="card">
+    <span class="date-range">1950s – 1960s</span>
+    <h3>Arab Nationalism and the Cold War</h3>
+    <p>In 1952, a group of Egyptian officers overthrew their king. <strong>Gamal Abdel Nasser</strong> became leader of Egypt and a hero across the Arab world. He preached <strong>pan-Arabism</strong> — the idea that all Arabs should unite into one great nation.</p>
+    <p>In 1956, Nasser nationalized the <strong>Suez Canal</strong> (took it from British and French control). Britain, France, and Israel attacked Egypt in the <strong>Suez Crisis</strong>, but the United States and Soviet Union forced them to back down. This showed the old European powers were finished in the Middle East.</p>
+    <p>In 1967, the <strong>Six-Day War</strong> was a disaster for the Arabs. Israel defeated Egypt, Jordan, and Syria in just six days. Israel captured the <strong>West Bank</strong> (from Jordan), <strong>Gaza Strip</strong> and <strong>Sinai</strong> (from Egypt), <strong>Golan Heights</strong> (from Syria), and all of East Jerusalem. Israel has controlled or influenced these lands ever since.</p>
+    <p>In 1973, Egypt and Syria tried again in the <strong>Yom Kippur War</strong>. They surprised Israel and did better, but Israel still won. However, this war led to the first peace deal — in 1979, Egypt and Israel signed the <strong>Camp David Accords</strong>, and Egypt got Sinai back. For this, Egyptian President <strong>Anwar Sadat</strong> was assassinated by extremists in 1981.</p>
+  </div>
+
+  <div class="card">
+    <span class="date-range">1960 – present</span>
+    <h3>Oil Changes the World</h3>
+    <p>Oil was found in Persia (Iran) in 1908, and in huge amounts in Saudi Arabia in the 1930s. By the mid-20th century, Middle East oil was vital to the whole world. In 1960, oil-producing countries (including Saudi Arabia, Iran, Iraq, Kuwait, and Venezuela) formed <strong>OPEC</strong> to control prices.</p>
+    <p>In 1973, OPEC stopped selling oil to countries that supported Israel in the Yom Kippur War. This was the <strong>Oil Embargo</strong>. Oil prices shot up four times higher, and the world economy was shocked. Gulf states like Saudi Arabia, Kuwait, UAE, and Qatar became incredibly rich almost overnight.</p>
+    <p>Oil money transformed Gulf cities like <strong>Dubai, Abu Dhabi, Doha, and Riyadh</strong> from small desert towns into futuristic metropolises with skyscrapers and huge projects.</p>
+  </div>
+
+  <div class="card">
+    <span class="date-range">1979</span>
+    <h3>The Iranian Revolution — A Huge Turning Point</h3>
+    <p>Iran was ruled by <strong>Shah Mohammad Reza Pahlavi</strong>, who was backed by the United States. He tried to modernize Iran quickly with Western ways. But many Iranians felt he was a dictator who ignored poor people and insulted Islam.</p>
+    <p>In 1979, a revolution led by religious leader <strong>Ayatollah Khomeini</strong> overthrew the Shah. Iran became an <strong>Islamic Republic</strong> — the first modern nation run by Shia religious clerics. This was shocking to the world.</p>
+    <p>Later that year, Iranian students took over the US embassy and held 52 Americans hostage for 444 days. This ended US-Iran friendship for decades. The revolution also inspired Islamist movements across the region.</p>
+    <p>In 1980, Iraq's leader <strong>Saddam Hussein</strong> attacked Iran, starting the brutal <strong>Iran–Iraq War</strong> (1980 – 1988). About a million people died. Neither side really won.</p>
+  </div>
+
+  <div class="card">
+    <span class="date-range">1990 – 2003</span>
+    <h3>Gulf Wars and the American Era</h3>
+    <p>In 1990, Saddam Hussein invaded the small oil-rich country of <strong>Kuwait</strong>. The world reacted. A huge coalition led by the United States — including many Arab countries — crushed the Iraqi army in the <strong>First Gulf War</strong> (1991). Kuwait was freed, but Saddam stayed in power.</p>
+    <p>After the terrorist attacks on <strong>September 11, 2001</strong> (done by Al-Qaeda, led by Saudi-born <strong>Osama bin Laden</strong> from his base in Afghanistan), the US launched the "War on Terror." It invaded Afghanistan in 2001 and then <strong>Iraq in 2003</strong>, accusing Saddam of having weapons of mass destruction (which were never found).</p>
+    <p>Saddam was overthrown and later executed. But Iraq fell into chaos. A long insurgency and civil war killed hundreds of thousands. A new extreme group, <strong>ISIS (Islamic State)</strong>, was born from this chaos and briefly controlled large parts of Iraq and Syria in 2014 – 2017 before being defeated.</p>
+  </div>
+</section>
+
+<section id="today" class="reveal">
+  <span class="section-label">Part 7 · The 21st Century</span>
+  <h2 class="section-title">The Middle East Today</h2>
+  <p class="section-intro">The last 15 years have seen revolutions, civil wars, big changes in the Gulf, peace deals, and new conflicts. The region is changing fast, and understanding today's news requires knowing all the history above.</p>
+
+  <div class="card">
+    <span class="date-range">2010 – 2012</span>
+    <h3>The Arab Spring</h3>
+    <p>In December 2010, a young Tunisian named <strong>Mohamed Bouazizi</strong> set himself on fire to protest police harassment. His act sparked huge protests across the Arab world. Young people, tired of corrupt dictators, high unemployment, and lack of freedom, took to the streets — often organized through social media.</p>
+    <p>Dictators fell one by one:</p>
+    <p>• <strong>Tunisia</strong> — President Ben Ali fled in January 2011.<br>
+    • <strong>Egypt</strong> — President Hosni Mubarak resigned after 18 days of huge protests in Cairo's Tahrir Square.<br>
+    • <strong>Libya</strong> — Muammar Gaddafi was killed after a civil war (with NATO help).<br>
+    • <strong>Yemen</strong> — President Saleh stepped down after protests.</p>
+    <p>But the hopes of the Arab Spring mostly faded. Egypt elected a new Islamist president in 2012 but the army took over again in 2013. Libya and Yemen fell into long civil wars. Only Tunisia became a democracy — and even it has struggled.</p>
+  </div>
+
+  <div class="card">
+    <span class="date-range">2011 – present</span>
+    <h3>The Syrian Civil War</h3>
+    <p>In Syria, peaceful protests against President <strong>Bashar al-Assad</strong> in 2011 turned into a horrible civil war. Many groups fought: government forces, rebels, Kurds, ISIS, and others. Russia, Iran, Turkey, the US, and Gulf countries all got involved in different ways.</p>
+    <p>The war killed over 500,000 people and made over 13 million people refugees — one of the biggest refugee crises since World War II. Many fled to Europe, creating political shocks there too.</p>
+    <p>Assad held onto power with Russian and Iranian help. By the mid-2020s, the country was shattered, poor, and still divided. In December 2024, rebels finally broke through and Assad fled to Russia, ending the 54-year rule of the Assad family.</p>
+  </div>
+
+  <div class="card">
+    <span class="date-range">2015 – present</span>
+    <h3>Yemen and Saudi–Iran Rivalry</h3>
+    <p>In 2015, <strong>Houthi</strong> rebels (backed by Iran) took over much of Yemen. Saudi Arabia and its allies started a huge bombing campaign to stop them. The war caused the <strong>worst humanitarian crisis in the world</strong>, with famine, disease, and tens of thousands of deaths.</p>
+    <p>This war is part of a bigger regional rivalry: <strong>Saudi Arabia (Sunni) vs. Iran (Shia)</strong>. They fight through proxies in Yemen, Syria, Lebanon (where Iran supports Hezbollah), and Iraq. However, in 2023, a surprise deal — brokered by China — restored diplomatic ties between them.</p>
+  </div>
+
+  <div class="card">
+    <span class="date-range">2017 – present</span>
+    <h3>Gulf Transformation — A New Vision</h3>
+    <p>In Saudi Arabia, young crown prince <strong>Mohammed bin Salman (MBS)</strong> began huge changes. Women were allowed to drive in 2018. Cinemas reopened. Tourism opened up. He announced <strong>Vision 2030</strong>, a plan to move the economy away from oil.</p>
+    <p>The UAE became a global business and tourism hub. Qatar hosted the <strong>FIFA World Cup in 2022</strong> — the first in the Arab world. Gulf nations invested in AI, sports, space programs, and green energy.</p>
+    <p>In 2020, the <strong>Abraham Accords</strong> saw the UAE, Bahrain, Morocco, and Sudan establish diplomatic ties with Israel — a major shift that would have seemed impossible just years before.</p>
+  </div>
+
+  <div class="card">
+    <span class="date-range">2023 – present</span>
+    <h3>The Israel–Gaza War and Regional Fallout</h3>
+    <p>On <strong>October 7, 2023</strong>, the militant group Hamas attacked Israel from Gaza, killing about 1,200 people and taking over 240 hostages. Israel responded with a massive war in Gaza that killed tens of thousands of Palestinians and devastated the territory. This was the deadliest chapter of the long Israeli–Palestinian conflict.</p>
+    <p>The war pulled in Iran-backed groups: <strong>Hezbollah</strong> in Lebanon traded fire with Israel; the <strong>Houthis</strong> in Yemen attacked ships in the Red Sea; and Iran and Israel even traded direct missile strikes in 2024 — something never seen before. In late 2024, Israel's strong response weakened Hezbollah. Combined with Assad's fall in Syria, the regional balance of power shifted sharply away from Iran.</p>
+    <p>As of 2026, the region is still working through the aftermath: ceasefire deals, reconstruction, changing alliances, and ongoing questions about a Palestinian state, Iran's nuclear program, and what kind of peace might be possible.</p>
+  </div>
+
+  <div class="highlight">
+    The Middle East is not just a place of conflict. It is home to about 500 million people with rich cultures, young populations, growing tech industries, amazing food, music, art, and history. Every day, most people there are simply trying to live, work, and dream — just like everyone else.
+  </div>
+</section>
+
+<section id="takeaways" class="reveal">
+  <span class="section-label">Key Ideas</span>
+  <h2 class="section-title">What to Remember</h2>
+
+  <div class="grid">
+    <div class="mini-card">
+      <div class="icon">1</div>
+      <h4>The First Place</h4>
+      <p>Nearly everything we use today — writing, cities, laws, math, farming — started here over 5,000 years ago.</p>
+    </div>
+    <div class="mini-card">
+      <div class="icon">2</div>
+      <h4>Three Religions, One Land</h4>
+      <p>Judaism, Christianity, and Islam all began here. Jerusalem is holy to all three. This makes the region deeply meaningful to billions.</p>
+    </div>
+    <div class="mini-card">
+      <div class="icon">3</div>
+      <h4>Empires Come and Go</h4>
+      <p>Sumerians, Babylonians, Persians, Greeks, Romans, Arabs, Ottomans — each ruled, built great things, and fell. The cycle shapes the region.</p>
+    </div>
+    <div class="mini-card">
+      <div class="icon">4</div>
+      <h4>Golden Age</h4>
+      <p>From 750 to 1258, the Islamic world was the most advanced on Earth in science, medicine, and thought — Europe learned from it.</p>
+    </div>
+    <div class="mini-card">
+      <div class="icon">5</div>
+      <h4>Modern Borders Are Colonial</h4>
+      <p>Most country borders were drawn by Britain and France after World War I. Many problems today come from those lines.</p>
+    </div>
+    <div class="mini-card">
+      <div class="icon">6</div>
+      <h4>Oil Reshaped Everything</h4>
+      <p>The discovery of oil made poor desert kingdoms into global powers and made the region vital to the world economy.</p>
+    </div>
+    <div class="mini-card">
+      <div class="icon">7</div>
+      <h4>Sunni-Shia Split Still Matters</h4>
+      <p>A 1,400-year-old split in Islam still shapes politics today — especially the Saudi-Iran rivalry.</p>
+    </div>
+    <div class="mini-card">
+      <div class="icon">8</div>
+      <h4>Change Is Constant</h4>
+      <p>From Arab Spring to Abraham Accords, from Assad's fall to Gulf megaprojects, the region changes faster than people think.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Middle East History — A Complete Journey</strong></p>
+  <p>An educational overview crafted for clarity and depth.</p>
+  <p style="margin-top: 1rem; font-size: 0.8rem;">© 2026 · Designed with modern glassmorphism and gradient aesthetics</p>
+</footer>
+
+<script>
+  // Scroll reveal animation
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Smooth parallax effect on hero
+  window.addEventListener('scroll', () => {
+    const scroll = window.scrollY;
+    const hero = document.querySelector('.hero');
+    if (hero && scroll < window.innerHeight) {
+      hero.style.transform = `translateY(${scroll * 0.3}px)`;
+      hero.style.opacity = 1 - (scroll / window.innerHeight) * 0.8;
+    }
+  });
+</script>
+
+</body>
+</html>
