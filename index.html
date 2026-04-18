@@ -3,140 +3,81 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>History & Geopolitics — Library</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>History &amp; Geopolitics — Library</title>
 <style>
   :root {
-    --bg:            #FFFFFF;
-    --bg-muted:      #FAFAFA;
-    --bg-hover:      #F4F4F5;
-    --bg-active:     #EEF2F7;
-    --ink:           #0A0A0A;
-    --ink-soft:      #525252;
-    --ink-muted:     #A3A3A3;
-    --border:        #E5E5E5;
-    --border-strong: #D4D4D4;
-    --accent:        #2563EB;
-    --accent-soft:   #DBEAFE;
-    --danger:        #DC2626;
-    --radius:        8px;
-    --radius-sm:     6px;
-    --sidebar-w:     296px;
-    --header-h:      56px;
-    --shadow:        0 1px 2px rgba(0,0,0,0.04), 0 2px 6px rgba(0,0,0,0.04);
-    --mono:          'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --bg: #ffffff;
+    --bg-soft: #fafafa;
+    --bg-hover: #f0f0f0;
+    --bg-active: #e7efff;
+    --ink: #111;
+    --ink-soft: #555;
+    --ink-muted: #999;
+    --border: #e5e5e5;
+    --accent: #2563eb;
   }
 
   [data-theme="dark"] {
-    --bg:            #0A0A0B;
-    --bg-muted:      #111113;
-    --bg-hover:      #1A1A1D;
-    --bg-active:     #1E2430;
-    --ink:           #F5F5F5;
-    --ink-soft:      #A1A1AA;
-    --ink-muted:     #71717A;
-    --border:        #27272A;
-    --border-strong: #3F3F46;
-    --accent:        #60A5FA;
-    --accent-soft:   #1E3A8A;
-    --shadow:        0 1px 2px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.3);
+    --bg: #0f0f11;
+    --bg-soft: #17171a;
+    --bg-hover: #222227;
+    --bg-active: #1e2a44;
+    --ink: #eee;
+    --ink-soft: #aaa;
+    --ink-muted: #777;
+    --border: #2a2a30;
+    --accent: #7aa9ff;
   }
 
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
   html, body {
     height: 100%;
     overflow: hidden;
-  }
-
-  body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: var(--bg);
-    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
     font-size: 14px;
-    line-height: 1.5;
-    font-feature-settings: "cv11", "ss01";
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    color: var(--ink);
+    background: var(--bg);
   }
 
-  button {
+  button, input {
     font-family: inherit;
     font-size: inherit;
     color: inherit;
     background: none;
-    border: none;
-    cursor: pointer;
+    border: 0;
   }
 
-  input {
-    font-family: inherit;
-    font-size: inherit;
-    color: inherit;
-  }
-
-  /* ====================================================================
-     LAYOUT
-     ==================================================================== */
   .app {
-    display: grid;
-    grid-template-columns: var(--sidebar-w) 1fr;
-    grid-template-rows: 100vh;
-    transition: grid-template-columns 0.25s ease;
+    display: flex;
+    height: 100vh;
+    width: 100vw;
   }
 
-  .app.sidebar-collapsed {
-    grid-template-columns: 0px 1fr;
-  }
-
-  /* ====================================================================
-     SIDEBAR
-     ==================================================================== */
+  /* Sidebar */
   .sidebar {
-    background: var(--bg-muted);
+    width: 280px;
+    flex-shrink: 0;
+    background: var(--bg-soft);
     border-right: 1px solid var(--border);
-    overflow: hidden;
     display: flex;
     flex-direction: column;
-    min-width: 0;
+    overflow: hidden;
   }
 
   .sidebar-header {
-    padding: 18px 20px 14px;
+    padding: 18px 18px 14px;
     border-bottom: 1px solid var(--border);
   }
 
   .brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 14px;
-  }
-
-  .brand-logo {
-    width: 28px;
-    height: 28px;
-    border-radius: 7px;
-    background: linear-gradient(135deg, var(--accent) 0%, #7B5BE8 100%);
-    display: grid;
-    place-items: center;
-    color: white;
-    font-weight: 700;
-    font-size: 14px;
-    letter-spacing: -0.03em;
-    flex-shrink: 0;
-  }
-
-  .brand-text {
     font-weight: 600;
-    font-size: 14px;
-    letter-spacing: -0.01em;
+    font-size: 15px;
+    margin-bottom: 12px;
     line-height: 1.2;
   }
 
-  .brand-text small {
+  .brand small {
     display: block;
     font-weight: 400;
     color: var(--ink-muted);
@@ -145,136 +86,54 @@
   }
 
   .search {
-    position: relative;
-  }
-
-  .search input {
     width: 100%;
+    padding: 7px 10px;
     background: var(--bg);
     border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 8px 12px 8px 34px;
-    font-size: 13px;
-    color: var(--ink);
+    border-radius: 6px;
     outline: none;
-    transition: border-color 0.15s, box-shadow 0.15s;
   }
 
-  .search input::placeholder { color: var(--ink-muted); }
+  .search:focus { border-color: var(--accent); }
 
-  .search input:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-soft);
-  }
-
-  .search-icon {
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--ink-muted);
-    pointer-events: none;
-  }
-
-  .search-kbd {
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--ink-muted);
-    background: var(--bg-muted);
-    border: 1px solid var(--border);
-    padding: 2px 5px;
-    border-radius: 4px;
-    pointer-events: none;
-  }
-
-  /* Nav */
   .nav {
     flex: 1;
     overflow-y: auto;
-    padding: 10px 8px 20px;
-    scrollbar-width: thin;
-    scrollbar-color: var(--border-strong) transparent;
-  }
-
-  .nav::-webkit-scrollbar { width: 6px; }
-  .nav::-webkit-scrollbar-thumb {
-    background: var(--border-strong);
-    border-radius: 3px;
+    padding: 10px 8px 16px;
   }
 
   .cat {
-    margin-top: 10px;
+    margin-top: 14px;
   }
 
-  .cat:first-child { margin-top: 4px; }
+  .cat:first-child { margin-top: 2px; }
 
-  .cat-head {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    width: 100%;
-    padding: 6px 10px;
+  .cat-name {
     font-size: 11px;
     font-weight: 600;
     color: var(--ink-muted);
-    letter-spacing: 0.05em;
     text-transform: uppercase;
-    user-select: none;
-    border-radius: var(--radius-sm);
-    transition: color 0.15s;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    margin-bottom: 4px;
   }
 
-  .cat-head:hover { color: var(--ink-soft); }
-
-  .cat-chevron {
-    transition: transform 0.2s ease;
-    opacity: 0.7;
-  }
-
-  .cat.collapsed .cat-chevron {
-    transform: rotate(-90deg);
-  }
-
-  .cat-body {
-    overflow: hidden;
-    transition: max-height 0.25s ease, opacity 0.2s;
-    max-height: 3000px;
-  }
-
-  .cat.collapsed .cat-body {
-    max-height: 0;
-    opacity: 0;
-  }
-
-  .sub {
-    padding: 4px 0 4px 8px;
-  }
-
-  .sub-title {
+  .sub-name {
     font-size: 11px;
-    font-weight: 500;
-    color: var(--ink-soft);
-    padding: 6px 10px 4px;
-    letter-spacing: 0.01em;
+    color: var(--ink-muted);
+    padding: 6px 10px 2px 14px;
   }
 
   .item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 7px 10px 7px 16px;
-    font-size: 13px;
+    display: block;
+    padding: 7px 12px 7px 16px;
     color: var(--ink-soft);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    position: relative;
-    transition: background 0.12s, color 0.12s;
     text-decoration: none;
+    border-radius: 5px;
+    font-size: 13px;
     line-height: 1.4;
+    margin: 1px 4px;
+    cursor: pointer;
   }
 
   .item:hover {
@@ -288,56 +147,20 @@
     font-weight: 500;
   }
 
-  .item.active::before {
-    content: "";
-    position: absolute;
-    left: 4px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 3px;
-    height: 16px;
-    background: var(--accent);
-    border-radius: 2px;
-  }
-
-  .item-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--ink-muted);
-    flex-shrink: 0;
-    transition: background 0.12s;
-  }
-
-  .item:hover .item-dot { background: var(--ink-soft); }
-  .item.active .item-dot { background: var(--accent); }
-
-  .item-label {
-    flex: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  /* Sidebar footer */
   .sidebar-foot {
     border-top: 1px solid var(--border);
-    padding: 10px 12px;
+    padding: 8px;
     display: flex;
-    gap: 6px;
+    gap: 4px;
   }
 
   .foot-btn {
     flex: 1;
-    padding: 7px 10px;
+    padding: 6px 8px;
     font-size: 12px;
     color: var(--ink-soft);
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    transition: background 0.12s, color 0.12s;
+    border-radius: 5px;
+    cursor: pointer;
   }
 
   .foot-btn:hover {
@@ -345,418 +168,162 @@
     color: var(--ink);
   }
 
-  /* ====================================================================
-     MAIN AREA
-     ==================================================================== */
+  /* Main */
   .main {
-    display: grid;
-    grid-template-rows: var(--header-h) 1fr;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     min-width: 0;
-    overflow: hidden;
+    background: var(--bg);
   }
 
   .topbar {
     display: flex;
     align-items: center;
-    padding: 0 16px;
+    gap: 12px;
+    padding: 10px 16px;
     border-bottom: 1px solid var(--border);
-    background: var(--bg);
-    gap: 10px;
-  }
-
-  .icon-btn {
-    width: 32px;
-    height: 32px;
-    display: grid;
-    place-items: center;
-    border-radius: var(--radius-sm);
-    color: var(--ink-soft);
-    transition: background 0.12s, color 0.12s;
-  }
-
-  .icon-btn:hover {
-    background: var(--bg-hover);
-    color: var(--ink);
+    min-height: 48px;
   }
 
   .crumbs {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    flex: 1;
     font-size: 13px;
     color: var(--ink-soft);
-    flex: 1;
-    min-width: 0;
-    overflow: hidden;
-  }
-
-  .crumb-sep {
-    color: var(--ink-muted);
-    flex-shrink: 0;
-  }
-
-  .crumb-current {
-    color: var(--ink);
-    font-weight: 500;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  .topbar-right {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    flex-shrink: 0;
+  .crumbs .current {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .open-tab-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .open-tab-btn:hover {
+    background: var(--bg-hover);
+    color: var(--ink);
   }
 
   .content {
+    flex: 1;
     position: relative;
-    background: var(--bg);
-    overflow: hidden;
-    min-height: 0;           /* belt-and-braces for grid children */
+    min-height: 0;
   }
 
   .frame {
     width: 100%;
     height: 100%;
-    min-height: calc(100vh - var(--header-h));
     border: 0;
-    background: var(--bg);
     display: block;
+    background: var(--bg);
   }
 
-  /* Thin loading stripe shown while the iframe is fetching content */
-  .loading-bar {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--accent);
-    transform-origin: left;
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-    z-index: 5;
-    pointer-events: none;
-  }
-  .loading-bar.loading { transform: scaleX(0.7); }
-  .loading-bar.done    { transform: scaleX(1); opacity: 0; transition: transform 0.2s ease, opacity 0.3s ease 0.1s; }
-
-  /* ====================================================================
-     WELCOME / EMPTY STATE
-     ==================================================================== */
   .welcome {
     position: absolute;
     inset: 0;
-    display: grid;
-    place-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 40px;
-    overflow-y: auto;
+    overflow: auto;
+    background: var(--bg);
   }
 
   .welcome-inner {
-    max-width: 680px;
-    width: 100%;
+    max-width: 520px;
+    text-align: center;
   }
 
   .welcome h1 {
-    font-size: clamp(28px, 4vw, 44px);
+    font-size: 28px;
     font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    margin-bottom: 14px;
-  }
-
-  .welcome h1 .grad {
-    background: linear-gradient(135deg, var(--accent) 0%, #7B5BE8 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  .welcome-sub {
-    color: var(--ink-soft);
-    font-size: 16px;
-    margin-bottom: 32px;
-    max-width: 540px;
-  }
-
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 12px;
-    margin-bottom: 32px;
-  }
-
-  .stat {
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px;
-    background: var(--bg-muted);
-  }
-
-  .stat-num {
-    font-size: 24px;
-    font-weight: 600;
+    margin-bottom: 10px;
     letter-spacing: -0.02em;
-    color: var(--ink);
-    line-height: 1.1;
   }
 
-  .stat-label {
-    font-size: 12px;
-    color: var(--ink-soft);
-    margin-top: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .recent h3 {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--ink-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 12px;
-  }
-
-  .recent-list {
-    display: grid;
-    gap: 8px;
-  }
-
-  .recent-item {
-    padding: 14px 16px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--bg);
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    cursor: pointer;
-    transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s;
-    text-align: left;
-    width: 100%;
-  }
-
-  .recent-item:hover {
-    border-color: var(--border-strong);
-    box-shadow: var(--shadow);
-  }
-
-  .recent-item:active {
-    transform: translateY(1px);
-  }
-
-  .recent-tag {
-    font-size: 10px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--accent);
-    font-weight: 600;
-    padding: 4px 8px;
-    background: var(--accent-soft);
-    border-radius: 4px;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
-  .recent-body {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .recent-title {
-    font-weight: 500;
-    color: var(--ink);
-    margin-bottom: 4px;
-  }
-
-  .recent-desc {
-    font-size: 13px;
-    color: var(--ink-soft);
-    line-height: 1.45;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-  }
-
-  .help {
-    margin-top: 32px;
-    padding: 16px;
-    border: 1px dashed var(--border-strong);
-    border-radius: var(--radius);
-    font-size: 13px;
+  .welcome p {
     color: var(--ink-soft);
     line-height: 1.6;
+    margin-bottom: 18px;
   }
 
-  .help b { color: var(--ink); font-weight: 600; }
-
-  .help code {
-    font-family: var(--mono);
+  .welcome .hint {
     font-size: 12px;
-    background: var(--bg-muted);
-    border: 1px solid var(--border);
-    padding: 1px 6px;
-    border-radius: 4px;
-    color: var(--ink);
-  }
-
-  /* ====================================================================
-     Empty search state
-     ==================================================================== */
-  .no-results {
-    padding: 24px 16px;
-    text-align: center;
     color: var(--ink-muted);
-    font-size: 13px;
+    background: var(--bg-soft);
+    padding: 12px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    text-align: left;
   }
 
-  /* ====================================================================
-     Mobile
-     ==================================================================== */
-  @media (max-width: 860px) {
-    .app {
-      grid-template-columns: 0 1fr;
-    }
-    .app.sidebar-open {
-      grid-template-columns: 100vw 0;
-    }
-    .sidebar {
-      position: fixed;
-      top: 0; left: 0; bottom: 0;
-      width: min(320px, 90vw);
-      z-index: 40;
-      transform: translateX(-105%);
-      transition: transform 0.25s ease;
-      border-right: 1px solid var(--border);
-    }
-    .app.sidebar-open .sidebar {
-      transform: translateX(0);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-    }
-    .backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.4);
-      z-index: 30;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s;
-    }
-    .app.sidebar-open .backdrop {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .main {
-      grid-column: 1 / -1;
-    }
+  .no-results {
+    padding: 20px 10px;
+    color: var(--ink-muted);
+    text-align: center;
+    font-size: 13px;
   }
 </style>
 </head>
 <body data-theme="light">
 
-<div class="app" id="app">
-  <aside class="sidebar" id="sidebar">
+<div class="app">
+  <aside class="sidebar">
     <div class="sidebar-header">
       <div class="brand">
-        <div class="brand-logo">H</div>
-        <div class="brand-text">
-          History &amp; Geopolitics
-          <small>Personal library · 2026</small>
-        </div>
+        History &amp; Geopolitics
+        <small>Personal library · 2026</small>
       </div>
-      <div class="search">
-        <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        <input id="search" type="text" placeholder="Search library…" autocomplete="off" spellcheck="false" />
-        <span class="search-kbd">/</span>
-      </div>
+      <input class="search" id="search" type="text" placeholder="Search library…" autocomplete="off" />
     </div>
-
     <nav class="nav" id="nav"></nav>
-
     <div class="sidebar-foot">
-      <button class="foot-btn" id="rescanBtn" title="Rescan folder using your browser's file picker (Chrome/Edge)">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
-        Rescan
-      </button>
-      <button class="foot-btn" id="themeBtn" title="Toggle light / dark">
-        <svg id="themeIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-        <span id="themeLabel">Dark</span>
-      </button>
+      <button class="foot-btn" id="rescanBtn" title="Rescan folder (Chrome/Edge)">↻ Rescan</button>
+      <button class="foot-btn" id="themeBtn" title="Toggle light/dark">◐ <span id="themeLabel">Dark</span></button>
     </div>
   </aside>
 
-  <div class="backdrop" id="backdrop"></div>
-
   <main class="main">
-    <header class="topbar">
-      <button class="icon-btn" id="menuBtn" aria-label="Toggle sidebar" title="Toggle sidebar (more reading room)">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="9" y1="4" x2="9" y2="20"/></svg>
-      </button>
-      <div class="crumbs" id="crumbs">
-        <span class="crumb-current">Welcome</span>
-      </div>
-      <div class="topbar-right">
-        <button class="icon-btn" id="openNewTab" title="Open current in new tab" style="display:none">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </button>
-      </div>
-    </header>
-
-    <section class="content" id="content">
-      <!-- Welcome screen -->
+    <div class="topbar">
+      <div class="crumbs" id="crumbs"><span class="current">Welcome</span></div>
+      <a class="open-tab-btn" id="openTab" href="#" target="_blank" style="display:none">Open in new tab ↗</a>
+    </div>
+    <div class="content">
+      <iframe class="frame" id="frame" name="reader" title="Content" allow="fullscreen"></iframe>
       <div class="welcome" id="welcome">
         <div class="welcome-inner">
-          <h1>Your <span class="grad">history library</span>, one quiet place.</h1>
-          <p class="welcome-sub">Every HTML essay, book, and timeline you add to this folder shows up in the sidebar. Pick one on the left to start reading.</p>
-
-          <div class="stats" id="stats"></div>
-
-          <div class="recent">
-            <h3>Recently added</h3>
-            <div class="recent-list" id="recentList"></div>
-          </div>
-
-          <div class="help">
-            <b>Adding a new piece?</b> Drop your <code>.html</code> file in this folder and include these tags in its <code>&lt;head&gt;</code>:<br/>
-            <code>&lt;meta name="category" content="War"&gt;</code><br/>
-            <code>&lt;meta name="subcategory" content="WWII"&gt;</code><br/>
-            <code>&lt;meta name="nav-title" content="The Second World War"&gt;</code><br/>
-            Then either click <b>Rescan</b> below (Chrome/Edge) or run <code>python3 regenerate.py</code> in this folder.
+          <h1>Your history library</h1>
+          <p>Pick a piece from the menu on the left to start reading. The sidebar stays open while you read.</p>
+          <div class="hint">
+            <b>Trouble seeing content?</b> Open this page via a local server:<br/>
+            <code>python3 -m http.server 8000</code> → then visit <code>http://localhost:8000</code>.
+            Browsers sometimes block iframes when opening files directly.
           </div>
         </div>
       </div>
-      <div class="loading-bar" id="loadingBar"></div>
-      <iframe class="frame" id="frame" style="display:none" title="Content"
-              allow="fullscreen" loading="eager"></iframe>
-      <!-- Shown if the iframe never fires onload (CSP, network, etc.) -->
-      <div id="errorPanel" style="display:none;position:absolute;inset:0;padding:40px;background:var(--bg);overflow:auto">
-        <div style="max-width:560px;margin:40px auto">
-          <h2 style="font-size:22px;margin-bottom:12px;font-weight:600;letter-spacing:-0.02em">Couldn't load that piece</h2>
-          <p id="errorMsg" style="color:var(--ink-soft);margin-bottom:20px">The embedded reader didn't finish loading.</p>
-          <p style="margin-bottom:16px"><a id="errorLink" href="#" target="_blank" style="color:var(--accent);text-decoration:none;font-weight:500">Open in a new tab ↗</a></p>
-          <div class="help" style="margin-top:24px">
-            <b>Try this:</b><br/>
-            • Hard-refresh the page (<code>Cmd/Ctrl + Shift + R</code>).<br/>
-            • Open the browser console (F12 → Console) and share any red errors.<br/>
-            • Confirm the file exists next to <code>index.html</code>.
-          </div>
-        </div>
-      </div>
-    </section>
+    </div>
   </main>
 </div>
 
 <script>
 // ======================================================================
 // EMBEDDED MANIFEST — regenerate.py rewrites the block between the markers.
-// Do not hand-edit between the markers unless you know what you're doing.
 // ======================================================================
 // MANIFEST_START
 window.__MANIFEST__ = {
-  "generated": "2026-04-18T04:50:52Z",
+  "generated": "2026-04-18T06:26:43Z",
   "categories": [
     {
       "name": "Middle East",
@@ -768,6 +335,12 @@ window.__MANIFEST__ = {
               "title": "The Story of Israel",
               "file": "Israel_Book_Easy.html",
               "description": "A plain-English history of Israel in 15 short chapters — from ancient times through October 7, 2023.",
+              "added": "2026-04-18"
+            },
+            {
+              "title": "Benjamin Netanyahu — A Simple Story",
+              "file": "Netanyahu_Easy.html",
+              "description": "The life of Israel's longest-serving prime minister, told in plain English.",
               "added": "2026-04-18"
             }
           ]
@@ -782,70 +355,26 @@ window.__MANIFEST__ = {
 // APP
 // ======================================================================
 (function () {
-  const $ = (sel, root = document) => root.querySelector(sel);
-  const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+  const $  = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
   const state = {
     manifest: window.__MANIFEST__,
     currentFile: null,
     query: "",
-    collapsed: new Set(JSON.parse(localStorage.getItem("hub.collapsed") || "[]")),
   };
 
   // ---- Theme ----
   const savedTheme = localStorage.getItem("hub.theme") || "light";
   document.body.setAttribute("data-theme", savedTheme);
-  updateThemeLabel(savedTheme);
+  $("#themeLabel").textContent = savedTheme === "dark" ? "Light" : "Dark";
 
   $("#themeBtn").addEventListener("click", () => {
     const cur = document.body.getAttribute("data-theme");
     const next = cur === "dark" ? "light" : "dark";
     document.body.setAttribute("data-theme", next);
     localStorage.setItem("hub.theme", next);
-    updateThemeLabel(next);
-  });
-
-  function updateThemeLabel(theme) {
-    $("#themeLabel").textContent = theme === "dark" ? "Light" : "Dark";
-  }
-
-  // ---- Sidebar toggle (mobile = overlay, desktop = collapse-to-zero) ----
-  const app = $("#app");
-  const MOBILE_MAX = 860;
-
-  // Restore collapsed state on desktop
-  if (localStorage.getItem("hub.sidebarCollapsed") === "1" && window.innerWidth > MOBILE_MAX) {
-    app.classList.add("sidebar-collapsed");
-  }
-
-  $("#menuBtn").addEventListener("click", () => {
-    if (window.innerWidth <= MOBILE_MAX) {
-      app.classList.toggle("sidebar-open");
-    } else {
-      app.classList.toggle("sidebar-collapsed");
-      localStorage.setItem(
-        "hub.sidebarCollapsed",
-        app.classList.contains("sidebar-collapsed") ? "1" : "0"
-      );
-    }
-  });
-  $("#backdrop").addEventListener("click", () => app.classList.remove("sidebar-open"));
-
-  // Keep state sane when the window crosses the mobile breakpoint
-  window.addEventListener("resize", () => {
-    if (window.innerWidth <= MOBILE_MAX) {
-      app.classList.remove("sidebar-collapsed");
-    } else {
-      app.classList.remove("sidebar-open");
-    }
-  });
-
-  // ---- Rescan ----
-  $("#rescanBtn").addEventListener("click", rescanFolder);
-
-  // ---- Open in new tab ----
-  $("#openNewTab").addEventListener("click", () => {
-    if (state.currentFile) window.open(state.currentFile, "_blank");
+    $("#themeLabel").textContent = next === "dark" ? "Light" : "Dark";
   });
 
   // ---- Search ----
@@ -854,8 +383,6 @@ window.__MANIFEST__ = {
     state.query = e.target.value.trim().toLowerCase();
     renderNav();
   });
-
-  // "/" focuses the search field
   document.addEventListener("keydown", (e) => {
     if (e.key === "/" && document.activeElement !== searchInput &&
         !/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) {
@@ -864,203 +391,103 @@ window.__MANIFEST__ = {
       searchInput.select();
     }
     if (e.key === "Escape" && document.activeElement === searchInput) {
-      searchInput.blur();
       searchInput.value = "";
       state.query = "";
       renderNav();
+      searchInput.blur();
     }
   });
 
-  // ---- Render nav ----
+  // ---- Rescan ----
+  $("#rescanBtn").addEventListener("click", rescanFolder);
+
+  // ---- Navigation list ----
   function renderNav() {
     const nav = $("#nav");
     const q = state.query;
-    const cats = state.manifest.categories || [];
+    const cats = (state.manifest.categories || []).map(cat => ({
+      ...cat,
+      subcategories: (cat.subcategories || []).map(sub => ({
+        ...sub,
+        items: (sub.items || []).filter(it => {
+          if (!q) return true;
+          const hay = [it.title, it.description, cat.name, sub.name, it.file]
+            .filter(Boolean).join(" ").toLowerCase();
+          return hay.includes(q);
+        })
+      })).filter(sub => sub.items.length > 0)
+    })).filter(cat => cat.subcategories.length > 0);
 
-    // Filter by query
-    const filtered = cats
-      .map(cat => ({
-        ...cat,
-        subcategories: (cat.subcategories || [])
-          .map(sub => ({
-            ...sub,
-            items: (sub.items || []).filter(it => matchQuery(it, cat.name, sub.name, q))
-          }))
-          .filter(sub => sub.items.length > 0)
-      }))
-      .filter(cat => cat.subcategories.length > 0);
-
-    if (filtered.length === 0) {
-      nav.innerHTML = `<div class="no-results">No results for "${escapeHtml(q)}"</div>`;
+    if (!cats.length) {
+      nav.innerHTML = `<div class="no-results">No results${q ? ` for "${esc(q)}"` : ""}</div>`;
       return;
     }
 
-    nav.innerHTML = filtered.map(cat => {
-      const isCollapsed = !q && state.collapsed.has(cat.name);
-      const subsHtml = cat.subcategories.map(sub => {
-        const hasSubName = sub.name && sub.name !== "_default";
-        const itemsHtml = sub.items.map(it => {
-          const active = state.currentFile === it.file ? " active" : "";
-          return `<a class="item${active}" href="#${encodeURIComponent(it.file)}" data-file="${escapeAttr(it.file)}" title="${escapeAttr(it.description || it.title)}">
-                    <span class="item-dot"></span>
-                    <span class="item-label">${escapeHtml(it.title)}</span>
-                  </a>`;
-        }).join("");
-        return `
-          <div class="sub">
-            ${hasSubName ? `<div class="sub-title">${escapeHtml(sub.name)}</div>` : ""}
-            ${itemsHtml}
-          </div>`;
-      }).join("");
-
-      return `
-        <div class="cat${isCollapsed ? " collapsed" : ""}" data-cat="${escapeAttr(cat.name)}">
-          <button class="cat-head" data-toggle>
-            <svg class="cat-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            <span>${escapeHtml(cat.name)}</span>
-          </button>
-          <div class="cat-body">${subsHtml}</div>
-        </div>`;
-    }).join("");
-
-    // Bind events
-    $$(".cat-head", nav).forEach(btn => {
-      btn.addEventListener("click", () => {
-        const cat = btn.closest(".cat");
-        const name = cat.dataset.cat;
-        cat.classList.toggle("collapsed");
-        if (cat.classList.contains("collapsed")) state.collapsed.add(name);
-        else state.collapsed.delete(name);
-        localStorage.setItem("hub.collapsed", JSON.stringify([...state.collapsed]));
-      });
-    });
+    nav.innerHTML = cats.map(cat => `
+      <div class="cat">
+        <div class="cat-name">${esc(cat.name)}</div>
+        ${cat.subcategories.map(sub => `
+          ${sub.name && sub.name !== "_default" ? `<div class="sub-name">${esc(sub.name)}</div>` : ""}
+          ${sub.items.map(it => `
+            <a class="item${state.currentFile === it.file ? " active" : ""}"
+               href="${esc(it.file)}"
+               data-file="${esc(it.file)}"
+               title="${esc(it.description || it.title)}">${esc(it.title)}</a>
+          `).join("")}
+        `).join("")}
+      </div>
+    `).join("");
 
     $$(".item", nav).forEach(a => {
       a.addEventListener("click", (e) => {
+        if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
         e.preventDefault();
-        open(a.dataset.file);
-        if (window.innerWidth <= 860) app.classList.remove("sidebar-open");
+        openFile(a.dataset.file);
       });
     });
   }
 
-  function matchQuery(item, catName, subName, q) {
-    if (!q) return true;
-    const hay = [item.title, item.description, catName, subName, item.file]
-      .filter(Boolean).join(" ").toLowerCase();
-    return hay.includes(q);
-  }
-
-  // ---- Welcome screen ----
-  function renderWelcome() {
-    const cats = state.manifest.categories || [];
-    let total = 0;
-    const allItems = [];
-    for (const c of cats) for (const s of (c.subcategories || [])) for (const it of (s.items || [])) {
-      total++;
-      allItems.push({ ...it, category: c.name, subcategory: s.name });
-    }
-
-    const stats = $("#stats");
-    stats.innerHTML = `
-      <div class="stat"><div class="stat-num">${total}</div><div class="stat-label">Pieces</div></div>
-      <div class="stat"><div class="stat-num">${cats.length}</div><div class="stat-label">Categories</div></div>
-      <div class="stat"><div class="stat-num">${cats.reduce((a, c) => a + (c.subcategories || []).length, 0)}</div><div class="stat-label">Sections</div></div>
-    `;
-
-    const recent = allItems
-      .slice()
-      .sort((a, b) => (b.added || "").localeCompare(a.added || ""))
-      .slice(0, 6);
-
-    $("#recentList").innerHTML = recent.map(it => `
-      <button class="recent-item" data-file="${escapeAttr(it.file)}">
-        <span class="recent-tag">${escapeHtml(it.category)}</span>
-        <div class="recent-body">
-          <div class="recent-title">${escapeHtml(it.title)}</div>
-          <div class="recent-desc">${escapeHtml(it.description || "")}</div>
-        </div>
-      </button>
-    `).join("") || `<div class="no-results" style="text-align:left;padding:0">No content yet. Add an HTML file and rescan.</div>`;
-
-    $$(".recent-item").forEach(b => {
-      b.addEventListener("click", () => open(b.dataset.file));
-    });
-  }
-
-  // ---- Open an item ----
-  // We fetch the HTML ourselves and hand it to the iframe via srcdoc. This
-  // gives us real error messages and avoids mysterious blank iframes.
-  async function open(file) {
-    console.log("[hub] opening:", file);
+  // ---- Open a file in the reader iframe ----
+  function openFile(file) {
+    console.log("[hub] open:", file);
     state.currentFile = file;
     const meta = findMeta(file);
 
     $("#welcome").style.display = "none";
-    $("#errorPanel").style.display = "none";
-    const frame = $("#frame");
-    frame.style.display = "block";
-    const bar = $("#loadingBar");
-    bar.classList.remove("done");
-    bar.classList.add("loading");
-
-    const abs = new URL(file, location.href).href;
-    console.log("[hub] fetching →", abs);
-    $("#errorLink").href = abs;
-    $("#openNewTab").style.display = "grid";
-
-    frame.onload = () => {
-      console.log("[hub] iframe rendered");
-      bar.classList.remove("loading");
-      bar.classList.add("done");
-    };
-
-    let html;
-    try {
-      const res = await fetch(abs, { cache: "no-cache" });
-      console.log("[hub] fetch status:", res.status);
-      if (!res.ok) throw new Error("HTTP " + res.status + " " + res.statusText);
-      html = await res.text();
-      console.log("[hub] fetched " + html.length + " bytes");
-    } catch (err) {
-      console.error("[hub] fetch failed:", err);
-      bar.classList.remove("loading");
-      $("#errorMsg").textContent =
-        `Couldn't load "${file}": ${err.message || err}. Open it in a new tab to inspect.`;
-      $("#errorPanel").style.display = "block";
-      return;
-    }
-
-    // Inject reveal-animation override + a <base> tag so relative URLs inside
-    // the book resolve against its real location, not the srcdoc about:blank.
-    const baseTag = `<base href="${abs}">`;
-    const revealFix =
-      `<style>.reveal{opacity:1!important;transform:none!important;transition:none!important}</style>`;
-    let doctored;
-    if (/<head[^>]*>/i.test(html)) {
-      doctored = html.replace(/<head([^>]*)>/i, `<head$1>${baseTag}${revealFix}`);
-    } else {
-      doctored = `<head>${baseTag}${revealFix}</head>` + html;
-    }
-
-    frame.srcdoc = doctored;
+    $("#frame").src = file;
 
     // Crumbs
     const crumbs = $("#crumbs");
     if (meta) {
-      crumbs.innerHTML = `
-        <span>${escapeHtml(meta.category)}</span>
-        <svg class="crumb-sep" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-        ${meta.subcategory && meta.subcategory !== "_default" ? `<span>${escapeHtml(meta.subcategory)}</span>
-          <svg class="crumb-sep" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>` : ""}
-        <span class="crumb-current">${escapeHtml(meta.title)}</span>`;
+      const parts = [meta.category];
+      if (meta.subcategory && meta.subcategory !== "_default") parts.push(meta.subcategory);
+      crumbs.innerHTML = parts.map(p => `<span>${esc(p)}</span>`).join(" / ") +
+        ` / <span class="current">${esc(meta.title)}</span>`;
     } else {
-      crumbs.innerHTML = `<span class="crumb-current">${escapeHtml(file)}</span>`;
+      crumbs.innerHTML = `<span class="current">${esc(file)}</span>`;
     }
 
-    location.hash = encodeURIComponent(file);
-    renderNav();
+    // Fallback "open in new tab" link
+    const openTab = $("#openTab");
+    openTab.href = file;
+    openTab.style.display = "inline-block";
+
+    // Active highlight
+    $$(".item").forEach(a => a.classList.toggle("active", a.dataset.file === file));
   }
+
+  // Log when the iframe finishes loading, and force-reveal any hidden
+  // elements inside (same-origin only; cross-origin is silently skipped and
+  // the book has its own safety net anyway).
+  $("#frame").addEventListener("load", () => {
+    console.log("[hub] iframe loaded:", $("#frame").src);
+    try {
+      const doc = $("#frame").contentDocument;
+      if (doc) {
+        doc.querySelectorAll(".reveal").forEach(el => el.classList.add("in"));
+      }
+    } catch (e) { /* cross-origin — ignore */ }
+  });
 
   function findMeta(file) {
     for (const c of (state.manifest.categories || []))
@@ -1070,10 +497,10 @@ window.__MANIFEST__ = {
     return null;
   }
 
-  // ---- Rescan via File System Access API ----
+  // ---- Rescan via File System Access API (Chrome/Edge) ----
   async function rescanFolder() {
     if (!window.showDirectoryPicker) {
-      alert("Your browser can't pick folders directly. Run this instead:\n\n  python3 regenerate.py\n\nThen reload this page.");
+      alert("Your browser can't pick folders directly. Run:\n\n  python3 regenerate.py\n\nThen reload.");
       return;
     }
     try {
@@ -1081,8 +508,7 @@ window.__MANIFEST__ = {
       const manifest = await scanDirectory(dir);
       state.manifest = manifest;
       renderNav();
-      renderWelcome();
-      alert(`Found ${countItems(manifest)} HTML piece(s) across ${manifest.categories.length} categor${manifest.categories.length === 1 ? "y" : "ies"}.\n\nNote: to make this permanent, save it using regenerate.py.`);
+      alert(`Found ${countItems(manifest)} piece(s). Run regenerate.py to save permanently.`);
     } catch (e) {
       if (e.name !== "AbortError") console.error(e);
     }
@@ -1096,24 +522,22 @@ window.__MANIFEST__ = {
       if (entry.name.toLowerCase() === "index.html") continue;
       const file = await entry.getFile();
       const text = await file.text();
-      const meta = parseMeta(text, entry.name);
-      items.push(meta);
+      items.push(parseMeta(text, entry.name));
     }
-    // Group
     const catMap = new Map();
     for (const it of items) {
       if (!catMap.has(it.category)) catMap.set(it.category, new Map());
-      const subMap = catMap.get(it.category);
-      if (!subMap.has(it.subcategory)) subMap.set(it.subcategory, []);
-      subMap.get(it.subcategory).push({
-        title: it.title, file: it.file, description: it.description, added: it.added
-      });
+      const sm = catMap.get(it.category);
+      if (!sm.has(it.subcategory)) sm.set(it.subcategory, []);
+      sm.get(it.subcategory).push({ title: it.title, file: it.file, description: it.description, added: it.added });
     }
-    const categories = [...catMap.entries()].map(([name, subMap]) => ({
-      name,
-      subcategories: [...subMap.entries()].map(([sn, items]) => ({ name: sn, items }))
-    }));
-    return { generated: new Date().toISOString(), categories };
+    return {
+      generated: new Date().toISOString(),
+      categories: [...catMap.entries()].map(([name, sm]) => ({
+        name,
+        subcategories: [...sm.entries()].map(([n, items]) => ({ name: n, items }))
+      }))
+    };
   }
 
   function parseMeta(html, filename) {
@@ -1139,22 +563,19 @@ window.__MANIFEST__ = {
     return n;
   }
 
-  // ---- Helpers ----
-  function escapeHtml(s) {
-    return String(s || "").replace(/[&<>"']/g, ch => ({
-      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-    })[ch]);
+  function esc(s) {
+    return String(s || "").replace(/[&<>"']/g, ch =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch])
+    );
   }
-  function escapeAttr(s) { return escapeHtml(s); }
 
   // ---- Init ----
   renderNav();
-  renderWelcome();
 
-  // Load from hash
+  // Deep link support: index.html#Israel_Book_Easy.html
   if (location.hash) {
     const file = decodeURIComponent(location.hash.slice(1));
-    if (findMeta(file)) open(file);
+    if (findMeta(file)) openFile(file);
   }
 })();
 </script>

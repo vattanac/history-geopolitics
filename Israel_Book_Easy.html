@@ -914,6 +914,19 @@
     });
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Safety net: reveal anything already in view on load, and force-reveal
+  // everything after 1.2s so chapters are never stuck invisible (e.g. when
+  // the book is loaded inside an iframe and the observer is jittery).
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.reveal').forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('in');
+    });
+  });
+  setTimeout(() => {
+    document.querySelectorAll('.reveal:not(.in)').forEach(el => el.classList.add('in'));
+  }, 1200);
 </script>
 </body>
 </html>

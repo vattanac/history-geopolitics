@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Benjamin Netanyahu — A Simple Story</title>
+
+<!-- Library meta tags -->
+<meta name="category"        content="Middle East" />
+<meta name="subcategory"     content="Israel & Palestine" />
+<meta name="nav-title"       content="Benjamin Netanyahu — A Simple Story" />
+<meta name="nav-description" content="The life of Israel's longest-serving prime minister, told in plain English." />
+<meta name="nav-added"       content="2026-04-18" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg: #F4F1EA;
+    --bg-soft: #EAE5DA;
+    --ink: #141414;
+    --ink-soft: #555;
+    --ink-muted: #8a8a8a;
+    --accent: #1F3B6E;
+    --accent-2: #C98B3C;
+    --card: rgba(255, 255, 255, 0.62);
+    --border: rgba(0, 0, 0, 0.08);
+    --glow: rgba(31, 59, 110, 0.14);
+  }
+
+  [data-theme="dark"] {
+    --bg: #0C0D10;
+    --bg-soft: #15161A;
+    --ink: #F4F1EA;
+    --ink-soft: #A8A39A;
+    --ink-muted: #6b6a66;
+    --accent: #8CB3FF;
+    --accent-2: #EABF7A;
+    --card: rgba(255, 255, 255, 0.04);
+    --border: rgba(255, 255, 255, 0.08);
+    --glow: rgba(140, 179, 255, 0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 17px;
+    transition: background 0.6s ease, color 0.6s ease;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 90% 55% at 10% -10%, var(--glow), transparent),
+      radial-gradient(ellipse 70% 45% at 100% 100%, var(--glow), transparent);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* Progress bar */
+  .progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    width: 0%;
+    z-index: 100;
+    transition: width 0.1s linear;
+  }
+
+  /* Top nav chips */
+  nav.top {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    display: flex;
+    gap: 8px;
+    z-index: 50;
+  }
+
+  .chip {
+    background: var(--card);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    color: var(--ink);
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .chip:hover {
+    transform: translateY(-1px);
+    background: var(--bg-soft);
+    box-shadow: 0 8px 24px var(--glow);
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px clamp(24px, 6vw, 96px);
+    max-width: 1180px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 28px;
+    font-weight: 500;
+  }
+
+  .eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+    vertical-align: middle;
+    margin-right: 12px;
+  }
+
+  h1.title {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: clamp(44px, 8.5vw, 108px);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+  }
+
+  h1.title .accent {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .subtitle {
+    font-size: clamp(18px, 2vw, 22px);
+    color: var(--ink-soft);
+    max-width: 640px;
+    line-height: 1.5;
+    margin-bottom: 48px;
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--ink-soft);
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    max-width: 640px;
+  }
+
+  .meta-row span strong {
+    color: var(--ink);
+    display: block;
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+
+  /* Quick facts card */
+  .fact-card {
+    margin-top: 56px;
+    max-width: 640px;
+    background: var(--card);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 28px 32px;
+  }
+
+  .fact-title {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .fact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px 24px;
+  }
+
+  .fact-grid dt {
+    font-size: 12px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 2px;
+  }
+  .fact-grid dd { font-weight: 500; font-size: 15px; }
+
+  /* TOC */
+  .toc {
+    max-width: 1180px;
+    margin: 120px auto;
+    padding: 0 clamp(24px, 5vw, 64px);
+  }
+
+  .section-label {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 32px;
+    color: var(--ink);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+  }
+
+  .section-label::before {
+    content: "";
+    flex: 1;
+    max-width: 48px;
+    height: 1px;
+    background: var(--ink-soft);
+  }
+
+  .toc-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2px;
+    background: var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .toc-item {
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: 22px 28px;
+    background: var(--bg);
+    color: var(--ink);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .toc-item:hover {
+    background: var(--bg-soft);
+    padding-left: 34px;
+  }
+
+  .toc-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 28px;
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .toc-title { font-weight: 500; font-size: 16px; }
+
+  .toc-sub {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+    font-weight: 400;
+  }
+
+  .toc-arrow {
+    color: var(--ink-soft);
+    font-size: 18px;
+    transition: transform 0.2s;
+  }
+
+  .toc-item:hover .toc-arrow {
+    transform: translateX(4px);
+    color: var(--accent);
+  }
+
+  /* Chapter */
+  .chapter {
+    max-width: 820px;
+    margin: 120px auto;
+    padding: 0 clamp(24px, 5vw, 48px);
+    scroll-margin-top: 40px;
+  }
+
+  .chapter-header {
+    margin-bottom: 56px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .chapter-num {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  h2.chapter-title {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: clamp(36px, 5vw, 54px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+
+  h2.chapter-title em { color: var(--accent); }
+
+  .chapter-intro {
+    font-size: 19px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    max-width: 620px;
+  }
+
+  .chapter p { margin-bottom: 22px; color: var(--ink); }
+  .chapter p + p { margin-top: 0; }
+
+  .dropcap::first-letter {
+    font-family: 'Instrument Serif', serif;
+    font-size: 64px;
+    float: left;
+    line-height: 1;
+    padding: 6px 14px 0 0;
+    color: var(--accent);
+  }
+
+  h3 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 28px;
+    margin: 48px 0 16px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  /* Callout */
+  .callout {
+    background: var(--card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 32px;
+    margin: 32px 0;
+    position: relative;
+  }
+
+  .callout::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 24px;
+    width: 48px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 0 0 4px 4px;
+  }
+
+  .callout-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .callout p { margin-bottom: 0; font-size: 16px; }
+
+  /* Word box */
+  .words {
+    background: linear-gradient(135deg, var(--bg-soft), transparent);
+    border-left: 3px solid var(--accent-2);
+    padding: 20px 24px;
+    border-radius: 0 14px 14px 0;
+    margin: 32px 0;
+  }
+
+  .words-title {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--accent-2);
+    margin-bottom: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .words dl { font-size: 15px; }
+  .words dt { font-weight: 600; color: var(--ink); display: inline; }
+  .words dd {
+    display: inline;
+    color: var(--ink-soft);
+    margin-left: 6px;
+  }
+  .words dd::after { content: ""; display: block; margin-bottom: 8px; }
+
+  /* Pull quote */
+  .pull {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(24px, 3vw, 34px);
+    line-height: 1.3;
+    color: var(--ink);
+    margin: 48px 0;
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .pull cite {
+    display: block;
+    margin-top: 16px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-size: 13px;
+    color: var(--ink-soft);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* Timeline row */
+  .timeline {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding: 12px 0 24px;
+    margin: 32px -16px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .timeline::-webkit-scrollbar { height: 4px; }
+  .timeline::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .t-card {
+    min-width: 240px;
+    background: var(--card);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+
+  .t-year {
+    font-family: 'Instrument Serif', serif;
+    font-size: 26px;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .t-card p { font-size: 14px; margin: 0; color: var(--ink-soft); }
+
+  /* Chapter nav bottom */
+  .chapter-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    gap: 16px;
+  }
+
+  .nav-link {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.2s;
+    background: var(--card);
+  }
+
+  .nav-link:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .nav-link.prev { text-align: left; }
+  .nav-link.next { text-align: right; }
+
+  .nav-link small {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+  }
+
+  .nav-link span {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 80px 32px 48px;
+    color: var(--ink-soft);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+    margin-top: 80px;
+  }
+
+  footer .mark {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 28px;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    nav.top { top: 12px; right: 12px; }
+    .chip { padding: 8px 12px; font-size: 12px; }
+    .hero { padding: 120px 24px 60px; }
+    .toc-item { grid-template-columns: 44px 1fr auto; padding: 18px 20px; gap: 14px; }
+    .toc-num { font-size: 22px; }
+    .chapter { padding: 0 24px; }
+    .chapter-nav { flex-direction: column; }
+  }
+
+  /* Reveal animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: none;
+  }
+</style>
+</head>
+<body data-theme="light">
+
+<div class="progress" id="progress"></div>
+
+<nav class="top">
+  <a href="#toc" class="chip">Contents</a>
+  <button class="chip" id="themeBtn" aria-label="Toggle theme">
+    <span id="themeIcon">◐</span> <span id="themeText">Dark</span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="eyebrow reveal">A Simple Life Story · 2026 Edition</div>
+  <h1 class="title reveal">Benjamin <span class="accent">Netanyahu</span>,<br/>told in easy words.</h1>
+  <p class="subtitle reveal">He has been Israel's prime minister longer than anyone else. This is the short, plain-English story of his life — from a boy who grew up between two countries to the man still leading Israel in 2026.</p>
+  <div class="meta-row reveal">
+    <span><strong>Chapters</strong> 12 short parts</span>
+    <span><strong>Reading time</strong> About 25 minutes</span>
+    <span><strong>Level</strong> Easy for everyone</span>
+  </div>
+
+  <div class="fact-card reveal">
+    <div class="fact-title">Quick facts</div>
+    <dl class="fact-grid">
+      <div><dt>Born</dt><dd>October 21, 1949 · Tel Aviv</dd></div>
+      <div><dt>Nickname</dt><dd>"Bibi"</dd></div>
+      <div><dt>Party</dt><dd>Likud (right-wing)</dd></div>
+      <div><dt>First PM term</dt><dd>1996 – 1999</dd></div>
+      <div><dt>Longest run</dt><dd>2009 – 2021</dd></div>
+      <div><dt>Back again</dt><dd>Since Dec 2022</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- TOC -->
+<section class="toc" id="toc">
+  <div class="section-label reveal">Chapters</div>
+  <div class="toc-grid reveal">
+    <a href="#c1"  class="toc-item"><div class="toc-num">01</div><div><div class="toc-title">A Boy in Two Worlds</div><div class="toc-sub">Born in Israel, growing up in America</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c2"  class="toc-item"><div class="toc-num">02</div><div><div class="toc-title">The Army Years</div><div class="toc-sub">A young commando in a famous unit</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c3"  class="toc-item"><div class="toc-num">03</div><div><div class="toc-title">A Brother Named Yoni</div><div class="toc-sub">The raid at Entebbe</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c4"  class="toc-item"><div class="toc-num">04</div><div><div class="toc-title">First Steps in Politics</div><div class="toc-sub">From TV to the United Nations</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c5"  class="toc-item"><div class="toc-num">05</div><div><div class="toc-title">Prime Minister at Last</div><div class="toc-sub">The first time, 1996</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c6"  class="toc-item"><div class="toc-num">06</div><div><div class="toc-title">Out, and Back Again</div><div class="toc-sub">A long wait, a big comeback</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c7"  class="toc-item"><div class="toc-num">07</div><div><div class="toc-title">The Long Run</div><div class="toc-sub">2009 to 2021 — twelve years on top</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c8"  class="toc-item"><div class="toc-num">08</div><div><div class="toc-title">Money, Gifts, and Court</div><div class="toc-sub">The corruption trials</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c9"  class="toc-item"><div class="toc-num">09</div><div><div class="toc-title">A New Deal with Arab Neighbors</div><div class="toc-sub">The Abraham Accords</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c10" class="toc-item"><div class="toc-num">10</div><div><div class="toc-title">October 7, 2023</div><div class="toc-sub">The worst day</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c11" class="toc-item"><div class="toc-num">11</div><div><div class="toc-title">War, and More War</div><div class="toc-sub">Gaza, Lebanon, Iran</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c12" class="toc-item"><div class="toc-num">12</div><div><div class="toc-title">Netanyahu in 2026</div><div class="toc-sub">Still here, still fighting, still running</div></div><div class="toc-arrow">→</div></a>
+  </div>
+</section>
+
+<!-- C1 -->
+<section class="chapter" id="c1">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter One</div>
+    <h2 class="chapter-title">A Boy in <em>Two Worlds</em></h2>
+    <p class="chapter-intro">He was born in Tel Aviv. He went to high school in Philadelphia. He learned to live with one foot in Israel and one foot in America.</p>
+  </div>
+  <p class="dropcap">Benjamin Netanyahu was born on October 21, 1949. Israel was only one year old. His family called him "Bibi," and people still call him that today.</p>
+  <p>His father, Benzion, was a history teacher. He studied the history of the Jewish people. Benzion had strong ideas. He believed that enemies of Jewish people would never stop, so Jewish people must always be strong. These ideas stuck in Bibi's head for life.</p>
+  <p>When Bibi was a teenager, his family moved to the United States because his father got a job there. Bibi finished high school near Philadelphia. He spoke perfect English, with an American sound to it. That small thing would matter a lot later — because American TV and American leaders would always feel comfortable with him.</p>
+  <div class="words">
+    <div class="words-title">New Words</div>
+    <dl>
+      <dt>Tel Aviv —</dt><dd>A big city on Israel's coast.</dd>
+      <dt>Bibi —</dt><dd>Netanyahu's nickname, used since he was little.</dd>
+    </dl>
+  </div>
+  <div class="chapter-nav">
+    <a href="#toc" class="nav-link prev"><small>Back to</small><span>Contents</span></a>
+    <a href="#c2" class="nav-link next"><small>Next</small><span>The Army Years</span></a>
+  </div>
+</section>
+
+<!-- C2 -->
+<section class="chapter" id="c2">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Two</div>
+    <h2 class="chapter-title">The <em>Army Years</em></h2>
+    <p class="chapter-intro">At 18, he flew back to Israel to join the army. He did not go into a normal unit. He joined one of the most famous fighting groups in the country.</p>
+  </div>
+  <p class="dropcap">The unit is called Sayeret Matkal. It is a small, secret group of soldiers who do very hard jobs — rescuing hostages, hunting terrorists, sneaking behind enemy lines. You have to be smart and tough to get in.</p>
+  <p>Bibi served for five years. He fought in real battles. He was wounded in the shoulder in a rescue of a hijacked plane in 1972. His brother Yoni was a soldier in the same unit. So was his brother Iddo. Three brothers, all commandos.</p>
+  <p>After the army, Bibi went back to America for college. He studied at MIT, a famous school for science and engineering in Boston. He got two degrees there — in building design and in business.</p>
+  <div class="callout">
+    <div class="callout-label">Good to know</div>
+    <p>Many Israeli leaders start their stories in the army. For Bibi, the army years made him tough, gave him a group of loyal friends, and showed him how to act under pressure.</p>
+  </div>
+  <div class="chapter-nav">
+    <a href="#c1" class="nav-link prev"><small>Back</small><span>Two Worlds</span></a>
+    <a href="#c3" class="nav-link next"><small>Next</small><span>A Brother Named Yoni</span></a>
+  </div>
+</section>
+
+<!-- C3 -->
+<section class="chapter" id="c3">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Three</div>
+    <h2 class="chapter-title">A Brother Named <em>Yoni</em></h2>
+    <p class="chapter-intro">On July 4, 1976, something happened that changed Bibi's life forever. His older brother died a hero.</p>
+  </div>
+  <p class="dropcap">A French plane had been hijacked by terrorists. The plane landed in Uganda, in Africa, far from Israel. The terrorists wanted money and Palestinian prisoners to be set free. They held over 100 Jewish and Israeli people on the plane.</p>
+  <p>Israel decided to do something wild. They sent soldiers on planes, in secret, all the way to Africa. The soldiers landed at the airport at night, fought the terrorists, and saved the hostages. It was one of the most famous rescue missions in history.</p>
+  <p>The leader of that rescue was Yonatan Netanyahu — Bibi's older brother, everyone called him Yoni. He was the only Israeli soldier killed in the raid. Just one bullet.</p>
+  <div class="pull">
+    "Better to die on your feet than to live on your knees."
+    <cite>— Words often used by the Netanyahu family</cite>
+  </div>
+  <p>Yoni became a national hero. Books were written about him. His young brother Bibi, who was now 26, felt he had to carry on Yoni's fight. From that day on, Bibi's public life was about one big idea: terrorists must never win, and Israel must never be weak.</p>
+  <div class="chapter-nav">
+    <a href="#c2" class="nav-link prev"><small>Back</small><span>Army Years</span></a>
+    <a href="#c4" class="nav-link next"><small>Next</small><span>First Steps</span></a>
+  </div>
+</section>
+
+<!-- C4 -->
+<section class="chapter" id="c4">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Four</div>
+    <h2 class="chapter-title">First Steps <em>in Politics</em></h2>
+    <p class="chapter-intro">He wasn't a politician yet. But he was smart, good on camera, and he knew how to speak to Americans.</p>
+  </div>
+  <p class="dropcap">After his brother died, Bibi started a group to study terrorism. He wrote books about it. He gave many interviews on American TV. People saw a young man in a nice suit, with clear English and strong ideas. He looked like a politician before he was one.</p>
+  <p>In 1982, Israel sent him to the United States as a deputy ambassador. Four years later, he became Israel's ambassador to the United Nations in New York. There, he made Israel's case in front of the whole world. During the Gulf War in 1991, when Iraqi missiles were falling on Tel Aviv, his calm TV interviews made him a star.</p>
+  <p>In 1988, he came home and ran for a seat in the Israeli parliament. He won. In 1993, he became the leader of the Likud party — the biggest right-wing party in Israel. He was only 43 years old.</p>
+  <div class="words">
+    <div class="words-title">New Words</div>
+    <dl>
+      <dt>Ambassador —</dt><dd>A person sent to another country to speak for their own country.</dd>
+      <dt>Parliament —</dt><dd>The group of people who make laws. In Israel it is called the Knesset.</dd>
+      <dt>Likud —</dt><dd>A big political party in Israel, on the right side of politics.</dd>
+    </dl>
+  </div>
+  <div class="chapter-nav">
+    <a href="#c3" class="nav-link prev"><small>Back</small><span>Yoni</span></a>
+    <a href="#c5" class="nav-link next"><small>Next</small><span>Prime Minister</span></a>
+  </div>
+</section>
+
+<!-- C5 -->
+<section class="chapter" id="c5">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Five</div>
+    <h2 class="chapter-title">Prime Minister <em>at Last</em></h2>
+    <p class="chapter-intro">In 1996, at age 46, he became the youngest prime minister Israel had ever had. But the job was hard, and it did not last long.</p>
+  </div>
+  <p class="dropcap">Before he won, a big thing happened: the peace-making prime minister, Yitzhak Rabin, was killed by a Jewish man who hated the peace deals with the Palestinians. The country was shocked and sad. A few months later, Israelis voted for a new leader.</p>
+  <p>Netanyahu ran against Shimon Peres, the old man of Israeli politics. Almost no one thought Bibi would win. But there were bus bombings in Israel, and people were scared. They picked the tough man instead of the dove. Bibi won by less than one percent.</p>
+  <p>His first time as prime minister was rough. He kept fighting with his own team. He kept fighting with the Americans. He slowed down the peace deals but could not stop them. In 1999, he lost the next election to a soldier named Ehud Barak, and went home.</p>
+  <div class="callout">
+    <div class="callout-label">Did you know?</div>
+    <p>Bibi was the first Israeli prime minister born after the country was created in 1948. The older leaders had all been part of the founding of Israel. Bibi was a new kind of leader — a TV-age politician.</p>
+  </div>
+  <div class="chapter-nav">
+    <a href="#c4" class="nav-link prev"><small>Back</small><span>First Steps</span></a>
+    <a href="#c6" class="nav-link next"><small>Next</small><span>Back Again</span></a>
+  </div>
+</section>
+
+<!-- C6 -->
+<section class="chapter" id="c6">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Six</div>
+    <h2 class="chapter-title">Out, and <em>Back Again</em></h2>
+    <p class="chapter-intro">Most politicians who lose don't come back. Bibi did. It took him ten years, but he did it.</p>
+  </div>
+  <p class="dropcap">Out of the prime minister's office, Bibi did not quit. He became finance minister in the 2000s and cut lots of spending to help the economy grow. The poor did not love him for it. But the economy became stronger.</p>
+  <p>Slowly, he built himself back up. He studied his old mistakes. He became more careful. In 2009, his Likud party won the election, and Bibi was prime minister again. This time, he stayed — for twelve long years.</p>
+  <div class="timeline">
+    <div class="t-card"><div class="t-year">1999</div><p>Loses his first time as prime minister.</p></div>
+    <div class="t-card"><div class="t-year">2003</div><p>Becomes finance minister. Cuts spending. Economy grows.</p></div>
+    <div class="t-card"><div class="t-year">2005</div><p>Quits the government over the pullout from Gaza.</p></div>
+    <div class="t-card"><div class="t-year">2009</div><p>Wins election. Becomes prime minister again.</p></div>
+  </div>
+  <div class="chapter-nav">
+    <a href="#c5" class="nav-link prev"><small>Back</small><span>First Term</span></a>
+    <a href="#c7" class="nav-link next"><small>Next</small><span>The Long Run</span></a>
+  </div>
+</section>
+
+<!-- C7 -->
+<section class="chapter" id="c7">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Seven</div>
+    <h2 class="chapter-title">The <em>Long Run</em></h2>
+    <p class="chapter-intro">From 2009 to 2021, Bibi was prime minister. Twelve years in a row. No one had ever done that in Israel before.</p>
+  </div>
+  <p class="dropcap">During this long time, Bibi did many things. He kept the economy strong. He built up Israel's tech industry. He made friends with many world leaders. He was very worried about one country above all: Iran.</p>
+  <p>Netanyahu said Iran wanted to build nuclear bombs and destroy Israel. He worked hard to stop that. In 2015, he even flew to America and spoke to the U.S. Congress to try to stop a deal that President Obama was making with Iran. That was not normal — and it made some people in America angry. But Bibi did not care. He felt he was fighting for Israel's life.</p>
+  <p>Inside Israel, he also slowed down any real talks with the Palestinians. He said peace was a nice idea but not possible now. Many Israelis agreed with him, especially after many years of bombs and attacks.</p>
+  <div class="pull">
+    "If the Arabs put down their weapons, there will be no more war. If Israel puts down its weapons, there will be no more Israel."
+    <cite>— A line Netanyahu often uses</cite>
+  </div>
+  <div class="chapter-nav">
+    <a href="#c6" class="nav-link prev"><small>Back</small><span>Back Again</span></a>
+    <a href="#c8" class="nav-link next"><small>Next</small><span>Court</span></a>
+  </div>
+</section>
+
+<!-- C8 -->
+<section class="chapter" id="c8">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Eight</div>
+    <h2 class="chapter-title">Money, Gifts, <em>and Court</em></h2>
+    <p class="chapter-intro">In 2019, something happened that no other prime minister had ever had to deal with. Bibi was charged with crimes.</p>
+  </div>
+  <p class="dropcap">The police had been watching him for years. They said he and his wife, Sara, had taken a lot of free gifts — champagne, fancy cigars, jewelry — from rich friends, and in return had done favors for them. In another case, they said he had tried to get nicer news stories written about him by giving a newspaper a better deal.</p>
+  <p>Netanyahu said no, it was all lies. He said the police, the courts, and the news were all out to get him. His fans believed him. Others thought the evidence was strong.</p>
+  <p>The trial started in 2020. As of 2026, it is still going on. Trials in Israel take a very long time. Bibi has never been found guilty. But the shadow of these cases has followed him every day.</p>
+  <div class="words">
+    <div class="words-title">New Words</div>
+    <dl>
+      <dt>Corruption —</dt><dd>When a leader uses their power for their own gain, like taking secret money or gifts.</dd>
+      <dt>Indicted —</dt><dd>Officially charged with a crime, so a trial can begin.</dd>
+    </dl>
+  </div>
+  <div class="chapter-nav">
+    <a href="#c7" class="nav-link prev"><small>Back</small><span>The Long Run</span></a>
+    <a href="#c9" class="nav-link next"><small>Next</small><span>Arab Neighbors</span></a>
+  </div>
+</section>
+
+<!-- C9 -->
+<section class="chapter" id="c9">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Nine</div>
+    <h2 class="chapter-title">A New Deal with <em>Arab Neighbors</em></h2>
+    <p class="chapter-intro">In 2020, something surprising happened. Israel made peace with some Arab countries that had not been friends before.</p>
+  </div>
+  <p class="dropcap">With the help of U.S. President Donald Trump, Israel signed deals with the United Arab Emirates, Bahrain, Sudan, and Morocco. These were called the Abraham Accords, named after a man in the Bible who is seen as the father of both Jewish people and Arab people.</p>
+  <p>For Bibi, this was a huge win. For many years, the rule was: no peace with Arabs until the Palestinian problem is fixed. Now, he had broken that rule. Israel was making friends without Palestinians at the table.</p>
+  <p>Many Palestinians were very upset. They felt left out and forgotten. But Israelis who supported Bibi loved him for this — a real, new peace, without giving up any land.</p>
+  <div class="callout">
+    <div class="callout-label">Why it matters</div>
+    <p>The Abraham Accords changed the Middle East. For the first time in a long time, Israel had normal, open friendships with Arab countries on the other side of the region.</p>
+  </div>
+  <div class="chapter-nav">
+    <a href="#c8" class="nav-link prev"><small>Back</small><span>Court</span></a>
+    <a href="#c10" class="nav-link next"><small>Next</small><span>October 7</span></a>
+  </div>
+</section>
+
+<!-- C10 -->
+<section class="chapter" id="c10">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Ten</div>
+    <h2 class="chapter-title">October 7, <em>2023</em></h2>
+    <p class="chapter-intro">Netanyahu was back as prime minister. Then, the worst day in Israel's modern history came on his watch.</p>
+  </div>
+  <p class="dropcap">In 2021, Bibi had lost power for about a year and a half to a group of other parties who worked together to push him out. But their group was shaky. By the end of 2022, he was prime minister again, with the most right-wing government Israel had ever had.</p>
+  <p>Then came October 7, 2023. On that morning, a Jewish holiday, fighters from Hamas broke through the fence around Gaza. They killed about 1,200 people in Israel — families, children, people at a music festival. They took about 250 hostages back to Gaza. It was the darkest day for Jewish people since the Holocaust.</p>
+  <p>Many Israelis blamed Bibi. They asked: how did this happen on your watch? Why did the army not know? Why did the government ignore the warnings? He had always said he was the safe choice, the strong leader. Now the country had never felt more broken.</p>
+  <div class="pull">
+    "There will be a time to ask the hard questions. That time is not now."
+    <cite>— Netanyahu, after October 7</cite>
+  </div>
+  <p>Even so, he did not resign. He said Israel needed a wartime leader, and that leader was him.</p>
+  <div class="chapter-nav">
+    <a href="#c9" class="nav-link prev"><small>Back</small><span>Arab Deals</span></a>
+    <a href="#c11" class="nav-link next"><small>Next</small><span>War and War</span></a>
+  </div>
+</section>
+
+<!-- C11 -->
+<section class="chapter" id="c11">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Eleven</div>
+    <h2 class="chapter-title">War, <em>and More War</em></h2>
+    <p class="chapter-intro">The war that started on October 7 did not stay in one place. It grew, and grew, and spread.</p>
+  </div>
+  <p class="dropcap">Israel's army went into Gaza. Bombs from the sky, tanks on the ground. The fighting was very bloody. Tens of thousands of Palestinians were killed. Most of Gaza was damaged. Food, water, and homes were hard to find. Much of the world watched with horror.</p>
+  <p>Then the fighting spread. Hezbollah, a group in Lebanon, fired rockets at Israel. Israel fired back, and later sent soldiers into Lebanon. The Houthis, a group in Yemen, shot at ships in the Red Sea. In 2024, for the first time ever, Israel and Iran fired missiles at each other directly. It was the biggest regional war in a long time.</p>
+  <p>Through all of this, Netanyahu kept fighting. Some hostages came home — a few through deals, a few through army raids. Others are still in Gaza. In late 2024, a huge shock: the family of Bashar al-Assad lost power in Syria, after more than 50 years.</p>
+  <div class="timeline">
+    <div class="t-card"><div class="t-year">Oct 2023</div><p>Hamas attacks. Israel goes to war in Gaza.</p></div>
+    <div class="t-card"><div class="t-year">2024</div><p>Fighting with Hezbollah in Lebanon grows. Israel and Iran fire missiles at each other.</p></div>
+    <div class="t-card"><div class="t-year">Dec 2024</div><p>Assad falls in Syria. The Middle East map changes again.</p></div>
+    <div class="t-card"><div class="t-year">2025</div><p>On-again, off-again ceasefires in Gaza. Some hostages come home.</p></div>
+  </div>
+  <p>Inside Israel, big crowds came out every week. Some shouted for the hostages. Some shouted for Bibi to go. Some shouted for both. Israel has felt more divided than maybe ever.</p>
+  <div class="chapter-nav">
+    <a href="#c10" class="nav-link prev"><small>Back</small><span>October 7</span></a>
+    <a href="#c12" class="nav-link next"><small>Next</small><span>Today</span></a>
+  </div>
+</section>
+
+<!-- C12 -->
+<section class="chapter" id="c12">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Twelve</div>
+    <h2 class="chapter-title">Netanyahu <em>in 2026</em></h2>
+    <p class="chapter-intro">He is 76 years old. He has been prime minister for more than 17 years in total. And he is running again.</p>
+  </div>
+  <p class="dropcap">In April 2026, Bibi is still Israel's prime minister. He was re-elected as the leader of his Likud party. He has said he will run in the next Israeli election. Many people cheer him. Many people want him gone. Both groups are big, and neither is going away.</p>
+  <p>His court case is still going on. The war has cooled down in some places and heated up in others. Israel is tired but not broken. The Palestinian question is still unanswered. Peace feels very far, but not impossible.</p>
+  <h3>The man behind the politics</h3>
+  <p>Bibi has a wife, Sara, and three children — Yair, Avner, and Noa. He loves old movies. He smokes cigars. He writes his own speeches. He works late into the night. His friends say he is warm in private and stiff in public.</p>
+  <p>His fans call him the savior of Israel. His critics call him the person most responsible for how divided Israel has become. Both could be right at the same time.</p>
+  <div class="callout">
+    <div class="callout-label">The long view</div>
+    <p>No leader of a small country has shaped its recent story more than Netanyahu has shaped Israel's. Whether he stays in power one more year or ten, his name will be in the history books forever.</p>
+  </div>
+  <div class="chapter-nav">
+    <a href="#c11" class="nav-link prev"><small>Back</small><span>War</span></a>
+    <a href="#toc" class="nav-link next"><small>Go to</small><span>Contents</span></a>
+  </div>
+</section>
+
+<footer>
+  <span class="mark">A life still being written.</span>
+  <p>A simple, easy-to-read story of Benjamin Netanyahu.<br/>Written in April 2026. Numbers and events are accurate up to this date.</p>
+</footer>
+
+<script>
+  // Progress bar
+  const progress = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    progress.style.width = pct + '%';
+  });
+
+  // Theme toggle
+  const themeBtn = document.getElementById('themeBtn');
+  const themeIcon = document.getElementById('themeIcon');
+  const themeText = document.getElementById('themeText');
+  themeBtn.addEventListener('click', () => {
+    const cur = document.body.getAttribute('data-theme');
+    const next = cur === 'light' ? 'dark' : 'light';
+    document.body.setAttribute('data-theme', next);
+    themeIcon.textContent = next === 'dark' ? '◑' : '◐';
+    themeText.textContent = next === 'dark' ? 'Light' : 'Dark';
+  });
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Safety net: reveal anything already in view on load, and force-reveal
+  // everything after 1.2s so chapters are never stuck invisible (e.g. inside
+  // an iframe where the observer can misbehave).
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.reveal').forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('in');
+    });
+  });
+  setTimeout(() => {
+    document.querySelectorAll('.reveal:not(.in)').forEach(el => el.classList.add('in'));
+  }, 1200);
+</script>
+</body>
+</html>
