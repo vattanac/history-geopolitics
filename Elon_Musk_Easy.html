@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Elon Musk — The Hidden Story</title>
+
+<!-- Library meta tags -->
+<meta name="category"        content="Tech &amp; Business" />
+<meta name="subcategory"     content="Entrepreneurs" />
+<meta name="nav-title"       content="Elon Musk — The Hidden Story" />
+<meta name="nav-description" content="A plain-English deep dive into the things most people don't know about Elon Musk." />
+<meta name="nav-added"       content="2026-04-18" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg: #0B0B10;
+    --bg-soft: #13131B;
+    --bg-card: rgba(255, 255, 255, 0.035);
+    --ink: #F0EDE8;
+    --ink-soft: #A8A49D;
+    --ink-muted: #6a6760;
+    --accent: #8A7DFF;       /* electric violet */
+    --accent-2: #F5A742;     /* warm gold */
+    --accent-3: #54E0B0;     /* mint */
+    --border: rgba(255, 255, 255, 0.08);
+    --glow-1: rgba(138, 125, 255, 0.18);
+    --glow-2: rgba(245, 167, 66, 0.12);
+    --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  [data-theme="light"] {
+    --bg: #F6F4EF;
+    --bg-soft: #EDEAE2;
+    --bg-card: rgba(255, 255, 255, 0.55);
+    --ink: #14141A;
+    --ink-soft: #555;
+    --ink-muted: #8a8a8a;
+    --accent: #5B4AE0;
+    --accent-2: #D17A1B;
+    --accent-3: #1F9B73;
+    --border: rgba(0, 0, 0, 0.08);
+    --glow-1: rgba(91, 74, 224, 0.14);
+    --glow-2: rgba(209, 122, 27, 0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 17px;
+    transition: background 0.6s ease, color 0.6s ease;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 90% 55% at 15% -5%, var(--glow-1), transparent),
+      radial-gradient(ellipse 65% 45% at 110% 100%, var(--glow-2), transparent);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* Progress bar */
+  .progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    width: 0%;
+    z-index: 100;
+    transition: width 0.1s linear;
+  }
+
+  /* Top nav chips */
+  nav.top {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    display: flex;
+    gap: 8px;
+    z-index: 50;
+  }
+
+  .chip {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    color: var(--ink);
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .chip:hover {
+    transform: translateY(-1px);
+    background: var(--bg-soft);
+    box-shadow: 0 8px 24px var(--glow-1);
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px clamp(24px, 6vw, 96px);
+    max-width: 1180px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 28px;
+    font-weight: 500;
+    font-family: var(--mono);
+  }
+
+  .eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+    vertical-align: middle;
+    margin-right: 12px;
+  }
+
+  h1.title {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: clamp(44px, 9vw, 116px);
+    line-height: 0.97;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+  }
+
+  h1.title .accent {
+    font-style: italic;
+    background: linear-gradient(120deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .subtitle {
+    font-size: clamp(18px, 2vw, 22px);
+    color: var(--ink-soft);
+    max-width: 680px;
+    line-height: 1.5;
+    margin-bottom: 48px;
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--ink-soft);
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    max-width: 640px;
+  }
+
+  .meta-row span strong {
+    color: var(--ink);
+    display: block;
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+
+  /* Quick-facts card */
+  .fact-card {
+    margin-top: 56px;
+    max-width: 720px;
+    background: var(--bg-card);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 28px 32px;
+  }
+
+  .fact-title {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 18px;
+    font-family: var(--mono);
+  }
+
+  .fact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 16px 24px;
+  }
+
+  .fact-grid dt {
+    font-size: 12px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 2px;
+  }
+  .fact-grid dd { font-weight: 500; font-size: 15px; color: var(--ink); }
+
+  /* TOC */
+  .toc {
+    max-width: 1180px;
+    margin: 120px auto;
+    padding: 0 clamp(24px, 5vw, 64px);
+  }
+
+  .section-label {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 32px;
+    color: var(--ink);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+  }
+
+  .section-label::before {
+    content: "";
+    flex: 1;
+    max-width: 48px;
+    height: 1px;
+    background: var(--ink-soft);
+  }
+
+  .toc-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2px;
+    background: var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .toc-item {
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: 22px 28px;
+    background: var(--bg);
+    color: var(--ink);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .toc-item:hover {
+    background: var(--bg-soft);
+    padding-left: 34px;
+  }
+
+  .toc-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 28px;
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .toc-title { font-weight: 500; font-size: 16px; }
+
+  .toc-sub {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+    font-weight: 400;
+  }
+
+  .toc-arrow {
+    color: var(--ink-soft);
+    font-size: 18px;
+    transition: transform 0.2s;
+  }
+
+  .toc-item:hover .toc-arrow {
+    transform: translateX(4px);
+    color: var(--accent);
+  }
+
+  /* Chapter */
+  .chapter {
+    max-width: 820px;
+    margin: 120px auto;
+    padding: 0 clamp(24px, 5vw, 48px);
+    scroll-margin-top: 40px;
+  }
+
+  .chapter-header {
+    margin-bottom: 56px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .chapter-num {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 16px;
+    font-family: var(--mono);
+  }
+
+  h2.chapter-title {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: clamp(36px, 5vw, 54px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+
+  h2.chapter-title em { color: var(--accent); }
+
+  .chapter-intro {
+    font-size: 19px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    max-width: 620px;
+  }
+
+  .chapter p { margin-bottom: 22px; color: var(--ink); }
+  .chapter p + p { margin-top: 0; }
+
+  .dropcap::first-letter {
+    font-family: 'Instrument Serif', serif;
+    font-size: 64px;
+    float: left;
+    line-height: 1;
+    padding: 6px 14px 0 0;
+    color: var(--accent);
+  }
+
+  h3 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 28px;
+    margin: 48px 0 16px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  /* Callout */
+  .callout {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 32px;
+    margin: 32px 0;
+    position: relative;
+  }
+
+  .callout::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 24px;
+    width: 48px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 0 0 4px 4px;
+  }
+
+  .callout-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-family: var(--mono);
+  }
+
+  .callout p { margin-bottom: 0; font-size: 16px; }
+
+  /* "Did you know" — different accent */
+  .dyk {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent-3);
+    border-radius: 0 16px 16px 0;
+    padding: 22px 26px;
+    margin: 32px 0;
+  }
+
+  .dyk-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-3);
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-family: var(--mono);
+  }
+
+  .dyk p { font-size: 16px; margin: 0; }
+
+  /* Word box */
+  .words {
+    background: linear-gradient(135deg, var(--bg-soft), transparent);
+    border-left: 3px solid var(--accent-2);
+    padding: 20px 24px;
+    border-radius: 0 14px 14px 0;
+    margin: 32px 0;
+  }
+
+  .words-title {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--accent-2);
+    margin-bottom: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: var(--mono);
+  }
+
+  .words dl { font-size: 15px; }
+  .words dt { font-weight: 600; color: var(--ink); display: inline; }
+  .words dd {
+    display: inline;
+    color: var(--ink-soft);
+    margin-left: 6px;
+  }
+  .words dd::after { content: ""; display: block; margin-bottom: 8px; }
+
+  /* Pull quote */
+  .pull {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(24px, 3vw, 34px);
+    line-height: 1.3;
+    color: var(--ink);
+    margin: 48px 0;
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .pull cite {
+    display: block;
+    margin-top: 16px;
+    font-family: var(--mono);
+    font-style: normal;
+    font-size: 12px;
+    color: var(--ink-soft);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* Timeline row */
+  .timeline {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding: 12px 0 24px;
+    margin: 32px -16px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .timeline::-webkit-scrollbar { height: 4px; }
+  .timeline::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .t-card {
+    min-width: 240px;
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+
+  .t-year {
+    font-family: 'Instrument Serif', serif;
+    font-size: 26px;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .t-card p { font-size: 14px; margin: 0; color: var(--ink-soft); }
+
+  /* Number stat row */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
+    margin: 32px 0;
+  }
+
+  .stat {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 20px;
+  }
+
+  .stat .num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 36px;
+    line-height: 1;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+
+  .stat .lbl {
+    font-size: 12px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* Chapter nav bottom */
+  .chapter-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    gap: 16px;
+  }
+
+  .nav-link {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.2s;
+    background: var(--bg-card);
+  }
+
+  .nav-link:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .nav-link.prev { text-align: left; }
+  .nav-link.next { text-align: right; }
+
+  .nav-link small {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+    font-family: var(--mono);
+  }
+
+  .nav-link span {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 80px 32px 48px;
+    color: var(--ink-soft);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+    margin-top: 80px;
+  }
+
+  footer .mark {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 28px;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    nav.top { top: 12px; right: 12px; }
+    .chip { padding: 8px 12px; font-size: 12px; }
+    .hero { padding: 120px 24px 60px; }
+    .toc-item { grid-template-columns: 44px 1fr auto; padding: 18px 20px; gap: 14px; }
+    .toc-num { font-size: 22px; }
+    .chapter { padding: 0 24px; }
+    .chapter-nav { flex-direction: column; }
+  }
+
+  /* Reveal animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: none;
+  }
+</style>
+</head>
+<body data-theme="dark">
+
+<div class="progress" id="progress"></div>
+
+<nav class="top">
+  <a href="#toc" class="chip">Contents</a>
+  <button class="chip" id="themeBtn" aria-label="Toggle theme">
+    <span id="themeIcon">◐</span> <span id="themeText">Light</span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="eyebrow reveal">The Hidden Story · 2026 Edition</div>
+  <h1 class="title reveal">Elon <span class="accent">Musk</span>,<br/>the things<br/>you didn't know.</h1>
+  <p class="subtitle reveal">He builds rockets and robots, owns one of the biggest social networks, has 14 kids, and used to rule half the U.S. government. But the strangest parts of his story are the ones almost no one talks about. Here is the plain-English version, with no jargon.</p>
+  <div class="meta-row reveal">
+    <span><strong>Chapters</strong> 14 short parts</span>
+    <span><strong>Reading time</strong> About 35 minutes</span>
+    <span><strong>Level</strong> Easy for everyone</span>
+  </div>
+
+  <div class="fact-card reveal">
+    <div class="fact-title">Quick facts</div>
+    <dl class="fact-grid">
+      <div><dt>Born</dt><dd>June 28, 1971 · Pretoria, South Africa</dd></div>
+      <div><dt>Full name</dt><dd>Elon Reeve Musk</dd></div>
+      <div><dt>Citizenship</dt><dd>South African, Canadian, American</dd></div>
+      <div><dt>Main companies</dt><dd>Tesla, SpaceX, xAI, X, Neuralink, Boring Co.</dd></div>
+      <div><dt>Children</dt><dd>14, with 4 different mothers</dd></div>
+      <div><dt>Wealth (2026)</dt><dd>Richest person in the world</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- TOC -->
+<section class="toc" id="toc">
+  <div class="section-label reveal">Chapters</div>
+  <div class="toc-grid reveal">
+    <a href="#c1"  class="toc-item"><div class="toc-num">01</div><div><div class="toc-title">The Boy Who Read Too Much</div><div class="toc-sub">Pretoria, 1971. A strange, lonely kid.</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c2"  class="toc-item"><div class="toc-num">02</div><div><div class="toc-title">A Hard Father</div><div class="toc-sub">The truth about Errol and the emerald mine</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c3"  class="toc-item"><div class="toc-num">03</div><div><div class="toc-title">Alone at Seventeen</div><div class="toc-sub">Why he left South Africa in a hurry</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c4"  class="toc-item"><div class="toc-num">04</div><div><div class="toc-title">Stanford for Two Days</div><div class="toc-sub">A PhD he never started</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c5"  class="toc-item"><div class="toc-num">05</div><div><div class="toc-title">The First Company, Zip2</div><div class="toc-sub">Sleeping on an office couch</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c6"  class="toc-item"><div class="toc-num">06</div><div><div class="toc-title">Fired From His Own Company</div><div class="toc-sub">The hidden story of PayPal</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c7"  class="toc-item"><div class="toc-num">07</div><div><div class="toc-title">Losing His First Baby</div><div class="toc-sub">A sadness he almost never talks about</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c8"  class="toc-item"><div class="toc-num">08</div><div><div class="toc-title">The Year Everything Almost Died</div><div class="toc-sub">2008 — rockets blew up, Tesla ran out of cash</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c9"  class="toc-item"><div class="toc-num">09</div><div><div class="toc-title">Fourteen Children</div><div class="toc-sub">The unusual way he built his family</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c10" class="toc-item"><div class="toc-num">10</div><div><div class="toc-title">The Autism Reveal</div><div class="toc-sub">Telling the world on Saturday Night Live</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c11" class="toc-item"><div class="toc-num">11</div><div><div class="toc-title">Buying Twitter for $44 Billion</div><div class="toc-sub">The most expensive impulse purchase ever</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c12" class="toc-item"><div class="toc-num">12</div><div><div class="toc-title">The DOGE Year</div><div class="toc-sub">Running part of the U.S. government</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c13" class="toc-item"><div class="toc-num">13</div><div><div class="toc-title">Breaking Up With Trump</div><div class="toc-sub">From best friend to new political party</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c14" class="toc-item"><div class="toc-num">14</div><div><div class="toc-title">Elon in 2026</div><div class="toc-sub">Terafab, Mars, and no signs of slowing</div></div><div class="toc-arrow">→</div></a>
+  </div>
+</section>
+
+<!-- C1 -->
+<section class="chapter" id="c1">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter One</div>
+    <h2 class="chapter-title">The Boy Who <em>Read Too Much</em></h2>
+    <p class="chapter-intro">Most kids like playing outside. Elon liked reading encyclopedias. Not one page — the whole thing, cover to cover. Twice.</p>
+  </div>
+  <p class="dropcap">Elon Reeve Musk was born in Pretoria, South Africa, on June 28, 1971. He was named Elon after his great-grandfather, and Reeve after his grandfather, who was a pilot and explorer from Canada. From day one, he was a kid who was a little out of step with the world.</p>
+  <p>By age 4 or 5, he would stare into space when people talked to him, so deep in his own thoughts that his parents took him to a doctor. They thought he was deaf. He wasn't. His brain was just somewhere else. His mother Maye said he was "reading a book in his head" — and often, he was.</p>
+  <p>When he was 8 or 9, he read the entire Encyclopedia Britannica. When he finished it, he just read it again. Other kids thought this was weird. Elon did not really have friends. He was bullied a lot.</p>
+  <div class="dyk">
+    <div class="dyk-label">Did you know?</div>
+    <p>When Elon was around 12, a group of boys at school chased him, beat him up, and threw him down a set of concrete stairs. He was hurt so badly he ended up in the hospital, and needed surgery on his nose decades later to fix the damage. He says he did not fully recover from that beating until he was an adult.</p>
+  </div>
+  <p>He got his first computer at age 10 — a little Commodore VIC-20 with 5 kilobytes of memory (a smartphone today has about a million times more). He read the manual that came with it and taught himself to write code. Two years later, when he was 12, he wrote a small space video game called Blastar and sold it to a computer magazine for about $500. His first paycheck, as a programmer, at the age he was supposed to be in sixth grade.</p>
+  <div class="chapter-nav">
+    <a href="#toc" class="nav-link prev"><small>Back to</small><span>Contents</span></a>
+    <a href="#c2" class="nav-link next"><small>Next</small><span>A Hard Father</span></a>
+  </div>
+</section>
+
+<!-- C2 -->
+<section class="chapter" id="c2">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Two</div>
+    <h2 class="chapter-title">A <em>Hard Father</em></h2>
+    <p class="chapter-intro">You may have heard that Elon grew up on a rich family's emerald mine. The real story is a lot darker and a lot more complicated.</p>
+  </div>
+  <p class="dropcap">Elon's father was named Errol Musk. Errol was an engineer, a pilot, a sailor, and at one point a builder of houses. He was also, by every account — including Elon's own — a very difficult man. Elon has called him "a terrible human being." They have been on and off speaking terms for decades.</p>
+  <p>When Elon was 8, his parents divorced. Elon chose to live with his father. Why? Because his father had an Encyclopedia Britannica and a computer. Elon later said this was one of the worst choices he ever made.</p>
+  <p>Errol liked to lecture Elon for hours. He could be very cold. In one interview, Elon said his father would stand in front of him for an hour, telling him what a stupid, worthless son he was. Elon's brother Kimbal has backed up these stories.</p>
+  <div class="callout">
+    <div class="callout-label">The emerald mine myth</div>
+    <p>For years, people said Elon got rich because his dad owned an emerald mine. Errol has claimed this, and Elon has pushed back. The truth seems smaller: Errol bought a piece of a Zambian emerald business in the 1980s, with no papers and no ownership on record. Still, the Musk family was rich by South African standards. Elon did not grow up poor. He just did not inherit a "mine."</p>
+  </div>
+  <p>There is also a strange family story. In 2018, Errol had a child with his own stepdaughter — a woman he had raised from the age of 4, who was his step-child from a second marriage. She was in her 30s at the time. Elon cut off contact with his father over this and many other things.</p>
+  <div class="chapter-nav">
+    <a href="#c1" class="nav-link prev"><small>Back</small><span>The Boy</span></a>
+    <a href="#c3" class="nav-link next"><small>Next</small><span>Alone at 17</span></a>
+  </div>
+</section>
+
+<!-- C3 -->
+<section class="chapter" id="c3">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Three</div>
+    <h2 class="chapter-title">Alone at <em>Seventeen</em></h2>
+    <p class="chapter-intro">He packed a suitcase, got on a plane, and left South Africa. He did not know anyone where he was going. He was seventeen years old.</p>
+  </div>
+  <p class="dropcap">In 1988, South Africa was still under apartheid — a cruel system where white people ruled and non-white people had few rights. Every young white man had to join the army. Elon did not want to fight for that system. He also wanted out of his father's house.</p>
+  <p>His mother Maye was born in Canada, so Elon was able to get a Canadian passport through her. With that passport, he could leave. He flew to Canada with very little money, slept on the couches of distant relatives he barely knew, and worked odd jobs — cleaning grain bins, cutting logs, scrubbing the boilers at a lumber mill. One of those jobs paid him $18 an hour, which was great money for a teenager in 1989.</p>
+  <p>He got into Queen's University in Ontario. Two years later, he transferred to the University of Pennsylvania in the United States. He got two degrees — one in physics and one in business, from the famous Wharton School. He was paying his way through school by throwing parties at his shared house, charging $5 a head. It kept the lights on.</p>
+  <div class="words">
+    <div class="words-title">New Words</div>
+    <dl>
+      <dt>Apartheid —</dt><dd>A cruel South African system, ended in the 1990s, that separated people by race.</dd>
+      <dt>Wharton —</dt><dd>A very famous business school in Philadelphia.</dd>
+    </dl>
+  </div>
+  <div class="chapter-nav">
+    <a href="#c2" class="nav-link prev"><small>Back</small><span>Father</span></a>
+    <a href="#c4" class="nav-link next"><small>Next</small><span>Stanford</span></a>
+  </div>
+</section>
+
+<!-- C4 -->
+<section class="chapter" id="c4">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Four</div>
+    <h2 class="chapter-title">Stanford for <em>Two Days</em></h2>
+    <p class="chapter-intro">He was accepted into one of the best science schools in the world. He showed up on Monday. By Wednesday he was gone.</p>
+  </div>
+  <p class="dropcap">In 1995, Elon moved across the country to do a PhD at Stanford, in California. He was going to study batteries — of all things, the boring thing that would later power Tesla. But in the same month, the internet was exploding. Websites were being born. Young people were getting rich fast.</p>
+  <p>Elon sat in Stanford for two days, thought "wait, I'm going to miss this," and dropped out. He never went back. He went up the road to Palo Alto, rented a cheap office with his brother Kimbal, and started a company.</p>
+  <div class="pull">
+    "If the universe ever stops expanding, we're going to have to build something that can travel faster than the speed of light."
+    <cite>— Young Elon, on why he dropped out</cite>
+  </div>
+  <div class="chapter-nav">
+    <a href="#c3" class="nav-link prev"><small>Back</small><span>Alone at 17</span></a>
+    <a href="#c5" class="nav-link next"><small>Next</small><span>Zip2</span></a>
+  </div>
+</section>
+
+<!-- C5 -->
+<section class="chapter" id="c5">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Five</div>
+    <h2 class="chapter-title">The First Company, <em>Zip2</em></h2>
+    <p class="chapter-intro">No apartment, no shower at the office, no salary. Just a couch, a computer, and an idea that newspapers would need maps on the internet.</p>
+  </div>
+  <p class="dropcap">The company was called Zip2. The idea was simple: put maps of businesses on the internet so that newspapers could have online directories. Today this sounds obvious. In 1995, it was the future.</p>
+  <p>Elon and Kimbal were broke. They could not afford an apartment, so they slept on the office couch. They showered at the YMCA down the street. They ate at Jack in the Box because it was cheap and open 24 hours.</p>
+  <p>The company worked. Big newspapers like the New York Times signed on. Four years later, in 1999, the computer maker Compaq bought Zip2 for $307 million. Elon's share was about $22 million. He was 27 years old. He bought himself a million-dollar sports car — a McLaren F1 — and had a news crew film its delivery. (He would crash it, uninsured, on a highway a year later.)</p>
+  <div class="dyk">
+    <div class="dyk-label">Did you know?</div>
+    <p>At Zip2, Elon wanted to be the CEO. The older investors kept saying no — they didn't trust a 25-year-old to run the show. Elon was upset but kept working. This moment taught him that next time, he would hold the power. He made sure of it ever after.</p>
+  </div>
+  <div class="chapter-nav">
+    <a href="#c4" class="nav-link prev"><small>Back</small><span>Stanford</span></a>
+    <a href="#c6" class="nav-link next"><small>Next</small><span>Fired From PayPal</span></a>
+  </div>
+</section>
+
+<!-- C6 -->
+<section class="chapter" id="c6">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Six</div>
+    <h2 class="chapter-title">Fired From <em>His Own Company</em></h2>
+    <p class="chapter-intro">He took his Zip2 money and put it all into a new idea: a bank on the internet. He called it X.com. Then his own team kicked him out.</p>
+  </div>
+  <p class="dropcap">X.com started in 1999 — Elon loved the letter X, and that love has never gone away. It was one of the first online banks. A year later, X.com joined together with a rival company named Confinity, which was run by two young men named Peter Thiel and Max Levchin. Confinity had a small product called PayPal.</p>
+  <p>Elon wanted to keep the name X.com. The others wanted PayPal. They argued. The company was a mess. In the fall of 2000, Elon got on a plane to Australia for his honeymoon — he had just married a young writer named Justine Wilson. While he was in the air, the rest of the team quietly called a board meeting and voted him out as CEO.</p>
+  <p>He landed in Sydney and got the news. His own company had fired him, on his honeymoon. Peter Thiel took over. The name was changed to PayPal.</p>
+  <p>Elon stayed on as a big shareholder. When eBay bought PayPal in 2002 for $1.5 billion, Elon walked away with about $180 million. Not bad for getting fired.</p>
+  <div class="callout">
+    <div class="callout-label">Twenty years later</div>
+    <p>In 2023, when Elon bought Twitter, one of the first things he did was rename it to "X." After more than two decades, he finally got the name back.</p>
+  </div>
+  <div class="chapter-nav">
+    <a href="#c5" class="nav-link prev"><small>Back</small><span>Zip2</span></a>
+    <a href="#c7" class="nav-link next"><small>Next</small><span>Losing His Baby</span></a>
+  </div>
+</section>
+
+<!-- C7 -->
+<section class="chapter" id="c7">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Seven</div>
+    <h2 class="chapter-title">Losing His <em>First Baby</em></h2>
+    <p class="chapter-intro">In 2002, before anyone had heard of Tesla or SpaceX, Elon and Justine had their first child, a boy named Nevada. He lived for ten weeks.</p>
+  </div>
+  <p class="dropcap">Nevada Alexander Musk was born in the spring of 2002. One day, Justine put him down for a nap. When she came back, he was not breathing. Doctors could not save him. He died of Sudden Infant Death Syndrome — SIDS — a condition that takes babies in their sleep for reasons no one really understands.</p>
+  <p>Justine later wrote that Elon did not want to talk about the loss. He pushed it away. She grieved loudly. He grieved silently. They had very different ways of dealing with the pain, and the gap between them grew.</p>
+  <p>Elon rarely mentions Nevada in public. But people who know him say this loss changed him. It may be why he threw himself so hard into work after 2002 — always working, always building, always too busy to sit with a feeling for long.</p>
+  <div class="dyk">
+    <div class="dyk-label">Quietly connected</div>
+    <p>Elon and Justine used fertility treatment to have their other children. Griffin and Vivian were twins, born in 2004. Kai, Saxon, and Damian were triplets, born in 2006. Five children in two births. The Musk family felt rebuilt — but the loss of Nevada was still there.</p>
+  </div>
+  <div class="chapter-nav">
+    <a href="#c6" class="nav-link prev"><small>Back</small><span>PayPal</span></a>
+    <a href="#c8" class="nav-link next"><small>Next</small><span>The Year Everything Almost Died</span></a>
+  </div>
+</section>
+
+<!-- C8 -->
+<section class="chapter" id="c8">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Eight</div>
+    <h2 class="chapter-title">The Year Everything <em>Almost Died</em></h2>
+    <p class="chapter-intro">In 2008, his rocket company had failed three times in a row. His car company was running out of money. His marriage was ending. He was eating instant ramen and sleeping on borrowed couches again.</p>
+  </div>
+  <p class="dropcap">After PayPal, Elon did something almost no one expected: he spent nearly all of his $180 million on two brand-new companies. SpaceX, to build rockets — he put in $100 million. Tesla, to build electric cars — he put in $70 million. He kept almost nothing for himself.</p>
+  <p>By 2008, both were dying. SpaceX had launched three rockets. All three blew up. Tesla's first car was late, over budget, and the 2008 banking crash meant no one was buying $100,000 sports cars.</p>
+  <p>Elon borrowed money from friends just to pay his rent. He and Justine got divorced. He was, in his own words, "two months from personal bankruptcy." He had one more rocket he could afford to build. If the fourth launch failed, SpaceX was dead, and he would have no money to save Tesla either.</p>
+  <div class="stats">
+    <div class="stat"><div class="num">3</div><div class="lbl">Rockets exploded</div></div>
+    <div class="stat"><div class="num">$0</div><div class="lbl">Personal savings left</div></div>
+    <div class="stat"><div class="num">$40M</div><div class="lbl">Loan from friends to save Tesla</div></div>
+    <div class="stat"><div class="num">1</div><div class="lbl">Rocket left to try</div></div>
+  </div>
+  <p>On September 28, 2008, SpaceX launched its fourth rocket, the Falcon 1, from a tiny island in the Pacific Ocean. It worked. It reached orbit — the first privately built rocket to ever do so. A few months later, NASA gave SpaceX a $1.6 billion contract. That check saved the company.</p>
+  <p>On Christmas Eve 2008, Tesla ran out of money. In the final hours, investors — including Elon himself, with the last of his cash — closed a deal that kept it alive. Both companies survived by days.</p>
+  <div class="pull">
+    "I had this sort of moment where I thought — okay, I will do this until I die."
+    <cite>— Elon, on 2008</cite>
+  </div>
+  <div class="chapter-nav">
+    <a href="#c7" class="nav-link prev"><small>Back</small><span>Losing Nevada</span></a>
+    <a href="#c9" class="nav-link next"><small>Next</small><span>Fourteen Children</span></a>
+  </div>
+</section>
+
+<!-- C9 -->
+<section class="chapter" id="c9">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Nine</div>
+    <h2 class="chapter-title">Fourteen <em>Children</em></h2>
+    <p class="chapter-intro">Most people know Elon has "a lot of kids." The real count is fourteen, with four different mothers, and the story is stranger than most people realize.</p>
+  </div>
+  <p class="dropcap">By 2026, Elon has fathered at least 14 known children. He has said in interviews that he worries about "population collapse" — that the world does not have enough babies being born — and that smart people should have more kids. He has put this belief into practice in his own life.</p>
+  <h3>The four mothers</h3>
+  <p><strong>Justine Wilson</strong> (married 2000, divorced 2008) — six children, though Nevada died as a baby. Their daughter Vivian, born in 2004, came out as a transgender woman in 2022 and publicly cut ties with Elon, saying she no longer considered him her father.</p>
+  <p><strong>Grimes</strong>, a Canadian singer (real name Claire Boucher), partner 2018 to about 2022 — three children, with unusual names: X Æ A-12 (pronounced "X Ash A Twelve"), Exa Dark Sideræl, and Techno Mechanicus. You read that right.</p>
+  <p><strong>Shivon Zilis</strong>, an executive at Elon's brain-implant company Neuralink — four children, including a set of twins born secretly in 2021.</p>
+  <p><strong>Ashley St. Clair</strong>, a young American political writer — one child, a son named Romulus, whose existence only became public in 2025.</p>
+  <div class="callout">
+    <div class="callout-label">Important context</div>
+    <p>Several of Elon's children were born by surrogate — meaning another woman carried the pregnancy. Some were born only months apart by different mothers. Elon has said he tries to see all his children as much as he can, but critics point out that being very involved with 14 children is probably not possible for anyone.</p>
+  </div>
+  <div class="chapter-nav">
+    <a href="#c8" class="nav-link prev"><small>Back</small><span>2008</span></a>
+    <a href="#c10" class="nav-link next"><small>Next</small><span>The Autism Reveal</span></a>
+  </div>
+</section>
+
+<!-- C10 -->
+<section class="chapter" id="c10">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Ten</div>
+    <h2 class="chapter-title">The <em>Autism Reveal</em></h2>
+    <p class="chapter-intro">In May 2021, on live American TV, Elon told 8 million viewers something he had never said publicly before.</p>
+  </div>
+  <p class="dropcap">Saturday Night Live is one of the most famous TV shows in America. When Elon was invited to host it in 2021, it was a very big deal. During his opening speech, he said: "I'm actually making history tonight as the first person with Asperger's to host SNL."</p>
+  <p>Asperger syndrome is now usually called autism spectrum disorder. People with it often think in very focused, logical ways, but find normal social talk hard. They may not pick up on what other people are feeling. They may speak in a flat voice. Many of them are brilliant at one thing — like programming, or math, or chess.</p>
+  <p>Elon's reveal explained a lot of things about him. Why he seemed cold in interviews. Why he could work 100 hours a week on one problem. Why he said things that hurt people's feelings without seeming to know. For many autistic people watching at home, the most powerful man in technology telling the world "I'm one of you" was a huge moment.</p>
+  <div class="dyk">
+    <div class="dyk-label">One more thing</div>
+    <p>His daughter Vivian, who later came out as transgender, has also publicly shared that she is autistic. Elon has joked that it is a family trait.</p>
+  </div>
+  <div class="chapter-nav">
+    <a href="#c9" class="nav-link prev"><small>Back</small><span>Children</span></a>
+    <a href="#c11" class="nav-link next"><small>Next</small><span>Twitter</span></a>
+  </div>
+</section>
+
+<!-- C11 -->
+<section class="chapter" id="c11">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Eleven</div>
+    <h2 class="chapter-title">Buying Twitter <em>for $44 Billion</em></h2>
+    <p class="chapter-intro">He made an offer as a joke. Or maybe not. Then he tried to back out. Then he was forced by a court to go through with it. It may be the most expensive weekend whim in history.</p>
+  </div>
+  <p class="dropcap">In early 2022, Elon started buying Twitter shares in secret. He passed 9% and had to tell the world. Then, in April, he offered $44 billion for the whole company — all cash. Twitter's board said yes.</p>
+  <p>Elon almost immediately tried to back out. He said Twitter had too many fake accounts. Twitter sued him. The case was going badly for Elon. Just before the trial started, he gave up and bought the company in October 2022.</p>
+  <p>He fired about 75% of the staff. He walked into the office on his first day carrying a bathroom sink for the camera. He slept on an air mattress in the office, just like at Zip2. He changed the name of the company — you guessed it — to X.</p>
+  <div class="stats">
+    <div class="stat"><div class="num">$44B</div><div class="lbl">Price</div></div>
+    <div class="stat"><div class="num">75%</div><div class="lbl">Of staff let go</div></div>
+    <div class="stat"><div class="num">17 yrs</div><div class="lbl">After he first used the name X.com</div></div>
+  </div>
+  <p>Whether X is a better product than old Twitter is still a very hot argument. What is clear is that Elon turned what was the public square of the internet into his own personal megaphone, and changed the rules as he went.</p>
+  <div class="chapter-nav">
+    <a href="#c10" class="nav-link prev"><small>Back</small><span>SNL</span></a>
+    <a href="#c12" class="nav-link next"><small>Next</small><span>DOGE</span></a>
+  </div>
+</section>
+
+<!-- C12 -->
+<section class="chapter" id="c12">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Twelve</div>
+    <h2 class="chapter-title">The <em>DOGE Year</em></h2>
+    <p class="chapter-intro">In 2025, the world's richest man became a part-time U.S. government official with a joke name and a very real job.</p>
+  </div>
+  <p class="dropcap">After Donald Trump won the 2024 U.S. election — with Elon giving him huge public and financial support — Trump set up a new office called the Department of Government Efficiency. The short name, DOGE, was a joke about a meme coin Elon liked. The long name was serious: Elon's job was to make the government smaller and cheaper.</p>
+  <p>For about five months, Elon and his team swept through U.S. government offices. They cut jobs, canceled contracts, and dug into computer systems. Tens of thousands of federal workers lost their jobs. Whole agencies were shrunk. Old ways of working were thrown out.</p>
+  <p>His fans loved it. They said the government was too big and wasteful, and Elon was finally being honest. His critics said he was breaking laws, reading private data he had no right to see, and causing real damage to programs that helped poor and sick people.</p>
+  <div class="callout">
+    <div class="callout-label">The numbers</div>
+    <p>By the end of 2025, the U.S. federal workforce had shrunk by about 9%. But government spending had actually gone up, not down. Some of Elon's claims of massive "savings" were later shown to be exaggerated or wrong.</p>
+  </div>
+  <p>By May 2025, Elon was gone from DOGE. Not because he wanted to be. It was complicated.</p>
+  <div class="chapter-nav">
+    <a href="#c11" class="nav-link prev"><small>Back</small><span>Twitter</span></a>
+    <a href="#c13" class="nav-link next"><small>Next</small><span>Breaking With Trump</span></a>
+  </div>
+</section>
+
+<!-- C13 -->
+<section class="chapter" id="c13">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Thirteen</div>
+    <h2 class="chapter-title">Breaking Up <em>With Trump</em></h2>
+    <p class="chapter-intro">Two of the most powerful men in the world were the closest of friends. Then they had one of the loudest public fights in modern American history.</p>
+  </div>
+  <p class="dropcap">In June 2025, Elon publicly attacked the big spending bill that Trump was pushing — Trump called it the "One Big Beautiful Bill." Elon called it "a disgusting abomination." He said it would make America's debt far too big.</p>
+  <p>Trump shot back on social media. He said DOGE might end up "eating Elon." He threatened to cancel Elon's government contracts. For a few days, the whole world watched two billionaires tear each other apart in public, in real time, on Elon's own platform, X.</p>
+  <div class="timeline">
+    <div class="t-card"><div class="t-year">Jan 2025</div><p>Best friends. Elon standing next to Trump at inauguration.</p></div>
+    <div class="t-card"><div class="t-year">May 2025</div><p>Elon leaves DOGE after clashes with Trump's team.</p></div>
+    <div class="t-card"><div class="t-year">Jun 2025</div><p>Public fight over the big spending bill.</p></div>
+    <div class="t-card"><div class="t-year">Jul 2025</div><p>Elon announces a new party — the America Party.</p></div>
+    <div class="t-card"><div class="t-year">Late 2025</div><p>Slowly goes back to the Republican side on some issues.</p></div>
+  </div>
+  <p>In July 2025, Elon announced he was starting his own political party — the America Party. It was a loose group and not a real threat at a national level, but the point was clear: Elon did not want to be anyone's helper. He wanted to be his own power.</p>
+  <div class="pull">
+    "The worst enemy is the one who was once your best friend."
+    <cite>— An old saying, often quoted in 2025</cite>
+  </div>
+  <div class="chapter-nav">
+    <a href="#c12" class="nav-link prev"><small>Back</small><span>DOGE</span></a>
+    <a href="#c14" class="nav-link next"><small>Next</small><span>Elon in 2026</span></a>
+  </div>
+</section>
+
+<!-- C14 -->
+<section class="chapter" id="c14">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Fourteen</div>
+    <h2 class="chapter-title">Elon in <em>2026</em></h2>
+    <p class="chapter-intro">He is 54 years old. He runs six big companies at the same time. And he just started building the biggest chip factory the world has ever seen.</p>
+  </div>
+  <p class="dropcap">In February 2026, Elon merged two of his companies: SpaceX and xAI (his AI company). The merged company now owns the chatbot Grok, which sits inside every Tesla and X account. This was a surprise. Most people thought he would keep them separate.</p>
+  <p>In March 2026, he announced something even bigger: Terafab. It is a $25 billion factory being built next to Tesla's existing factory in Austin, Texas. When done, it will make computer chips for self-driving cars, for robots, and for the giant computer farms that run AI. It will be the largest chip factory in the United States, run by Tesla, SpaceX, and xAI together.</p>
+  <div class="stats">
+    <div class="stat"><div class="num">6</div><div class="lbl">Major companies he runs</div></div>
+    <div class="stat"><div class="num">14</div><div class="lbl">Children</div></div>
+    <div class="stat"><div class="num">$25B</div><div class="lbl">Cost of Terafab</div></div>
+    <div class="stat"><div class="num">54</div><div class="lbl">Age in 2026</div></div>
+  </div>
+  <h3>The Mars dream</h3>
+  <p>Through all of this, Elon still says his real goal is Mars. He wants humans to live on Mars before he dies. He has set dates — some of which have come and gone — for the first Mars mission. But every Starship test, every rocket launch, every robot he builds, he says, is one small step toward a city on another planet. Whether this sounds inspiring or crazy depends on who you ask. He clearly means it.</p>
+  <div class="callout">
+    <div class="callout-label">The big question</div>
+    <p>Elon Musk is, all at once, one of the most hated people in the world and one of the most loved. He has built things no one else managed to build. He has also broken many things. He has more power than most presidents. He has more enemies than most generals. And as of April 2026, he is nowhere near done.</p>
+  </div>
+  <div class="chapter-nav">
+    <a href="#c13" class="nav-link prev"><small>Back</small><span>Breakup</span></a>
+    <a href="#toc" class="nav-link next"><small>Go to</small><span>Contents</span></a>
+  </div>
+</section>
+
+<footer>
+  <span class="mark">A story still being written.</span>
+  <p>A plain-English, deep-dive look at Elon Musk.<br/>Written in April 2026. Facts are current up to this date; the future is anyone's guess.</p>
+</footer>
+
+<script>
+  // Progress bar
+  const progress = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    progress.style.width = pct + '%';
+  });
+
+  // Theme toggle (default is dark; clicking flips to light)
+  const themeBtn = document.getElementById('themeBtn');
+  const themeIcon = document.getElementById('themeIcon');
+  const themeText = document.getElementById('themeText');
+  function setTheme(t) {
+    document.body.setAttribute('data-theme', t);
+    themeIcon.textContent = t === 'dark' ? '◐' : '◑';
+    themeText.textContent = t === 'dark' ? 'Light' : 'Dark';
+  }
+  themeBtn.addEventListener('click', () => {
+    const cur = document.body.getAttribute('data-theme');
+    setTheme(cur === 'dark' ? 'light' : 'dark');
+  });
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Safety net: reveal anything already in view on load, and force-reveal
+  // everything after 1.2s so chapters are never stuck invisible (e.g. inside
+  // an iframe where the observer can misbehave).
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.reveal').forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('in');
+    });
+  });
+  setTimeout(() => {
+    document.querySelectorAll('.reveal:not(.in)').forEach(el => el.classList.add('in'));
+  }, 1200);
+</script>
+</body>
+</html>
