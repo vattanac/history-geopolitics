@@ -168,6 +168,26 @@
     color: var(--ink);
   }
 
+  .sync-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    margin: 0 4px 6px;
+    border-radius: 5px;
+    font-size: 11px;
+    color: var(--ink-muted);
+    background: var(--bg);
+    border: 1px dashed var(--border);
+  }
+  .sync-pill .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--ink-muted);
+  }
+  .sync-pill.live .dot { background: #22c55e; box-shadow: 0 0 6px #22c55e; }
+  .sync-pill.static .dot { background: #eab308; }
+  .sync-pill.live { color: var(--ink-soft); }
+
   /* Main */
   .main {
     flex: 1;
@@ -289,8 +309,11 @@
       <input class="search" id="search" type="text" placeholder="Search library…" autocomplete="off" />
     </div>
     <nav class="nav" id="nav"></nav>
+    <div id="syncPill" class="sync-pill static" title="Sync status">
+      <span class="dot"></span><span id="syncLabel">Static manifest</span>
+    </div>
     <div class="sidebar-foot">
-      <button class="foot-btn" id="rescanBtn" title="Rescan folder (Chrome/Edge)">↻ Rescan</button>
+      <button class="foot-btn" id="rescanBtn" title="Pick folder for auto-sync (Chrome/Edge)">↻ Auto-sync</button>
       <button class="foot-btn" id="themeBtn" title="Toggle light/dark">◐ <span id="themeLabel">Dark</span></button>
     </div>
   </aside>
@@ -323,7 +346,7 @@
 // ======================================================================
 // MANIFEST_START
 window.__MANIFEST__ = {
-  "generated": "2026-04-18T06:43:40Z",
+  "generated": "2026-04-18T06:51:44Z",
   "categories": [
     {
       "name": "General History",
@@ -431,7 +454,15 @@ window.__MANIFEST__ = {
   });
 
   // ---- Rescan ----
-  $("#rescanBtn").addEventListener("click", rescanFolder);
+  $("#rescanBtn").addEventListener("click", () => rescanFolder(true));
+
+  // ---- Sync pill ----
+  function setSync(mode, label) {
+    const pill = $("#syncPill");
+    pill.classList.remove("live", "static");
+    pill.classList.add(mode);
+    $("#syncLabel").textContent = label;
+  }
 
   // ---- Navigation list ----
   function renderNav() {
@@ -530,19 +561,81 @@ window.__MANIFEST__ = {
   }
 
   // ---- Rescan via File System Access API (Chrome/Edge) ----
-  async function rescanFolder() {
+  // `interactive=true` means user clicked the button — prompt for folder.
+  // `interactive=false` means silent load at startup using a remembered handle.
+  async function rescanFolder(interactive) {
     if (!window.showDirectoryPicker) {
-      alert("Your browser can't pick folders directly. Run:\n\n  python3 regenerate.py\n\nThen reload.");
-      return;
+      if (interactive) {
+        alert("Your browser can't pick folders directly.\n\nOption A: serve the folder with 'python3 -m http.server' — it will auto-sync.\nOption B: run 'python3 regenerate.py' after adding files.");
+      }
+      return false;
     }
     try {
-      const dir = await window.showDirectoryPicker({ id: "history-hub", mode: "read" });
+      let dir = interactive ? null : await idbGet("dirHandle");
+      let perm = "granted";
+      if (dir) {
+        perm = await dir.queryPermission({ mode: "read" });
+        if (perm !== "granted" && interactive) {
+          perm = await dir.requestPermission({ mode: "read" });
+        }
+        if (perm !== "granted") dir = null;
+      }
+      if (!dir) {
+        if (!interactive) return false;
+        dir = await window.showDirectoryPicker({ id: "history-hub", mode: "read" });
+        await idbSet("dirHandle", dir);
+      }
       const manifest = await scanDirectory(dir);
       state.manifest = manifest;
       renderNav();
-      alert(`Found ${countItems(manifest)} piece(s). Run regenerate.py to save permanently.`);
+      setSync("live", `Auto-synced · ${countItems(manifest)} pieces`);
+      return true;
     } catch (e) {
-      if (e.name !== "AbortError") console.error(e);
+      if (e.name !== "AbortError") console.warn("[hub] rescan:", e);
+      return false;
+    }
+  }
+
+  // ---- HTTP mode: auto-discover .html files via directory listing ----
+  async function scanViaHttp() {
+    if (!/^https?:$/.test(location.protocol)) return false;
+    try {
+      const res = await fetch("./", { cache: "no-cache" });
+      if (!res.ok) return false;
+      const text = await res.text();
+
+      // python -m http.server and most static servers produce
+      // an HTML listing with <a href="...">. Parse those links.
+      const doc = new DOMParser().parseFromString(text, "text/html");
+      const links = [...doc.querySelectorAll("a[href]")]
+        .map(a => a.getAttribute("href"))
+        .map(h => h.split("#")[0].split("?")[0])
+        .filter(h => /\.html?$/i.test(h))
+        .filter(h => !/^(\/|https?:|index\.html?$)/i.test(h))
+        .map(h => decodeURIComponent(h));
+
+      if (!links.length) return false;
+
+      const items = [];
+      for (const name of [...new Set(links)]) {
+        try {
+          const r = await fetch(name, { cache: "no-cache" });
+          if (!r.ok) continue;
+          const html = await r.text();
+          const meta = parseMeta(html, name);
+          if (meta.skip) continue;
+          items.push(meta);
+        } catch (_) {}
+      }
+      if (!items.length) return false;
+
+      state.manifest = groupItems(items);
+      renderNav();
+      setSync("live", `Auto-synced · ${items.length} pieces`);
+      return true;
+    } catch (e) {
+      console.warn("[hub] http scan:", e);
+      return false;
     }
   }
 
@@ -554,14 +647,31 @@ window.__MANIFEST__ = {
       if (entry.name.toLowerCase() === "index.html") continue;
       const file = await entry.getFile();
       const text = await file.text();
-      items.push(parseMeta(text, entry.name));
+      const meta = parseMeta(text, entry.name);
+      if (!meta.skip) items.push(meta);
     }
+    return groupItems(items);
+  }
+
+  function groupItems(items) {
     const catMap = new Map();
     for (const it of items) {
       if (!catMap.has(it.category)) catMap.set(it.category, new Map());
       const sm = catMap.get(it.category);
       if (!sm.has(it.subcategory)) sm.set(it.subcategory, []);
-      sm.get(it.subcategory).push({ title: it.title, file: it.file, description: it.description, added: it.added });
+      sm.get(it.subcategory).push({
+        title: it.title, file: it.file, description: it.description, added: it.added
+      });
+    }
+    // Sort items within each sub: newest 'added' first, then title.
+    for (const sm of catMap.values()) {
+      for (const arr of sm.values()) {
+        arr.sort((a, b) => {
+          const da = a.added || "", db = b.added || "";
+          if (da !== db) return db.localeCompare(da);
+          return String(a.title).localeCompare(String(b.title));
+        });
+      }
     }
     return {
       generated: new Date().toISOString(),
@@ -572,20 +682,56 @@ window.__MANIFEST__ = {
     };
   }
 
+  // ---- Tiny IndexedDB key-value for directory handle ----
+  const IDB_NAME = "history-hub";
+  const IDB_STORE = "kv";
+  function idbOpen() {
+    return new Promise((resolve, reject) => {
+      const req = indexedDB.open(IDB_NAME, 1);
+      req.onupgradeneeded = () => req.result.createObjectStore(IDB_STORE);
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+  }
+  async function idbGet(key) {
+    try {
+      const db = await idbOpen();
+      return await new Promise((res, rej) => {
+        const tx = db.transaction(IDB_STORE, "readonly");
+        const req = tx.objectStore(IDB_STORE).get(key);
+        req.onsuccess = () => res(req.result);
+        req.onerror = () => rej(req.error);
+      });
+    } catch { return null; }
+  }
+  async function idbSet(key, value) {
+    try {
+      const db = await idbOpen();
+      return await new Promise((res, rej) => {
+        const tx = db.transaction(IDB_STORE, "readwrite");
+        tx.objectStore(IDB_STORE).put(value, key);
+        tx.oncomplete = () => res(true);
+        tx.onerror = () => rej(tx.error);
+      });
+    } catch { return false; }
+  }
+
   function parseMeta(html, filename) {
     const get = (name) => {
-      const re = new RegExp(`<meta\\s+name=["']${name}["']\\s+content=["']([^"']+)["']`, "i");
+      const re = new RegExp(`<meta\\s+name=["']${name}["']\\s+content=["']([^"']*)["']`, "i");
       const m = html.match(re);
       return m ? m[1] : null;
     };
     const titleM = html.match(/<title>([^<]+)<\/title>/i);
+    const skip = /^(1|true|yes)$/i.test(get("nav-skip") || "");
     return {
       title: get("nav-title") || (titleM && titleM[1].trim()) || filename,
       file: filename,
       description: get("nav-description") || get("description") || "",
       category: get("category") || "Uncategorized",
       subcategory: get("subcategory") || "_default",
-      added: get("nav-added") || ""
+      added: get("nav-added") || "",
+      skip
     };
   }
 
@@ -602,9 +748,35 @@ window.__MANIFEST__ = {
   }
 
   // ---- Init ----
+  // 1. Render the static manifest immediately so the menu is never empty.
   renderNav();
+  setSync("static", `Static · ${countItems(state.manifest)} pieces`);
 
-  // Deep link support: index.html#Israel_Book_Easy.html
+  // 2. Try to upgrade to a live, auto-synced manifest.
+  //    Order of preference:
+  //      a) HTTP directory listing (works with `python3 -m http.server`)
+  //      b) Previously-picked folder handle stored in IndexedDB (Chrome/Edge)
+  //    If both fail, we stay on the baked-in static manifest.
+  (async () => {
+    const didHttp = await scanViaHttp();
+    if (!didHttp) {
+      const didFs = await rescanFolder(false);
+      if (!didFs) {
+        setSync("static",
+          location.protocol === "file:"
+            ? "Static · click ↻ Auto-sync to enable"
+            : `Static · ${countItems(state.manifest)} pieces`);
+      }
+    }
+
+    // Re-open a deep-linked file once we have the final manifest.
+    if (location.hash) {
+      const file = decodeURIComponent(location.hash.slice(1));
+      if (findMeta(file)) openFile(file);
+    }
+  })();
+
+  // Deep link support (immediate) — works even while async load is running.
   if (location.hash) {
     const file = decodeURIComponent(location.hash.slice(1));
     if (findMeta(file)) openFile(file);

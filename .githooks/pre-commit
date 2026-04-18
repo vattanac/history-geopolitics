@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# ---------------------------------------------------------------
+# pre-commit hook for the History & Geopolitics library.
+#
+# When you commit, this hook:
+#   1. Checks whether any .html file (other than index.html) is being
+#      added, modified, or deleted in this commit.
+#   2. If yes, runs regenerate.py to refresh the manifest inside
+#      index.html.
+#   3. Stages the updated index.html so the commit includes it.
+#
+# To install:   git config core.hooksPath .githooks
+# (or use the provided install-hooks.sh)
+# ---------------------------------------------------------------
+
+set -euo pipefail
+
+# Find repo root and cd into it so paths are stable.
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+# Look at the files staged for this commit. We care about any .html
+# change *except* index.html itself (its content is generated).
+staged_html="$(git diff --cached --name-only --diff-filter=ACMRD \
+  | grep -E '\.html?$' \
+  | grep -Ev '(^|/)index\.html$' \
+  || true)"
+
+if [ -z "$staged_html" ]; then
+  exit 0
+fi
+
+echo "[pre-commit] HTML files changed — regenerating library manifest..."
+
+# Run the regenerator. Fall back to 'python' if python3 isn't available.
+if command -v python3 >/dev/null 2>&1; then
+  PY=python3
+elif command -v python >/dev/null 2>&1; then
+  PY=python
+else
+  echo "[pre-commit] ERROR: python3 not found on PATH." >&2
+  exit 1
+fi
+
+"$PY" regenerate.py
+
+# Re-stage index.html if the regenerator changed it.
+if ! git diff --quiet -- index.html; then
+  git add index.html
+  echo "[pre-commit] index.html manifest updated and re-staged."
+else
+  echo "[pre-commit] index.html already up to date."
+fi

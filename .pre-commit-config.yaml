@@ -1,0 +1,22 @@
+# Config for the Python `pre-commit` framework (https://pre-commit.com)
+#
+# To enable:
+#   pip install pre-commit --break-system-packages
+#   pre-commit install
+#
+# After that, every `git commit` that touches an .html file will
+# automatically run regenerate.py and stage the refreshed index.html.
+
+repos:
+  - repo: local
+    hooks:
+      - id: regenerate-library
+        name: Regenerate library manifest
+        entry: python3 regenerate.py
+        language: system
+        pass_filenames: false
+        # Only run when a non-index .html changes.
+        files: \.html?$
+        exclude: ^index\.html$
+        # regenerate.py edits index.html, so make sure it is re-staged.
+        stages: [pre-commit]
