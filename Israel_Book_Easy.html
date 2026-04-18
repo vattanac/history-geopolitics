@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Story of Israel — A Simple Book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F7F5F0;
+    --bg-soft: #EFEBE2;
+    --ink: #1a1a1a;
+    --ink-soft: #555;
+    --accent: #2B4C7E;
+    --accent-2: #D4A574;
+    --card: rgba(255, 255, 255, 0.6);
+    --border: rgba(0, 0, 0, 0.08);
+    --glow: rgba(43, 76, 126, 0.15);
+  }
+
+  [data-theme="dark"] {
+    --bg: #0D0D10;
+    --bg-soft: #16161A;
+    --ink: #F5F2EA;
+    --ink-soft: #A8A39A;
+    --accent: #7FB3FF;
+    --accent-2: #E8B778;
+    --card: rgba(255, 255, 255, 0.04);
+    --border: rgba(255, 255, 255, 0.08);
+    --glow: rgba(127, 179, 255, 0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 17px;
+    font-weight: 400;
+    transition: background 0.6s ease, color 0.6s ease;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, var(--glow), transparent),
+      radial-gradient(ellipse 60% 40% at 100% 100%, var(--glow), transparent);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* Progress bar */
+  .progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    width: 0%;
+    z-index: 100;
+    transition: width 0.1s linear;
+  }
+
+  /* Top nav */
+  nav.top {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    display: flex;
+    gap: 8px;
+    z-index: 50;
+  }
+
+  .chip {
+    background: var(--card);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    color: var(--ink);
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .chip:hover {
+    transform: translateY(-1px);
+    background: var(--bg-soft);
+    box-shadow: 0 8px 24px var(--glow);
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 32px;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 28px;
+    font-weight: 500;
+  }
+
+  .eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+    vertical-align: middle;
+    margin-right: 12px;
+  }
+
+  h1.title {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: clamp(48px, 9vw, 112px);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+
+  h1.title .accent {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .subtitle {
+    font-size: clamp(18px, 2vw, 22px);
+    color: var(--ink-soft);
+    max-width: 640px;
+    line-height: 1.5;
+    margin-bottom: 48px;
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--ink-soft);
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    max-width: 640px;
+  }
+
+  .meta-row span strong {
+    color: var(--ink);
+    display: block;
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+
+  /* Table of contents */
+  .toc {
+    max-width: 900px;
+    margin: 120px auto;
+    padding: 0 32px;
+  }
+
+  .section-label {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 32px;
+    color: var(--ink);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+  }
+
+  .section-label::before {
+    content: "";
+    flex: 1;
+    max-width: 48px;
+    height: 1px;
+    background: var(--ink-soft);
+  }
+
+  .toc-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2px;
+    background: var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .toc-item {
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: 22px 28px;
+    background: var(--bg);
+    color: var(--ink);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .toc-item:hover {
+    background: var(--bg-soft);
+    padding-left: 34px;
+  }
+
+  .toc-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 28px;
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .toc-title {
+    font-weight: 500;
+    font-size: 16px;
+  }
+
+  .toc-sub {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+    font-weight: 400;
+  }
+
+  .toc-arrow {
+    color: var(--ink-soft);
+    font-size: 18px;
+    transition: transform 0.2s;
+  }
+
+  .toc-item:hover .toc-arrow {
+    transform: translateX(4px);
+    color: var(--accent);
+  }
+
+  /* Chapter */
+  .chapter {
+    max-width: 720px;
+    margin: 120px auto;
+    padding: 0 32px;
+    scroll-margin-top: 40px;
+  }
+
+  .chapter-header {
+    margin-bottom: 56px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .chapter-num {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  h2.chapter-title {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+
+  h2.chapter-title em {
+    color: var(--accent);
+  }
+
+  .chapter-intro {
+    font-size: 19px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    max-width: 620px;
+  }
+
+  .chapter p {
+    margin-bottom: 22px;
+    color: var(--ink);
+  }
+
+  .chapter p + p { margin-top: 0; }
+
+  .dropcap::first-letter {
+    font-family: 'Instrument Serif', serif;
+    font-size: 64px;
+    float: left;
+    line-height: 1;
+    padding: 6px 14px 0 0;
+    color: var(--accent);
+  }
+
+  h3 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 28px;
+    margin: 48px 0 16px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  /* Callout card */
+  .callout {
+    background: var(--card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 32px;
+    margin: 32px 0;
+    position: relative;
+  }
+
+  .callout::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 24px;
+    width: 48px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 0 0 4px 4px;
+  }
+
+  .callout-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .callout p { margin-bottom: 0; font-size: 16px; }
+
+  /* Word help box */
+  .words {
+    background: linear-gradient(135deg, var(--bg-soft), transparent);
+    border-left: 3px solid var(--accent-2);
+    padding: 20px 24px;
+    border-radius: 0 14px 14px 0;
+    margin: 32px 0;
+  }
+
+  .words .words-title {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--accent-2);
+    margin-bottom: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .words dl { font-size: 15px; }
+  .words dt {
+    font-weight: 600;
+    color: var(--ink);
+    display: inline;
+  }
+  .words dd {
+    display: inline;
+    color: var(--ink-soft);
+    margin-left: 6px;
+  }
+  .words dd::after { content: ""; display: block; margin-bottom: 8px; }
+
+  /* Timeline row */
+  .timeline {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding: 12px 0 24px;
+    margin: 32px -16px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .timeline::-webkit-scrollbar { height: 4px; }
+  .timeline::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .t-card {
+    min-width: 240px;
+    background: var(--card);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+
+  .t-year {
+    font-family: 'Instrument Serif', serif;
+    font-size: 26px;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .t-card p { font-size: 14px; margin: 0; color: var(--ink-soft); }
+
+  /* Chapter nav bottom */
+  .chapter-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    gap: 16px;
+  }
+
+  .nav-link {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.2s;
+    background: var(--card);
+  }
+
+  .nav-link:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .nav-link.prev { text-align: left; }
+  .nav-link.next { text-align: right; }
+
+  .nav-link small {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+  }
+
+  .nav-link span {
+    font-family: 'Instrument Serif', serif;
+    font-size: 20px;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 80px 32px 48px;
+    color: var(--ink-soft);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+    margin-top: 80px;
+  }
+
+  footer .mark {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 28px;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    nav.top { top: 12px; right: 12px; }
+    .chip { padding: 8px 12px; font-size: 12px; }
+    .hero { padding: 120px 24px 60px; }
+    .toc-item { grid-template-columns: 44px 1fr auto; padding: 18px 20px; gap: 14px; }
+    .toc-num { font-size: 22px; }
+    .chapter { padding: 0 24px; }
+    .chapter-nav { flex-direction: column; }
+  }
+
+  /* Reveal animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: none;
+  }
+</style>
+</head>
+<body data-theme="light">
+
+<div class="progress" id="progress"></div>
+
+<nav class="top">
+  <a href="#toc" class="chip">Contents</a>
+  <button class="chip" id="themeBtn" aria-label="Toggle theme">
+    <span id="themeIcon">◐</span> <span id="themeText">Dark</span>
+  </button>
+</nav>
+
+<!-- HERO / COVER -->
+<section class="hero">
+  <div class="eyebrow reveal">A Simple Book · 2026 Edition</div>
+  <h1 class="title reveal">The Story of <span class="accent">Israel</span>,<br/>told in easy words.</h1>
+  <p class="subtitle reveal">A short, friendly book that tells the long story of the land called Israel — the people who lived there, the big moments, and why it still matters today. Written in plain English, with no hard words.</p>
+  <div class="meta-row reveal">
+    <span><strong>Chapters</strong> 15 short parts</span>
+    <span><strong>Reading time</strong> About 45 minutes</span>
+    <span><strong>Level</strong> Easy for everyone</span>
+  </div>
+</section>
+
+<!-- TABLE OF CONTENTS -->
+<section class="toc" id="toc">
+  <div class="section-label reveal">Chapters</div>
+  <div class="toc-grid reveal">
+    <a href="#c1" class="toc-item"><div class="toc-num">01</div><div><div class="toc-title">A Piece of Land by the Sea</div><div class="toc-sub">Where it is and who lived there first</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c2" class="toc-item"><div class="toc-num">02</div><div><div class="toc-title">The First Israelites</div><div class="toc-sub">Small towns, families, and early kings</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c3" class="toc-item"><div class="toc-num">03</div><div><div class="toc-title">Big Empires Arrive</div><div class="toc-sub">Assyria, Babylon, and the First Temple falls</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c4" class="toc-item"><div class="toc-num">04</div><div><div class="toc-title">Coming Back and Building Again</div><div class="toc-sub">Persians, Greeks, and the Second Temple</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c5" class="toc-item"><div class="toc-num">05</div><div><div class="toc-title">The Romans and the Great Loss</div><div class="toc-sub">Revolts, the Temple burns, and people leave</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c6" class="toc-item"><div class="toc-num">06</div><div><div class="toc-title">Many Rulers for a Long Time</div><div class="toc-sub">Byzantines, Arabs, Crusaders, and more</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c7" class="toc-item"><div class="toc-num">07</div><div><div class="toc-title">Four Hundred Years of the Ottomans</div><div class="toc-sub">Life under the Turkish empire</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c8" class="toc-item"><div class="toc-num">08</div><div><div class="toc-title">A Dream of Home</div><div class="toc-sub">How modern Zionism began</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c9" class="toc-item"><div class="toc-num">09</div><div><div class="toc-title">World Wars and the British</div><div class="toc-sub">Promises, trouble, and the Holocaust</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c10" class="toc-item"><div class="toc-num">10</div><div><div class="toc-title">A New Country in 1948</div><div class="toc-sub">The birth of Israel and the Nakba</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c11" class="toc-item"><div class="toc-num">11</div><div><div class="toc-title">Wars with Neighbors</div><div class="toc-sub">1956, 1967, and 1973</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c12" class="toc-item"><div class="toc-num">12</div><div><div class="toc-title">Trying to Make Peace</div><div class="toc-sub">Egypt, Jordan, and the Oslo talks</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c13" class="toc-item"><div class="toc-num">13</div><div><div class="toc-title">The Palestinian Story</div><div class="toc-sub">Life in the West Bank and Gaza</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c14" class="toc-item"><div class="toc-num">14</div><div><div class="toc-title">Israel Today</div><div class="toc-sub">People, cities, and daily life</div></div><div class="toc-arrow">→</div></a>
+    <a href="#c15" class="toc-item"><div class="toc-num">15</div><div><div class="toc-title">October 7 and What Came After</div><div class="toc-sub">The biggest war in many years</div></div><div class="toc-arrow">→</div></a>
+  </div>
+</section>
+
+<!-- CHAPTER 1 -->
+<section class="chapter" id="c1">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter One</div>
+    <h2 class="chapter-title">A Piece of Land <em>by the Sea</em></h2>
+    <p class="chapter-intro">Israel sits on a small strip of land between the Mediterranean Sea and the Jordan River. It is not a big country. But it has been important for thousands of years.</p>
+  </div>
+  <p class="dropcap">The land we are going to talk about is small. You can drive across it in a few hours. On one side is the blue Mediterranean Sea. On the other side is a river called the Jordan, and a very salty lake called the Dead Sea. In the north are green hills. In the south is a dry desert called the Negev.</p>
+  <p>People have lived here for a very long time. Some of the oldest bones of modern humans outside of Africa were found in caves near the coast. One of the oldest cities in the world, Jericho, is here too. People were farming and building walls there more than 10,000 years ago.</p>
+  <p>The land sits right between big parts of the world. Egypt is to the south. What is now Iraq is to the east. Turkey is to the north. Europe is across the sea. Because of this, many armies and traders came through. It was always a busy place.</p>
+  <div class="words">
+    <div class="words-title">New Words</div>
+    <dl>
+      <dt>Mediterranean Sea —</dt><dd>A big sea between Europe, Africa, and Asia.</dd>
+      <dt>Negev —</dt><dd>A desert area in the south of Israel.</dd>
+      <dt>Dead Sea —</dt><dd>A very salty lake. So salty that people float in it easily.</dd>
+    </dl>
+  </div>
+  <div class="chapter-nav">
+    <a href="#toc" class="nav-link prev"><small>Back to</small><span>Contents</span></a>
+    <a href="#c2" class="nav-link next"><small>Next</small><span>The First Israelites</span></a>
+  </div>
+</section>
+
+<!-- CHAPTER 2 -->
+<section class="chapter" id="c2">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Two</div>
+    <h2 class="chapter-title">The First <em>Israelites</em></h2>
+    <p class="chapter-intro">More than 3,000 years ago, a new group of people started to show up in the hills. They called themselves the Children of Israel.</p>
+  </div>
+  <p class="dropcap">The land was called Canaan back then. Many people lived there in small cities, each with its own king. Then something new happened. In the high hills, small villages started to pop up. The people in them did not eat pigs. They lived simply. They believed in one God, not many.</p>
+  <p>These people were called the Israelites. An old Egyptian stone from about 3,200 years ago mentions them by name — this is one of the first times we see the word "Israel" outside the Bible.</p>
+  <p>At first, they had no king. Each tribe had its own leaders. Then, the Bible says, they picked a first king named Saul. After him came David, who took the city of Jerusalem and made it his home. His son, Solomon, built a big Temple there where people prayed to God.</p>
+  <div class="callout">
+    <div class="callout-label">Good to know</div>
+    <p>Some of what we know comes from the Bible, and some comes from things found in the ground by history workers called archaeologists. They do not always agree on every detail, but they agree on the big picture.</p>
+  </div>
+  <p>After Solomon died, the kingdom split in two. The north was called Israel. The south was called Judah. Both had their own kings. This lasted for a few hundred years.</p>
+  <div class="chapter-nav">
+    <a href="#c1" class="nav-link prev"><small>Back</small><span>A Piece of Land</span></a>
+    <a href="#c3" class="nav-link next"><small>Next</small><span>Big Empires Arrive</span></a>
+  </div>
+</section>
+
+<!-- CHAPTER 3 -->
+<section class="chapter" id="c3">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Three</div>
+    <h2 class="chapter-title">Big Empires <em>Arrive</em></h2>
+    <p class="chapter-intro">Small kingdoms do not last long when big empires come knocking. That is what happened here.</p>
+  </div>
+  <p class="dropcap">First came the Assyrians from the east. They had a huge army. In 722 BC they crushed the northern kingdom of Israel and took many of its people far away. Those people never came back. Many stories have been told about the "Ten Lost Tribes," but no one really knows what happened to them.</p>
+  <p>About 150 years later, another big empire, the Babylonians, came for the southern kingdom of Judah. In 586 BC, their king, Nebuchadnezzar, broke down the walls of Jerusalem. He burned the big Temple that Solomon had built. He took many of the Jewish people to Babylon, far to the east. This is called the Babylonian Exile.</p>
+  <div class="words">
+    <div class="words-title">New Words</div>
+    <dl>
+      <dt>Exile —</dt><dd>When people are forced to live far from their home.</dd>
+      <dt>BC —</dt><dd>"Before Christ." Years count backwards. 500 BC was before 100 BC.</dd>
+      <dt>Temple —</dt><dd>A big, holy building where people pray to God.</dd>
+    </dl>
+  </div>
+  <p>The Jews cried for their lost city. Some of the saddest and most beautiful songs in the Bible were written at this time. But something important happened too — even far from home, the Jewish people kept their God, their rules, and their stories. They did not disappear.</p>
+  <div class="chapter-nav">
+    <a href="#c2" class="nav-link prev"><small>Back</small><span>First Israelites</span></a>
+    <a href="#c4" class="nav-link next"><small>Next</small><span>Coming Back</span></a>
+  </div>
+</section>
+
+<!-- CHAPTER 4 -->
+<section class="chapter" id="c4">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Four</div>
+    <h2 class="chapter-title">Coming Back, <em>Building Again</em></h2>
+    <p class="chapter-intro">After about fifty years, a new king let the Jewish people go home. They rebuilt their Temple. But new rulers kept coming.</p>
+  </div>
+  <p class="dropcap">A Persian king named Cyrus took over from the Babylonians. He told the Jewish people they could go back to Jerusalem. Many did. They built a new Temple on the same spot as the old one. This is called the Second Temple.</p>
+  <p>Life was quiet for a while. Then a young Greek king named Alexander the Great marched through the land around 332 BC. After he died, his generals fought over his empire. Greeks ruled the land for about 150 years.</p>
+  <p>One Greek king tried to stop the Jews from praying to their God. He put a Greek statue in the Temple. A family of Jewish fighters called the Maccabees said no. They fought back and won. They cleaned the Temple and lit it again. Today, Jewish people remember this every year with a holiday called Hanukkah.</p>
+  <p>The Maccabees and their family ruled for about 100 years. They made the Jewish land bigger. But inside the family, there was fighting. That fighting gave the next empire — Rome — a chance to step in.</p>
+  <div class="chapter-nav">
+    <a href="#c3" class="nav-link prev"><small>Back</small><span>Big Empires</span></a>
+    <a href="#c5" class="nav-link next"><small>Next</small><span>The Romans</span></a>
+  </div>
+</section>
+
+<!-- CHAPTER 5 -->
+<section class="chapter" id="c5">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Five</div>
+    <h2 class="chapter-title">The Romans and <em>the Great Loss</em></h2>
+    <p class="chapter-intro">Rome was the biggest empire the world had ever seen. When Rome took over, things changed forever.</p>
+  </div>
+  <p class="dropcap">Rome took the land in 63 BC. They let a man named Herod be king. He was not fully Jewish, and many people did not like him. But he was a big builder. He made the Second Temple huge and beautiful. He built harbors, roads, and fortresses.</p>
+  <p>During Roman times, a man named Jesus was born in this land. He grew up, taught many people, and was killed by the Romans. His followers started a new faith called Christianity. That is why, today, this land is also called the Holy Land.</p>
+  <p>The Jewish people did not like being under Rome. They fought two big wars to be free. Both wars ended very badly. In 70 AD, Roman soldiers burned Jerusalem. They destroyed the Second Temple. Only one wall of the Temple platform was left standing — today we call it the Western Wall, and Jewish people still pray there.</p>
+  <p>About sixty years later, another Jewish revolt was crushed even harder. Rome kicked the Jewish people out of Jerusalem and changed the name of the whole land to "Palestine." Most Jewish people had to live in other countries. This long time away from home is called the Diaspora.</p>
+  <div class="callout">
+    <div class="callout-label">Why this matters</div>
+    <p>From here on, for almost 2,000 years, most Jewish people lived far from this land — in Europe, Africa, and across the Middle East. But they always kept talking about it, praying for it, and hoping to come back.</p>
+  </div>
+  <div class="chapter-nav">
+    <a href="#c4" class="nav-link prev"><small>Back</small><span>Coming Back</span></a>
+    <a href="#c6" class="nav-link next"><small>Next</small><span>Many Rulers</span></a>
+  </div>
+</section>
+
+<!-- CHAPTER 6 -->
+<section class="chapter" id="c6">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Six</div>
+    <h2 class="chapter-title">Many Rulers <em>for a Long Time</em></h2>
+    <p class="chapter-intro">For more than a thousand years after Rome, one empire after another ruled this land. Let's see them quickly.</p>
+  </div>
+  <div class="timeline">
+    <div class="t-card"><div class="t-year">324</div><p>Rome becomes Christian. Churches are built all over. Many people here become Christian.</p></div>
+    <div class="t-card"><div class="t-year">638</div><p>Arab Muslim armies take Jerusalem. Islam is now the new main religion.</p></div>
+    <div class="t-card"><div class="t-year">691</div><p>The gold Dome of the Rock is built on the old Temple hill. Jerusalem becomes holy for Muslims too.</p></div>
+    <div class="t-card"><div class="t-year">1099</div><p>European Christian armies called Crusaders capture Jerusalem. They are very bloody.</p></div>
+    <div class="t-card"><div class="t-year">1187</div><p>A Muslim leader, Saladin, takes Jerusalem back.</p></div>
+    <div class="t-card"><div class="t-year">1291</div><p>The Mamluks from Egypt push out the last Crusaders.</p></div>
+    <div class="t-card"><div class="t-year">1517</div><p>The Ottoman Turks take over. They will rule for 400 years.</p></div>
+  </div>
+  <p>During all these years, three big religions — Judaism, Christianity, and Islam — all grew to love Jerusalem. Each one sees it as a holy place. This is one of the reasons the city has been fought over so many times.</p>
+  <p>Over the centuries, most of the people who lived here became Arab and Muslim. But Christian and Jewish people always stayed too. Jerusalem has always had a mix.</p>
+  <div class="chapter-nav">
+    <a href="#c5" class="nav-link prev"><small>Back</small><span>The Romans</span></a>
+    <a href="#c7" class="nav-link next"><small>Next</small><span>The Ottomans</span></a>
+  </div>
+</section>
+
+<!-- CHAPTER 7 -->
+<section class="chapter" id="c7">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Seven</div>
+    <h2 class="chapter-title">Four Hundred Years <em>of the Ottomans</em></h2>
+    <p class="chapter-intro">The Ottomans were a big Turkish Muslim empire. They ruled this land longer than anyone else in the last 2,000 years.</p>
+  </div>
+  <p class="dropcap">Under the Ottomans, the land had a mix of Arab Muslim farmers, some Christian villages, and small groups of Jewish people living mostly in four holy cities: Jerusalem, Hebron, Safed, and Tiberias. Life was slow and mostly about farming.</p>
+  <p>One Ottoman sultan, Suleiman the Great, built the beautiful stone walls that still stand around the Old City of Jerusalem today. If you go to Jerusalem, you can walk along those walls.</p>
+  <p>For a long time the land was poor and quiet. Not many people lived here — maybe half a million in total. But in the 1800s, steamboats and new roads made it easier for pilgrims and travelers to come. Foreign countries started to pay more attention. Change was coming.</p>
+  <div class="chapter-nav">
+    <a href="#c6" class="nav-link prev"><small>Back</small><span>Many Rulers</span></a>
+    <a href="#c8" class="nav-link next"><small>Next</small><span>A Dream of Home</span></a>
+  </div>
+</section>
+
+<!-- CHAPTER 8 -->
+<section class="chapter" id="c8">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Eight</div>
+    <h2 class="chapter-title">A Dream <em>of Home</em></h2>
+    <p class="chapter-intro">In the 1800s, in Europe, Jewish people were treated very badly. Some started to say: we need our own country again.</p>
+  </div>
+  <p class="dropcap">In Russia and other places, Jewish families were attacked in awful events called pogroms. Homes were burned. People were killed. Many Jews left for America. But a few said: why not go back to the old land? Why not build a home there again?</p>
+  <p>A writer named Theodor Herzl wrote a small book in 1896 called "The Jewish State." He said Jewish people needed their own country where they would be safe. One year later, he held a big meeting in a Swiss city called Basel. This was the start of modern Zionism.</p>
+  <div class="words">
+    <div class="words-title">New Words</div>
+    <dl>
+      <dt>Zionism —</dt><dd>The idea that Jewish people should have their own country in their old homeland.</dd>
+      <dt>Pogrom —</dt><dd>A violent attack on Jewish people, usually in old Russia or Eastern Europe.</dd>
+      <dt>Aliyah —</dt><dd>A Hebrew word that means "going up." It is used for Jewish people moving to Israel.</dd>
+    </dl>
+  </div>
+  <p>Slowly, small waves of Jewish people started to move to the land. They bought plots of soil, mostly from Arab landlords. They built farms. They drained swamps. In 1909 they started a new city on sandy ground by the sea and called it Tel Aviv, which means "Hill of Spring."</p>
+  <p>At the same time, Arab people had been living on this land for many hundreds of years. They had their own towns, farms, and families. Two groups now wanted the same small piece of ground. This is where the long fight really begins.</p>
+  <div class="chapter-nav">
+    <a href="#c7" class="nav-link prev"><small>Back</small><span>The Ottomans</span></a>
+    <a href="#c9" class="nav-link next"><small>Next</small><span>World Wars</span></a>
+  </div>
+</section>
+
+<!-- CHAPTER 9 -->
+<section class="chapter" id="c9">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Nine</div>
+    <h2 class="chapter-title">World Wars and <em>the British</em></h2>
+    <p class="chapter-intro">In World War One, the Ottomans lost. The British took the land. They made too many promises to too many people.</p>
+  </div>
+  <p class="dropcap">During the war, the British wanted help from both Arabs and Jews. They told Arab leaders they could have their own lands. They told Jewish leaders, in a short letter called the Balfour Declaration in 1917, that Britain would help build a Jewish "national home" in the land. But they also said they would protect the rights of the Arabs already living there. It was hard to keep both promises.</p>
+  <p>After the war, the British took over and called the area the "British Mandate of Palestine." More Jewish people came, especially as life got worse and worse for Jews in Germany under Adolf Hitler in the 1930s.</p>
+  <div class="callout">
+    <div class="callout-label">The Holocaust</div>
+    <p>During World War Two, the Nazi government of Germany killed about 6 million Jewish people in Europe — about two out of every three Jews in Europe. This terrible event is called the Holocaust or the Shoah. After the war, many Jewish survivors had nowhere to go. Many wanted to move to the land, now more than ever.</p>
+  </div>
+  <p>The British tried to limit how many Jews could come in, to keep the peace with the Arab side. Some Jewish groups started fighting the British. Arab groups also fought against British rule and Jewish newcomers. The land was full of anger. The British got tired and said: we give up. You figure it out.</p>
+  <p>They gave the problem to the United Nations, a new group of countries that had just been formed.</p>
+  <div class="chapter-nav">
+    <a href="#c8" class="nav-link prev"><small>Back</small><span>Dream of Home</span></a>
+    <a href="#c10" class="nav-link next"><small>Next</small><span>A New Country</span></a>
+  </div>
+</section>
+
+<!-- CHAPTER 10 -->
+<section class="chapter" id="c10">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Ten</div>
+    <h2 class="chapter-title">A New Country <em>in 1948</em></h2>
+    <p class="chapter-intro">One state for Jews. One state for Arabs. That was the plan. It did not go smoothly.</p>
+  </div>
+  <p class="dropcap">On November 29, 1947, the United Nations voted to split the land into two countries — one Jewish, one Arab — with Jerusalem as a special international city. Jewish leaders said yes. Arab leaders said no. They felt it was not fair to split their land, where most of the people were Arab.</p>
+  <p>Fighting broke out almost right away. On May 14, 1948, as the last British soldiers were leaving, a Jewish leader named David Ben-Gurion stood up and said: "We are now a country. Our name is Israel." The State of Israel was born.</p>
+  <p>The very next day, the armies of Egypt, Jordan, Syria, Iraq, and Lebanon attacked. This is called Israel's War of Independence. To the surprise of many, Israel won. When the fighting stopped, Israel was bigger than the UN plan had said.</p>
+  <div class="callout">
+    <div class="callout-label">The Nakba</div>
+    <p>For Palestinian Arabs, this war was a disaster. About 700,000 people fled or were forced from their homes. Most could never return. About 400 Arab villages were emptied out. Palestinians call this the Nakba, which means "the catastrophe" in Arabic. Their pain from this moment is still felt today.</p>
+  </div>
+  <p>After the war, Jordan held a part called the West Bank. Egypt held a small strip on the coast called Gaza. There was no Palestinian Arab state. That is the key point to remember.</p>
+  <p>In the first ten years of the new country, about a million Jewish people moved to Israel. Many came from Arab countries, where they were no longer welcome after 1948. Others were survivors of the Holocaust from Europe. Israel doubled in size, very fast.</p>
+  <div class="chapter-nav">
+    <a href="#c9" class="nav-link prev"><small>Back</small><span>World Wars</span></a>
+    <a href="#c11" class="nav-link next"><small>Next</small><span>Wars with Neighbors</span></a>
+  </div>
+</section>
+
+<!-- CHAPTER 11 -->
+<section class="chapter" id="c11">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Eleven</div>
+    <h2 class="chapter-title">Wars with <em>Neighbors</em></h2>
+    <p class="chapter-intro">In the first 25 years, Israel fought three more big wars with its Arab neighbors. Each one changed the map.</p>
+  </div>
+  <div class="timeline">
+    <div class="t-card"><div class="t-year">1956</div><p>Israel, Britain, and France fight Egypt over the Suez Canal. Big countries tell them to stop.</p></div>
+    <div class="t-card"><div class="t-year">1967</div><p>In only six days, Israel wins a huge war. It takes the Sinai, Gaza, the West Bank, East Jerusalem, and the Golan Heights.</p></div>
+    <div class="t-card"><div class="t-year">1973</div><p>Egypt and Syria attack Israel on Yom Kippur, a Jewish holy day. Israel is surprised, nearly loses, then pushes back.</p></div>
+  </div>
+  <p>The 1967 war is the most important to understand. In six days, Israel won land from three countries. For the first time since Roman days, Jewish people could visit the Western Wall in Jerusalem freely. For many, it was a dream come true.</p>
+  <p>But those six days also made a big new problem. Israel now ruled over about a million Palestinian Arabs who lived in the West Bank and Gaza. They did not become Israeli citizens. They lived under Israeli army rule. This is called the Occupation. It has lasted, in some form, ever since.</p>
+  <p>The 1973 war shook Israel badly. Many soldiers died. The country felt it had been too proud after 1967. After the war, people started to think: maybe we really can make peace, at least with some neighbors.</p>
+  <div class="chapter-nav">
+    <a href="#c10" class="nav-link prev"><small>Back</small><span>A New Country</span></a>
+    <a href="#c12" class="nav-link next"><small>Next</small><span>Trying to Make Peace</span></a>
+  </div>
+</section>
+
+<!-- CHAPTER 12 -->
+<section class="chapter" id="c12">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Twelve</div>
+    <h2 class="chapter-title">Trying to <em>Make Peace</em></h2>
+    <p class="chapter-intro">Not every story is about war. In the 1970s, 80s, and 90s, Israel and some neighbors did find ways to talk.</p>
+  </div>
+  <p class="dropcap">In 1977, something amazing happened. The president of Egypt, Anwar Sadat, flew to Israel and spoke in the Israeli Parliament. Two years later, Egypt and Israel signed a peace deal. Israel gave back the big Sinai Desert. The border has been quiet ever since.</p>
+  <p>In 1994, Israel and Jordan also signed peace. Two down. Many more to go.</p>
+  <p>Then came the hardest part: peace with the Palestinians. In 1993, secret talks in a Norwegian city led to the Oslo Accords. Israeli Prime Minister Yitzhak Rabin and Palestinian leader Yasser Arafat shook hands on the White House lawn. Many people cried tears of joy. A new group, the Palestinian Authority, was set up to govern parts of the West Bank and Gaza.</p>
+  <div class="callout">
+    <div class="callout-label">A dark day</div>
+    <p>In November 1995, a Jewish man who hated the peace deal shot Prime Minister Rabin and killed him. Many people believe the peace process never fully recovered from that sad day.</p>
+  </div>
+  <p>After Rabin's death, talks slowed down. More tries were made, in 2000 and later, but none worked. Attacks by Palestinian groups and hard choices by Israeli leaders made trust very low on both sides.</p>
+  <div class="chapter-nav">
+    <a href="#c11" class="nav-link prev"><small>Back</small><span>Wars with Neighbors</span></a>
+    <a href="#c13" class="nav-link next"><small>Next</small><span>The Palestinian Story</span></a>
+  </div>
+</section>
+
+<!-- CHAPTER 13 -->
+<section class="chapter" id="c13">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Thirteen</div>
+    <h2 class="chapter-title">The <em>Palestinian</em> Story</h2>
+    <p class="chapter-intro">To understand Israel, you also have to know the other half of the story — the Palestinian people.</p>
+  </div>
+  <p class="dropcap">Palestinian Arabs lived in this land for many hundreds of years. When Israel was born in 1948, most of them were pushed out of the new country's borders or fled during the war. They became refugees in Jordan, Lebanon, Syria, and the West Bank and Gaza. Their children and grandchildren are still called refugees today. There are about 5 to 6 million of them.</p>
+  <p>The West Bank is a hilly area to the east of Israel. About 3 million Palestinians live there. Over the years, Israel has built more than 100 Jewish towns there, called settlements, where about half a million Israelis now live. Most of the world sees these settlements as against international law. Israel does not agree.</p>
+  <p>Gaza is a tiny strip of land by the sea, smaller than many cities. Before 2023, more than 2 million Palestinians lived there, squeezed into a very small space. Since 2007 it has been ruled by a group called Hamas, which Israel and many other countries see as a terrorist group. Israel and Egypt closed Gaza's borders. Life there has been very hard for a long time.</p>
+  <p>Some Palestinians also live as citizens of Israel. They are about one in five people in Israel. They can vote and sit in the Parliament. But many feel like second-class citizens.</p>
+  <div class="words">
+    <div class="words-title">New Words</div>
+    <dl>
+      <dt>Refugee —</dt><dd>A person who had to leave their home because of war or danger.</dd>
+      <dt>Settlement —</dt><dd>A Jewish town built in the West Bank after 1967.</dd>
+      <dt>Occupation —</dt><dd>When one country's army controls another people's land.</dd>
+    </dl>
+  </div>
+  <div class="chapter-nav">
+    <a href="#c12" class="nav-link prev"><small>Back</small><span>Trying to Make Peace</span></a>
+    <a href="#c14" class="nav-link next"><small>Next</small><span>Israel Today</span></a>
+  </div>
+</section>
+
+<!-- CHAPTER 14 -->
+<section class="chapter" id="c14">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Fourteen</div>
+    <h2 class="chapter-title">Israel <em>Today</em></h2>
+    <p class="chapter-intro">In 2026, Israel is a small but busy country. Let's look at who lives there and what life is like.</p>
+  </div>
+  <p class="dropcap">About 10 million people live in Israel. Around three quarters of them are Jewish. They come from many places — Europe, the Middle East, Africa, and Russia. About one fifth are Arab, most of them Muslim, some Christian and Druze. There are smaller groups too.</p>
+  <p>Tel Aviv, the city started on sand dunes in 1909, is now Israel's big modern city. It is full of tech companies, beaches, and cafés. Jerusalem is older, more holy, more serious. Haifa is a port city in the north where Jews and Arabs live side by side. In the south, the desert city of Beersheba is growing fast.</p>
+  <p>Israel speaks Hebrew, an old language that was almost dead a hundred years ago but has been brought back to life. Many people also speak Arabic, English, and Russian.</p>
+  <p>Most young Israelis join the army at age 18. Men serve for about three years. Women for about two. This is unusual in the world. It makes the army a big part of Israeli life.</p>
+  <p>Israel is known for its tech, called "Start-Up Nation." Many phone apps, chips, and medicines you use were made here.</p>
+  <p>But there are also deep problems. Some Jewish Israelis are very religious. Others are very secular and modern. They do not always agree on what kind of country Israel should be. Arab citizens feel left out of much of the national story. And the long fight with the Palestinians has no end in sight.</p>
+  <div class="chapter-nav">
+    <a href="#c13" class="nav-link prev"><small>Back</small><span>Palestinian Story</span></a>
+    <a href="#c15" class="nav-link next"><small>Next</small><span>October 7</span></a>
+  </div>
+</section>
+
+<!-- CHAPTER 15 -->
+<section class="chapter" id="c15">
+  <div class="chapter-header reveal">
+    <div class="chapter-num">Chapter Fifteen</div>
+    <h2 class="chapter-title">October 7 <em>and After</em></h2>
+    <p class="chapter-intro">The story is still being written. The last few years have been some of the darkest in a long time.</p>
+  </div>
+  <p class="dropcap">On the morning of October 7, 2023, a Jewish holiday, fighters from Hamas broke through the fence around Gaza. They killed about 1,200 people in Israel — mostly regular families, kids, and young people at a music festival. They took about 250 people back to Gaza as hostages. It was the worst day for Jewish people since the Holocaust.</p>
+  <p>Israel went to war. It fired bombs from the air and sent soldiers into Gaza by ground. The war has been very, very bloody. Tens of thousands of Palestinians have been killed. Most of Gaza has been damaged. Many families have lost everything. Food and water have been hard to find. Much of the world has watched with horror.</p>
+  <p>The fighting spread beyond Gaza. A group called Hezbollah in Lebanon fired rockets at Israel. A group called the Houthis in Yemen attacked ships in the Red Sea. Iran, the country behind these groups, and Israel fired missiles at each other directly — something that had never happened before. In late 2024, a big change: the ruler of Syria, Bashar al-Assad, lost power after more than 50 years of his family's rule.</p>
+  <p>There have been ceasefires and new rounds of fighting. Some hostages have been freed. Others are still in Gaza. Peace feels very far away.</p>
+  <div class="callout">
+    <div class="callout-label">The big question</div>
+    <p>Two peoples live on this small piece of land. Both say it is theirs. Both have long histories here. Both have suffered. Neither is going to go away. One day, somehow, they will have to find a way to share it. Until then, the story keeps going.</p>
+  </div>
+  <h3>A little hope</h3>
+  <p>Even in hard times, normal people on both sides still talk to each other. Israeli and Palestinian parents who lost children in the fighting meet and hug. Young people make music together. Doctors from both sides work in the same hospitals. These quiet stories are easy to miss, but they are real. And one day, they may grow bigger.</p>
+  <div class="chapter-nav">
+    <a href="#c14" class="nav-link prev"><small>Back</small><span>Israel Today</span></a>
+    <a href="#toc" class="nav-link next"><small>Go to</small><span>Contents</span></a>
+  </div>
+</section>
+
+<footer>
+  <span class="mark">The End · of the beginning.</span>
+  <p>A simple, easy-to-read book about Israel.<br/>Written in 2026. For readers of every age.</p>
+</footer>
+
+<script>
+  // Progress bar
+  const progress = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    progress.style.width = pct + '%';
+  });
+
+  // Theme toggle
+  const themeBtn = document.getElementById('themeBtn');
+  const themeIcon = document.getElementById('themeIcon');
+  const themeText = document.getElementById('themeText');
+  themeBtn.addEventListener('click', () => {
+    const cur = document.body.getAttribute('data-theme');
+    const next = cur === 'light' ? 'dark' : 'light';
+    document.body.setAttribute('data-theme', next);
+    themeIcon.textContent = next === 'dark' ? '◑' : '◐';
+    themeText.textContent = next === 'dark' ? 'Light' : 'Dark';
+  });
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
