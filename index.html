@@ -692,8 +692,8 @@
 
   <main class="main">
     <header class="topbar">
-      <button class="icon-btn" id="menuBtn" aria-label="Toggle menu">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <button class="icon-btn" id="menuBtn" aria-label="Toggle sidebar" title="Toggle sidebar (more reading room)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="9" y1="4" x2="9" y2="20"/></svg>
       </button>
       <div class="crumbs" id="crumbs">
         <span class="crumb-current">Welcome</span>
@@ -729,7 +729,22 @@
         </div>
       </div>
       <div class="loading-bar" id="loadingBar"></div>
-      <iframe class="frame" id="frame" style="display:none" title="Content"></iframe>
+      <iframe class="frame" id="frame" style="display:none" title="Content"
+              allow="fullscreen" loading="eager"></iframe>
+      <!-- Shown if the iframe never fires onload (CSP, network, etc.) -->
+      <div id="errorPanel" style="display:none;position:absolute;inset:0;padding:40px;background:var(--bg);overflow:auto">
+        <div style="max-width:560px;margin:40px auto">
+          <h2 style="font-size:22px;margin-bottom:12px;font-weight:600;letter-spacing:-0.02em">Couldn't load that piece</h2>
+          <p id="errorMsg" style="color:var(--ink-soft);margin-bottom:20px">The embedded reader didn't finish loading.</p>
+          <p style="margin-bottom:16px"><a id="errorLink" href="#" target="_blank" style="color:var(--accent);text-decoration:none;font-weight:500">Open in a new tab ↗</a></p>
+          <div class="help" style="margin-top:24px">
+            <b>Try this:</b><br/>
+            • Hard-refresh the page (<code>Cmd/Ctrl + Shift + R</code>).<br/>
+            • Open the browser console (F12 → Console) and share any red errors.<br/>
+            • Confirm the file exists next to <code>index.html</code>.
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 </div>
@@ -741,7 +756,7 @@
 // ======================================================================
 // MANIFEST_START
 window.__MANIFEST__ = {
-  "generated": "2026-04-18T04:27:15Z",
+  "generated": "2026-04-18T04:50:52Z",
   "categories": [
     {
       "name": "Middle East",
@@ -794,10 +809,36 @@ window.__MANIFEST__ = {
     $("#themeLabel").textContent = theme === "dark" ? "Light" : "Dark";
   }
 
-  // ---- Mobile sidebar ----
+  // ---- Sidebar toggle (mobile = overlay, desktop = collapse-to-zero) ----
   const app = $("#app");
-  $("#menuBtn").addEventListener("click", () => app.classList.toggle("sidebar-open"));
+  const MOBILE_MAX = 860;
+
+  // Restore collapsed state on desktop
+  if (localStorage.getItem("hub.sidebarCollapsed") === "1" && window.innerWidth > MOBILE_MAX) {
+    app.classList.add("sidebar-collapsed");
+  }
+
+  $("#menuBtn").addEventListener("click", () => {
+    if (window.innerWidth <= MOBILE_MAX) {
+      app.classList.toggle("sidebar-open");
+    } else {
+      app.classList.toggle("sidebar-collapsed");
+      localStorage.setItem(
+        "hub.sidebarCollapsed",
+        app.classList.contains("sidebar-collapsed") ? "1" : "0"
+      );
+    }
+  });
   $("#backdrop").addEventListener("click", () => app.classList.remove("sidebar-open"));
+
+  // Keep state sane when the window crosses the mobile breakpoint
+  window.addEventListener("resize", () => {
+    if (window.innerWidth <= MOBILE_MAX) {
+      app.classList.remove("sidebar-collapsed");
+    } else {
+      app.classList.remove("sidebar-open");
+    }
+  });
 
   // ---- Rescan ----
   $("#rescanBtn").addEventListener("click", rescanFolder);
@@ -948,43 +989,61 @@ window.__MANIFEST__ = {
   }
 
   // ---- Open an item ----
-  function open(file) {
+  // We fetch the HTML ourselves and hand it to the iframe via srcdoc. This
+  // gives us real error messages and avoids mysterious blank iframes.
+  async function open(file) {
+    console.log("[hub] opening:", file);
     state.currentFile = file;
     const meta = findMeta(file);
 
     $("#welcome").style.display = "none";
+    $("#errorPanel").style.display = "none";
     const frame = $("#frame");
     frame.style.display = "block";
-
-    // loading indicator
     const bar = $("#loadingBar");
     bar.classList.remove("done");
     bar.classList.add("loading");
 
-    // When the embedded page finishes loading, try to neutralise scroll-reveal
-    // animations inside it. Without this, any child HTML that uses
-    // `.reveal { opacity: 0 }` + IntersectionObserver can appear blank inside
-    // the iframe if the observer fires before layout settles.
+    const abs = new URL(file, location.href).href;
+    console.log("[hub] fetching →", abs);
+    $("#errorLink").href = abs;
+    $("#openNewTab").style.display = "grid";
+
     frame.onload = () => {
+      console.log("[hub] iframe rendered");
       bar.classList.remove("loading");
       bar.classList.add("done");
-      try {
-        const doc = frame.contentDocument;
-        if (!doc) return; // cross-origin, nothing we can do — that's fine
-        if (doc.getElementById("__hub_reveal_fix")) return;
-        const s = doc.createElement("style");
-        s.id = "__hub_reveal_fix";
-        s.textContent =
-          ".reveal{opacity:1!important;transform:none!important;transition:none!important}";
-        (doc.head || doc.documentElement).appendChild(s);
-      } catch (_) {
-        /* cross-origin — ignore */
-      }
     };
 
-    frame.src = file;
+    let html;
+    try {
+      const res = await fetch(abs, { cache: "no-cache" });
+      console.log("[hub] fetch status:", res.status);
+      if (!res.ok) throw new Error("HTTP " + res.status + " " + res.statusText);
+      html = await res.text();
+      console.log("[hub] fetched " + html.length + " bytes");
+    } catch (err) {
+      console.error("[hub] fetch failed:", err);
+      bar.classList.remove("loading");
+      $("#errorMsg").textContent =
+        `Couldn't load "${file}": ${err.message || err}. Open it in a new tab to inspect.`;
+      $("#errorPanel").style.display = "block";
+      return;
+    }
 
-    $("#openNewTab").style.display = "grid";
+    // Inject reveal-animation override + a <base> tag so relative URLs inside
+    // the book resolve against its real location, not the srcdoc about:blank.
+    const baseTag = `<base href="${abs}">`;
+    const revealFix =
+      `<style>.reveal{opacity:1!important;transform:none!important;transition:none!important}</style>`;
+    let doctored;
+    if (/<head[^>]*>/i.test(html)) {
+      doctored = html.replace(/<head([^>]*)>/i, `<head$1>${baseTag}${revealFix}`);
+    } else {
+      doctored = `<head>${baseTag}${revealFix}</head>` + html;
+    }
+
+    frame.srcdoc = doctored;
 
     // Crumbs
     const crumbs = $("#crumbs");

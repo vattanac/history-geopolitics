@@ -173,7 +173,9 @@ def build_manifest() -> dict:
     overrides = load_overrides()
 
     html_files = sorted(
-        p for p in ROOT.glob("*.html") if p.name.lower() != "index.html"
+        p for p in ROOT.glob("*.html")
+        if p.name.lower() != "index.html"
+        and not (overrides.get(p.name) or {}).get("skip")
     )
     if not html_files:
         print("  (no HTML files found — the library will be empty)")

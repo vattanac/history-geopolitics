@@ -1,5 +1,5 @@
 {
-  "_comment": "Hand-curated overrides for files that don't have <meta name='category'> tags of their own. Keys are filenames. Any field you set here wins over the file's own meta tags.",
+  "_comment": "Hand-curated overrides for files that don't have <meta name='category'> tags of their own. Keys are filenames. Any field you set here wins over the file's own meta tags. Set skip:true to hide a file from the library entirely.",
 
   "Israel_Book_Easy.html": {
     "title": "The Story of Israel",
@@ -7,5 +7,10 @@
     "category": "Middle East",
     "subcategory": "Israel & Palestine",
     "added": "2026-04-18"
+  },
+
+  "embed-test.html": {
+    "skip": true
   }
 }
+
