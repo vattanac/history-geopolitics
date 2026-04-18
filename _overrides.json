@@ -1,0 +1,11 @@
+{
+  "_comment": "Hand-curated overrides for files that don't have <meta name='category'> tags of their own. Keys are filenames. Any field you set here wins over the file's own meta tags.",
+
+  "Israel_Book_Easy.html": {
+    "title": "The Story of Israel",
+    "description": "A plain-English history of Israel in 15 short chapters — from ancient times through October 7, 2023.",
+    "category": "Middle East",
+    "subcategory": "Israel & Palestine",
+    "added": "2026-04-18"
+  }
+}

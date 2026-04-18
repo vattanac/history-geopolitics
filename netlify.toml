@@ -1,0 +1,75 @@
+# =============================================================================
+# Netlify configuration for the History & Geopolitics hub.
+#
+# This is a plain static site. The only "build step" is running regenerate.py
+# so the sidebar in index.html is always up-to-date with whatever HTML files
+# you have in the repo at deploy time.
+# =============================================================================
+
+[build]
+  # Re-scan the folder and refresh the embedded manifest before publishing.
+  # The `if` guard means the deploy still works even if regenerate.py is
+  # removed later.
+  command = "if [ -f regenerate.py ]; then python3 regenerate.py; fi"
+
+  # The whole repo root is the site — index.html lives here.
+  publish = "."
+
+[build.environment]
+  PYTHON_VERSION = "3.11"
+
+
+# -----------------------------------------------------------------------------
+# Headers
+# -----------------------------------------------------------------------------
+
+# Sensible defaults for every response.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options   = "nosniff"
+    Referrer-Policy          = "strict-origin-when-cross-origin"
+    Permissions-Policy       = "camera=(), microphone=(), geolocation=()"
+    # The hub loads chapters inside an <iframe> on the same origin, so we
+    # allow same-origin framing but block anyone else from embedding us.
+    X-Frame-Options          = "SAMEORIGIN"
+    Content-Security-Policy  = "frame-ancestors 'self'"
+
+# HTML should always be revalidated so new content shows up instantly.
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# The manifest is rewritten into index.html, but if you ever expose it as a
+# separate file in the future, keep it uncached too.
+[[headers]]
+  for = "/*.json"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+
+# -----------------------------------------------------------------------------
+# Redirects — hide build-time files from the public site.
+# -----------------------------------------------------------------------------
+
+# _overrides.json is editor-only data, not meant for readers.
+[[redirects]]
+  from   = "/_overrides.json"
+  to     = "/"
+  status = 404
+  force  = true
+
+# regenerate.py is a build tool, not a page.
+[[redirects]]
+  from   = "/regenerate.py"
+  to     = "/"
+  status = 404
+  force  = true
+
+# HOW_TO_USE.md is an authoring note. Hide it from the live site.
+[[redirects]]
+  from   = "/HOW_TO_USE.md"
+  to     = "/"
+  status = 404
+  force  = true
